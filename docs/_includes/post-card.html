@@ -1,0 +1,27 @@
+{%- comment -%}
+  Single post card — used in home.html and tag.html.
+  Expects `post` variable: { url, title, date, excerpt, tier, demand, competition, tags }
+{%- endcomment -%}
+<article class="post-card">
+  <a href="{{ post.url | relative_url }}" class="post-card__link">
+    <time class="post-card__date">{{ post.date | date: "%b %-d, %Y" }}</time>
+    <h2 class="post-card__title">{{ post.title }}</h2>
+    {% if post.excerpt and post.excerpt != '' %}
+      <p class="post-card__excerpt">{{ post.excerpt }}</p>
+    {% endif %}
+  </a>
+  <div class="post-card__meta">
+    {% if post.tier %}
+      <a href="{{ '/tags/' | append: post.tier | append: '.html' | relative_url }}" class="pill pill--{{ post.tier | downcase }}">{{ post.tier }}</a>
+    {% endif %}
+    {% if post.demand %}
+      <span class="pill">demand {{ post.demand }}/5</span>
+    {% endif %}
+    {% if post.competition %}
+      <span class="pill">competition {{ post.competition }}/5</span>
+    {% endif %}
+    {% for t in post.tags limit: 4 %}
+      <a href="{{ '/tags/' | append: t | append: '.html' | relative_url }}" class="pill pill--tag">#{{ t }}</a>
+    {% endfor %}
+  </div>
+</article>

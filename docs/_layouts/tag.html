@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{%- comment -%}
+  Tag listing — used by docs/tags/<tag>.html.
+  Expects front-matter:
+    tag       (string, e.g. "AI")
+    posts     [{url, title, date, excerpt, tier, demand, competition, tags}]
+{%- endcomment -%}
+
+<a href="{{ '/' | relative_url }}" class="back-link">← All directions</a>
+
+<header class="tag-header">
+  <p class="tag-header__eyebrow">Tag</p>
+  <h1 class="tag-header__title">
+    <span class="tag-header__hash">#</span>{{ page.tag }}
+  </h1>
+  <p class="tag-header__count">{{ page.posts | size }} direction{{ page.posts.size | pluralize }}</p>
+</header>
+
+<section class="post-list">
+  {% for p in page.posts %}
+    {% include post-card.html post=p %}
+  {% endfor %}
+</section>

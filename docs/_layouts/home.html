@@ -4,88 +4,56 @@ layout: default
 {%- comment -%}
   Home page — used by docs/index.html.
   Expects front-matter:
-    this_week    {week_label, run_id, selectables[], verdict_url, run_url}
-    history      [{week_label, run_id, run_url, selectable_count, top_slug, top_title, date_iso}]
+    posts   [{url, title, date, excerpt, tier, demand, competition, tags}]
+    weeks   [{run_id, date_iso, selectable_count, top_title}]
 {%- endcomment -%}
 
-{% if page.this_week %}
-  {% assign w = page.this_week %}
-
-  <div class="week-header">
-    <span class="week-header__label">THIS WEEK</span>
-    <span class="week-header__date">{{ w.week_label }}</span>
+<header class="hero">
+  <p class="hero__eyebrow">Weekly TrustMRR startup direction radar</p>
+  <h1 class="hero__title">Find this week's startup direction.<br>Skip 6 months of guessing.</h1>
+  <p class="hero__lede">
+    Every Monday morning, 3–5 selectable startup directions appear here — sourced from TrustMRR's public listings, verified against X/web demand signals, packaged as complete PRDs + 14-day build plans + 30-day marketing calendars.
+  </p>
+  <div class="hero__meta">
+    <span><strong>$10K MRR</strong> target</span>
+    <span class="hero__dot">·</span>
+    <span><strong>14d</strong> MVP</span>
+    <span class="hero__dot">·</span>
+    <span><strong>≤$300</strong>/30d marketing</span>
   </div>
+</header>
 
-  {% if w.selectables.size > 0 %}
-    {% assign top = w.selectables.first %}
-
-    <article class="card">
-      <div class="top-pick">
-        <span class="top-pick__badge">⭐ TOP PICK</span>
-        <h2 class="top-pick__title"><a href="{{ top.url | relative_url }}">{{ top.title }}</a></h2>
-        {% if top.one_liner != '' %}
-          <p class="top-pick__one-liner">{{ top.one_liner }}</p>
-        {% endif %}
-        <div class="pills">
-          <span class="pill {% if top.tier == 'GO' %}pill--go{% else %}pill--narrow{% endif %}">{{ top.tier }}</span>
-          <span class="pill">demand {{ top.demand }}/5</span>
-          <span class="pill">competition {{ top.competition }}/5</span>
-        </div>
-      </div>
-
-      {% if w.selectables.size > 1 %}
-        <h3 style="font-size: 13px; font-family: var(--font-mono); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 24px 0 8px;">Also this week</h3>
-        <ul class="direction-list">
-          {% for d in w.selectables offset: 1 %}
-            <li>
-              <span class="direction-list__rank">{{ d.rank }}</span>
-              <span class="direction-list__title"><a href="{{ d.url | relative_url }}">{{ d.title }}</a></span>
-              <span class="pill {% if d.tier == 'GO' %}pill--go{% else %}pill--narrow{% endif %}">{{ d.tier }}</span>
-              <span class="pill">d{{ d.demand }} c{{ d.competition }}</span>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-
-      <div class="card__footer">
-        <a href="{{ w.verdict_url | relative_url }}">→ Read VERDICT.md (why these directions)</a>
-        <span style="color: var(--muted); margin: 0 8px;">·</span>
-        <a href="{{ w.run_url | relative_url }}">Open week page</a>
-      </div>
-    </article>
-
-  {% else %}
-    <article class="card">
-      <p style="color: var(--muted);">Stage B did not produce enough selectables for this week. Check VERDICT.md for details.</p>
-      <div class="card__footer">
-        <a href="{{ w.verdict_url | relative_url }}">→ Read VERDICT.md</a>
-      </div>
-    </article>
-  {% endif %}
-{% else %}
-  <article class="card">
-    <p style="color: var(--muted);">No runs yet. The first weekly run will appear here.</p>
-  </article>
+{% if page.weeks and page.weeks.size > 0 %}
+  {% assign latest = page.weeks.first %}
+  <p class="latest-run">
+    <span class="latest-run__label">This week</span>
+    <span class="latest-run__date">{{ latest.date_iso | date: "%B %-d, %Y" }}</span>
+    <span class="latest-run__count">{{ latest.selectable_count }} selectables</span>
+    <a href="{{ '/runs/' | append: latest.run_id | append: '/' | relative_url }}" class="latest-run__link">→ Why these? Read VERDICT</a>
+  </p>
 {% endif %}
 
-{% if page.history and page.history.size > 0 %}
+{% if page.posts and page.posts.size > 0 %}
+  <section class="post-list">
+    {% for p in page.posts %}
+      {% include post-card.html post=p %}
+    {% endfor %}
+  </section>
+{% else %}
+  <p class="empty">No directions yet — check back Monday morning.</p>
+{% endif %}
+
+{% if page.weeks and page.weeks.size > 1 %}
   <section class="history">
-    <h2>History · {{ page.history.size }} previous week{{ page.history.size | pluralize }}</h2>
+    <h2 class="section-heading">Previous weeks</h2>
     <ul class="history__list">
-      {% for h in page.history %}
+      {% for w in page.weeks offset: 1 %}
         <li class="history__item">
-          <span class="history__week">{{ h.week_label | split: ' · ' | last }}</span>
+          <time class="history__date">{{ w.date_iso | date: "%b %-d, %Y" }}</time>
           <span class="history__summary">
-            {% if h.top_title != '' %}
-              <a href="{{ h.run_url | relative_url }}">{{ h.top_title }}</a>
-            {% else %}
-              <a href="{{ h.run_url | relative_url }}">{{ h.week_label }}</a>
-            {% endif %}
-            {% if h.run_id != '' %}
-              <span style="color: var(--muted); font-family: var(--font-mono); font-size: 12px; margin-left: 6px;">{{ h.run_id }}</span>
-            {% endif %}
+            <a href="{{ '/runs/' | append: w.run_id | append: '/' | relative_url }}">{{ w.top_title | default: w.run_id }}</a>
           </span>
-          <span class="history__count">{{ h.selectable_count }} sel.</span>
+          <span class="history__count">{{ w.selectable_count }} sel.</span>
         </li>
       {% endfor %}
     </ul>

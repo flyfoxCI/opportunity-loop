@@ -1,0 +1,49 @@
+---
+layout: default
+---
+{%- comment -%}
+  Single direction detail page — used by docs/directions/<slug>.md
+  Expects front-matter:
+    title, date, tier, demand, competition, tags, week, slug, excerpt
+{%- endcomment -%}
+
+<a href="{{ '/' | relative_url }}" class="back-link">← All directions</a>
+
+<article class="post">
+  <header class="post-header">
+    <div class="post-header__meta">
+      <time class="post-header__date">{{ page.date | date: "%B %-d, %Y" }}</time>
+      {% if page.week %}
+        <span class="post-header__sep">·</span>
+        <a href="{{ '/runs/' | append: page.week | append: '/' | relative_url }}" class="post-header__week">Week {{ page.week | slice: 5, 5 | replace: '-', ' ' }}</a>
+      {% endif %}
+    </div>
+    <h1 class="post-header__title">{{ page.title }}</h1>
+    {% if page.excerpt and page.excerpt != '' %}
+      <p class="post-header__excerpt">{{ page.excerpt }}</p>
+    {% endif %}
+    <div class="post-header__pills">
+      {% if page.tier %}
+        <a href="{{ '/tags/' | append: page.tier | append: '.html' | relative_url }}" class="pill pill--{{ page.tier | downcase }}">{{ page.tier }}</a>
+      {% endif %}
+      {% if page.demand %}<span class="pill">demand {{ page.demand }}/5</span>{% endif %}
+      {% if page.competition %}<span class="pill">competition {{ page.competition }}/5</span>{% endif %}
+      {% if page.tags %}
+        {% for t in page.tags %}
+          <a href="{{ '/tags/' | append: t | append: '.html' | relative_url }}" class="pill pill--tag">#{{ t }}</a>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+
+  <footer class="post-footer">
+    <a href="{{ '/' | relative_url }}" class="post-footer__back">← All directions</a>
+    {% if page.week %}
+      <a href="{{ '/runs/' | append: page.week | append: '/' | relative_url }}" class="post-footer__week">This was published in {{ page.week }}</a>
+    {% endif %}
+  </footer>
+</article>
