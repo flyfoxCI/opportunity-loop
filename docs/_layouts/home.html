@@ -29,7 +29,7 @@ layout: default
     <span class="latest-run__label">This week</span>
     <span class="latest-run__date">{{ latest.date_iso | date: "%B %-d, %Y" }}</span>
     <span class="latest-run__count">{{ latest.selectable_count }} selectables</span>
-    <a href="{{ '/runs/' | append: latest.run_id | append: '/' | relative_url }}" class="latest-run__link">→ Why these? Read VERDICT</a>
+    <a href="{{ '/runs/' | append: latest.run_id | append: '/VERDICT.html' | relative_url }}" class="latest-run__link">→ Why these? Read VERDICT</a>
   </p>
 {% endif %}
 

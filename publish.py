@@ -140,6 +140,7 @@ def parse_verdict(verdict_md: str, run_id: str) -> dict:
                 "demand": demand,
                 "competition": competition,
                 "one_liner": one_liner,
+                "excerpt": one_liner,  # default; overwritten by meta if one_liner missing
                 "title": slug,
             }
         )
@@ -176,18 +177,30 @@ def parse_direction_md(direction_md: str, slug_fallback: str) -> dict:
     if m:
         result["demand"] = int(m.group(1))
         result["competition"] = int(m.group(2))
-    # Excerpt: first non-heading paragraph with substance
+    # Excerpt: first non-heading, non-table, non-list paragraph with substance
     paragraphs = [p.strip() for p in direction_md.split("\n\n") if p.strip()]
     for p in paragraphs:
-        if p.startswith("#"):
+        if p.startswith("#"):  # heading
+            continue
+        if p.startswith(">"):  # blockquote
+            continue
+        if p.startswith("|"):  # table
             continue
         # Skip the front-matter-like metadata block (Run ID / Slug / Verdict / Scores)
         if p.startswith("**Run ID:**") or "Verdict:" in p[:30] or "Scores:" in p[:30]:
             continue
-        if "Why this direction" in p[:60]:
+        # Allow lists but skip "Why this direction" style headings-content
+        if "Why this direction" in p[:60] and p.startswith("###"):
             continue
         if len(p) > 60:
-            result["excerpt"] = p[:280].replace("\n", " ")
+            # Strip any inline markdown formatting from excerpt (bold, italic, links)
+            clean = re.sub(r"\*\*(.+?)\*\*", r"\1", p)  # bold
+            clean = re.sub(r"\*(.+?)\*", r"\1", clean)  # italic
+            clean = re.sub(r"`([^`]+)`", r"\1", clean)  # code
+            # Trim leading list marker
+            clean = re.sub(r"^[-*]\s+", "", clean)
+            clean = re.sub(r"^\d+\.\s+", "", clean)
+            result["excerpt"] = clean[:280].replace("\n", " ")
             break
     return result
 
@@ -239,8 +252,13 @@ def _yaml_quote(s: str) -> str:
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-def generate_direction_page(slug: str, run_id: str, run_dir: Path, run_date_iso: str) -> dict:
-    """Generate docs/directions/<slug>.md. Returns post meta dict for index."""
+def generate_direction_page(slug: str, run_id: str, run_dir: Path, run_date_iso: str, one_liner: str = "") -> dict:
+    """Generate docs/directions/<slug>.md. Returns post meta dict for index.
+
+    `one_liner` (from VERDICT.md table) takes priority as the excerpt —
+    it's the Stage-B-written summary, more readable than the direction file's
+    first paragraph (which is often metadata or a table).
+    """
     src = run_dir / "directions" / f"{slug}.md"
     if not src.exists():
         log(f"  WARN: direction source missing for {slug}")
@@ -249,7 +267,11 @@ def generate_direction_page(slug: str, run_id: str, run_dir: Path, run_date_iso:
     body = src.read_text(encoding="utf-8")
     meta = parse_direction_md(body, slug)
 
-    # Infer tags from title + one_liner + first 1000 chars of body
+    # Prefer one_liner from VERDICT.md; fall back to direction-md excerpt.
+    if one_liner:
+        meta["excerpt"] = one_liner
+
+    # Infer tags from title + excerpt + first 1500 chars of body
     blob = (meta["title"] + " " + meta["excerpt"] + " " + body[:1500])
     tags = infer_tags(blob, explicit_tier=meta["tier"])
     meta["tags"] = tags
@@ -264,6 +286,7 @@ def generate_direction_page(slug: str, run_id: str, run_dir: Path, run_date_iso:
         f"title: {_yaml_quote(meta['title'])}",
         f"date: {run_date_iso}",
         f"week: {_yaml_quote(run_id)}",
+        f"week_date: {_yaml_quote(run_date_iso)}",
         f"slug: {_yaml_quote(slug)}",
         f"permalink: /directions/{slug}.html",
     ]
@@ -582,7 +605,9 @@ def main() -> None:
     log("generating direction pages:")
     selectables_with_meta = []
     for sel in summary["selectables"]:
-        meta = generate_direction_page(sel["slug"], run_id, run_dir, date_iso)
+        meta = generate_direction_page(
+            sel["slug"], run_id, run_dir, date_iso, one_liner=sel.get("one_liner", "")
+        )
         if not meta:
             continue
         sel.update(meta)
@@ -606,11 +631,14 @@ def main() -> None:
             if src_md.exists():
                 meta = parse_direction_md(src_md.read_text(encoding="utf-8"), sel["slug"])
                 sel["title"] = meta["title"]
-                sel["excerpt"] = meta.get("excerpt", "")
+                # Prefer one_liner from VERDICT.md (designed as summary).
+                # Fall back to md-derived excerpt.
+                if not sel.get("one_liner"):
+                    sel["excerpt"] = meta.get("excerpt", "")
                 # Re-derive tags from original content
                 body = src_md.read_text(encoding="utf-8")
                 sel["tags"] = infer_tags(
-                    meta["title"] + " " + meta.get("excerpt", "") + " " + body[:1500],
+                    meta["title"] + " " + (sel.get("excerpt") or meta.get("excerpt", "")) + " " + body[:1500],
                     explicit_tier=meta.get("tier"),
                 )
         dt = parse_run_date(r.name)
