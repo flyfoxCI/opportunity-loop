@@ -194,35 +194,51 @@ def generate_week_page(run_id: str, target_dir: Path, selectables: list[dict], w
         "title": week_lbl,
         "week_label": week_lbl,
         "run_id": run_id,
-        "selectables": selectables_sorted,
         "verdict_url": "VERDICT.html",
         "permalink": f"/runs/{run_id}/",
     }
-    yaml = "---\n" + "\n".join(
-        f"{k}: {_yaml_val(v)}" for k, v in front_matter.items()
-    ) + "\n---\n\n"
+    yaml_parts = ["---"]
+    for k, v in front_matter.items():
+        yaml_parts.append(f"{k}: {_yaml_val(v)}")
+    yaml_parts.append(f"selectables:{_yaml_list_of_dicts(selectables_sorted, indent=2)}")
+    yaml_parts.append("---")
+    yaml_parts.append("")
+    yaml = "\n".join(yaml_parts)
     (target_dir / "index.html").write_text(yaml, encoding="utf-8")
     log(f"generated week page → {target_dir}/index.html")
 
 
 def _yaml_val(v) -> str:
-    """Quick YAML scalar/array serializer (no PyYAML dep)."""
+    """Quick YAML scalar serializer (no PyYAML dep).
+
+    For scalars only — list-of-dict serialization is handled separately via
+    _yaml_list_of_dicts to get correct block-style indentation.
+    """
     if isinstance(v, str):
-        # Always quote to avoid YAML parsing issues
         escaped = v.replace("\\", "\\\\").replace('"', '\\"')
         return f'"{escaped}"'
-    if isinstance(v, int):
+    if isinstance(v, (int, float)):
         return str(v)
-    if isinstance(v, list):
-        items = []
-        for item in v:
-            if isinstance(item, dict):
-                inner = ", ".join(f"{k}: {_yaml_val(vv)}" for k, vv in item.items())
-                items.append(f"{{ {inner} }}")
-            else:
-                items.append(f"- {_yaml_val(item)}")
-        return "\n" + "\n".join(items)
+    if isinstance(v, bool):
+        return "true" if v else "false"
     return f'"{v}"'
+
+
+def _yaml_list_of_dicts(items: list, indent: int = 2) -> str:
+    """Render a list of dicts as proper YAML block sequence."""
+    pad = " " * indent
+    inner_pad = " " * (indent + 2)
+    lines = []
+    for item in items:
+        if not isinstance(item, dict):
+            lines.append(f"{pad}- {_yaml_val(item)}")
+            continue
+        first = True
+        for k, vv in item.items():
+            prefix = f"{pad}- " if first else f"{inner_pad}"
+            lines.append(f"{prefix}{k}: {_yaml_val(vv)}")
+            first = False
+    return "\n" + "\n".join(lines)
 
 
 # ----------------------------------------------------------------------------
