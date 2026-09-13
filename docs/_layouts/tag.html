@@ -15,7 +15,7 @@ layout: default
   <h1 class="tag-header__title">
     <span class="tag-header__hash">#</span>{{ page.tag }}
   </h1>
-  <p class="tag-header__count">{{ page.posts | size }} direction{{ page.posts.size | pluralize }}</p>
+  <p class="tag-header__count">{{ page.posts | size }} direction{% if page.posts.size != 1 %}s{% endif %}</p>
 </header>
 
 <section class="post-list">

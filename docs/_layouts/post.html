@@ -13,9 +13,9 @@ layout: default
   <header class="post-header">
     <div class="post-header__meta">
       <time class="post-header__date">{{ page.date | date: "%B %-d, %Y" }}</time>
-      {% if page.week %}
+      {% if page.week_date %}
         <span class="post-header__sep">·</span>
-        <a href="{{ '/runs/' | append: page.week | append: '/' | relative_url }}" class="post-header__week">Week {{ page.week | slice: 5, 5 | replace: '-', ' ' }}</a>
+        <a href="{{ '/runs/' | append: page.week | append: '/' | relative_url }}" class="post-header__week">{{ page.week_date | date: "%b %-d" }}</a>
       {% endif %}
     </div>
     <h1 class="post-header__title">{{ page.title }}</h1>

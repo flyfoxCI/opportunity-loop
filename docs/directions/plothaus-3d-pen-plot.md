@@ -3,6 +3,7 @@ layout: post
 title: "Direction: PlotHaus — AI pen-plotter art + sticker pipeline for hobbyists & small shops (GO)"
 date: 2026-09-13T03:51:34+00:00
 week: "2026-09-13_035134"
+week_date: "2026-09-13T03:51:34+00:00"
 slug: "plothaus-3d-pen-plot"
 permalink: /directions/plothaus-3d-pen-plot.html
 tags:
@@ -10,7 +11,7 @@ tags:
   - "SaaS"
   - "mobile"
   - "vertical"
-excerpt: "> Tagline: *Turn \"make me a plot\" into a one-click subscription.*"
+excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | 3dplotter (TrustMRR) | Pen-plotter content marketplace | $5–$15/mo | Direct. We compete on AI generation speed and sticker pipeline. | | L2 | Etsy shops, Creative Market | Hand-designed plotter fil"
 ---
 
 > Tagline: *Turn "make me a plot" into a one-click subscription.*

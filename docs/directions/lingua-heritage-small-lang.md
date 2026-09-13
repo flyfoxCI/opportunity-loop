@@ -3,6 +3,7 @@ layout: post
 title: "Direction: Lingua — Heritage language learning for diaspora kids (GO)"
 date: 2026-09-13T03:51:34+00:00
 week: "2026-09-13_035134"
+week_date: "2026-09-13T03:51:34+00:00"
 slug: "lingua-heritage-small-lang"
 permalink: /directions/lingua-heritage-small-lang.html
 tags:
@@ -12,7 +13,7 @@ tags:
   - "education"
   - "finance"
   - "language"
-excerpt: "> Tagline: *Not Duolingo. The language your grandparents speak.*"
+excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | Speak Silq | Heritage-language niche player | $10–$15/mo | Direct. We compete on UX, breadth of languages, family mode. | | L1 | Duolingo, Babbel, Busuu | Big languages | Free–$15/mo | Tangential. "
 ---
 
 > Tagline: *Not Duolingo. The language your grandparents speak.*

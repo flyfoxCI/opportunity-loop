@@ -3,6 +3,7 @@ layout: post
 title: "Direction: Amen — Faith / Religion AI co-pilot (GO)"
 date: 2026-09-13T03:51:34+00:00
 week: "2026-09-13_035134"
+week_date: "2026-09-13T03:51:34+00:00"
 slug: "amen-faith-ai"
 permalink: /directions/amen-faith-ai.html
 tags:
@@ -12,7 +13,7 @@ tags:
   - "religion"
   - "mobile"
   - "vertical"
-excerpt: "> Tagline: *Sermon Scribe, but for every faith — and twice as fast.*"
+excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | Sermon Scribe (TrustMRR / sermon-scribe.md) | AI sermon prep + outlines for Christian pastors | ~$6/mo + tiers | Direct. Currently the incumbent. We compete on (a) multi-faith from day 1, (b) bette"
 ---
 
 > Tagline: *Sermon Scribe, but for every faith — and twice as fast.*

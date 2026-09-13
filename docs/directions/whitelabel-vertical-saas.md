@@ -3,6 +3,7 @@ layout: post
 title: "Direction: WhiteLabel — Vertical AI co-pilot, sold to agencies & course creators (GO)"
 date: 2026-09-13T03:51:34+00:00
 week: "2026-09-13_035134"
+week_date: "2026-09-13T03:51:34+00:00"
 slug: "whitelabel-vertical-saas"
 permalink: /directions/whitelabel-vertical-saas.html
 tags:
@@ -12,7 +13,7 @@ tags:
   - "B2C"
   - "creator"
   - "mobile"
-excerpt: "- **A chat assistant** trained on the agency's knowledge base (PDFs, Notion exports, website crawl). - **A lead-capture widget** for the agency's site (drops into Webflow, WordPress, Shopify, Framer). - **A simple CRM** that captures, tags, and emails leads back to the agency. - "
+excerpt: "- A chat assistant trained on the agency's knowledge base (PDFs, Notion exports, website crawl). - A lead-capture widget for the agency's site (drops into Webflow, WordPress, Shopify, Framer). - A simple CRM that captures, tags, and emails leads back to the agency. - A billing + "
 ---
 
 > Tagline: *One AI platform, a thousand niche brands.*

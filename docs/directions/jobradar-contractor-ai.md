@@ -3,6 +3,7 @@ layout: post
 title: "Direction: JobRadar — AI lead gen + permit monitor for solo contractors (GO)"
 date: 2026-09-13T03:51:34+00:00
 week: "2026-09-13_035134"
+week_date: "2026-09-13T03:51:34+00:00"
 slug: "jobradar-contractor-ai"
 permalink: /directions/jobradar-contractor-ai.html
 tags:
@@ -10,7 +11,7 @@ tags:
   - "SaaS"
   - "B2B"
   - "vertical"
-excerpt: "> Tagline: *Permits, leads, and callback reminders — without the $400/mo CRM tax.*"
+excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | NextjobConnect | AI lead gen for contractors | $99+/mo | Direct. We differentiate on permit-monitor + AI call-summary, not generic lead gen. | | L1 | ServiceTitan, Housecall Pro, Jobber | Field-ser"
 ---
 
 > Tagline: *Permits, leads, and callback reminders — without the $400/mo CRM tax.*
