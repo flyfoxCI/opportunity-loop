@@ -13,7 +13,6 @@ tags:
   - "B2C"
   - "creator"
   - "mobile"
-excerpt: "- A chat assistant trained on the agency's knowledge base (PDFs, Notion exports, website crawl). - A lead-capture widget for the agency's site (drops into Webflow, WordPress, Shopify, Framer). - A simple CRM that captures, tags, and emails leads back to the agency. - A billing + "
 ---
 
 > Tagline: *One AI platform, a thousand niche brands.*

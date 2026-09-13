@@ -13,7 +13,6 @@ tags:
   - "religion"
   - "mobile"
   - "vertical"
-excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | Sermon Scribe (TrustMRR / sermon-scribe.md) | AI sermon prep + outlines for Christian pastors | ~$6/mo + tiers | Direct. Currently the incumbent. We compete on (a) multi-faith from day 1, (b) bette"
 ---
 
 > Tagline: *Sermon Scribe, but for every faith — and twice as fast.*

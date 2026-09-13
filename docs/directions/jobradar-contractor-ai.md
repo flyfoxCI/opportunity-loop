@@ -11,7 +11,6 @@ tags:
   - "SaaS"
   - "B2B"
   - "vertical"
-excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | NextjobConnect | AI lead gen for contractors | $99+/mo | Direct. We differentiate on permit-monitor + AI call-summary, not generic lead gen. | | L1 | ServiceTitan, Housecall Pro, Jobber | Field-ser"
 ---
 
 > Tagline: *Permits, leads, and callback reminders — without the $400/mo CRM tax.*

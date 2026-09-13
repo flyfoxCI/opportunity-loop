@@ -13,7 +13,6 @@ tags:
   - "education"
   - "finance"
   - "language"
-excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | Speak Silq | Heritage-language niche player | $10–$15/mo | Direct. We compete on UX, breadth of languages, family mode. | | L1 | Duolingo, Babbel, Busuu | Big languages | Free–$15/mo | Tangential. "
 ---
 
 > Tagline: *Not Duolingo. The language your grandparents speak.*

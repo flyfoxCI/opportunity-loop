@@ -11,7 +11,6 @@ tags:
   - "SaaS"
   - "mobile"
   - "vertical"
-excerpt: "| Tier | Competitor | What they do | Price | Threat | |---|---|---|---|---| | L1 | 3dplotter (TrustMRR) | Pen-plotter content marketplace | $5–$15/mo | Direct. We compete on AI generation speed and sticker pipeline. | | L2 | Etsy shops, Creative Market | Hand-designed plotter fil"
 ---
 
 > Tagline: *Turn "make me a plot" into a one-click subscription.*
