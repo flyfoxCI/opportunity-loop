@@ -202,3 +202,4 @@ If you've been using `/Users/jerry/code/10k-in-month/loop/` locally:
 
 Methodology: derived from the [TrustMRR × X Opportunity Playbook](../loop/PLAYBOOK.md).
 Data source: [TrustMRR](https://trustmrr.com) public listings API.
+
