@@ -1,13 +1,27 @@
-title: "Opportunity Loop — Weekly Direction Radar"
-description: "Weekly TrustMRR opportunity scanner. Auto-publishes 3–5 selectable startup direction packages every Monday morning (Beijing time)."
+title: "Opportunity Loop"
+description: "Weekly TrustMRR startup direction radar. 3–5 selectable direction packages every Monday."
 theme: minima
 markdown: kramdown
-permalink: /:title/
+
+sass:
+  style: compressed
+
 defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
   - scope:
       path: "runs"
     values:
       layout: null
+  - scope:
+      path: "index.html"
+    values:
+      layout: home
+
+permalink: /:basename/
+
 exclude:
   - loop/
   - .github/
@@ -17,5 +31,16 @@ exclude:
   - publish.py
   - requirements.txt
   - _config.yml
+  - _layouts/
+  - _includes/
+  - _sass/
+  - assets/
   - README.md
   - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+
+github:
+  owner_name: flyfoxCI
+  repository_name: opportunity-loop

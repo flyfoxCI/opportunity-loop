@@ -1,0 +1,93 @@
+---
+layout: default
+---
+{%- comment -%}
+  Home page — used by docs/index.html.
+  Expects front-matter:
+    this_week    {week_label, run_id, selectables[], verdict_url, run_url}
+    history      [{week_label, run_id, run_url, selectable_count, top_slug, top_title, date_iso}]
+{%- endcomment -%}
+
+{% if page.this_week %}
+  {% assign w = page.this_week %}
+
+  <div class="week-header">
+    <span class="week-header__label">THIS WEEK</span>
+    <span class="week-header__date">{{ w.week_label }}</span>
+  </div>
+
+  {% if w.selectables.size > 0 %}
+    {% assign top = w.selectables.first %}
+
+    <article class="card">
+      <div class="top-pick">
+        <span class="top-pick__badge">⭐ TOP PICK</span>
+        <h2 class="top-pick__title"><a href="{{ top.url | relative_url }}">{{ top.title }}</a></h2>
+        {% if top.one_liner != '' %}
+          <p class="top-pick__one-liner">{{ top.one_liner }}</p>
+        {% endif %}
+        <div class="pills">
+          <span class="pill {% if top.tier == 'GO' %}pill--go{% else %}pill--narrow{% endif %}">{{ top.tier }}</span>
+          <span class="pill">demand {{ top.demand }}/5</span>
+          <span class="pill">competition {{ top.competition }}/5</span>
+        </div>
+      </div>
+
+      {% if w.selectables.size > 1 %}
+        <h3 style="font-size: 13px; font-family: var(--font-mono); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin: 24px 0 8px;">Also this week</h3>
+        <ul class="direction-list">
+          {% for d in w.selectables offset: 1 %}
+            <li>
+              <span class="direction-list__rank">{{ d.rank }}</span>
+              <span class="direction-list__title"><a href="{{ d.url | relative_url }}">{{ d.title }}</a></span>
+              <span class="pill {% if d.tier == 'GO' %}pill--go{% else %}pill--narrow{% endif %}">{{ d.tier }}</span>
+              <span class="pill">d{{ d.demand }} c{{ d.competition }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <div class="card__footer">
+        <a href="{{ w.verdict_url | relative_url }}">→ Read VERDICT.md (why these directions)</a>
+        <span style="color: var(--muted); margin: 0 8px;">·</span>
+        <a href="{{ w.run_url | relative_url }}">Open week page</a>
+      </div>
+    </article>
+
+  {% else %}
+    <article class="card">
+      <p style="color: var(--muted);">Stage B did not produce enough selectables for this week. Check VERDICT.md for details.</p>
+      <div class="card__footer">
+        <a href="{{ w.verdict_url | relative_url }}">→ Read VERDICT.md</a>
+      </div>
+    </article>
+  {% endif %}
+{% else %}
+  <article class="card">
+    <p style="color: var(--muted);">No runs yet. The first weekly run will appear here.</p>
+  </article>
+{% endif %}
+
+{% if page.history and page.history.size > 0 %}
+  <section class="history">
+    <h2>History · {{ page.history.size }} previous week{{ page.history.size | pluralize }}</h2>
+    <ul class="history__list">
+      {% for h in page.history %}
+        <li class="history__item">
+          <span class="history__week">{{ h.week_label | split: ' · ' | last }}</span>
+          <span class="history__summary">
+            {% if h.top_title != '' %}
+              <a href="{{ h.run_url | relative_url }}">{{ h.top_title }}</a>
+            {% else %}
+              <a href="{{ h.run_url | relative_url }}">{{ h.week_label }}</a>
+            {% endif %}
+            {% if h.run_id != '' %}
+              <span style="color: var(--muted); font-family: var(--font-mono); font-size: 12px; margin-left: 6px;">{{ h.run_id }}</span>
+            {% endif %}
+          </span>
+          <span class="history__count">{{ h.selectable_count }} sel.</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
