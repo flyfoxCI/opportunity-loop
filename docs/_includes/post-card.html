@@ -2,6 +2,7 @@
   Single post card — used in home.html and tag.html.
   Expects `post` variable: { url, title, date, excerpt, tier, demand, competition, tags }
 {%- endcomment -%}
+DEBUG: include rendered with post={{ post | inspect }}
 <article class="post-card">
   <a href="{{ post.url | relative_url }}" class="post-card__link">
     <time class="post-card__date">{{ post.date | date: "%b %-d, %Y" }}</time>
