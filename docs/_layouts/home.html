@@ -36,7 +36,25 @@ layout: default
 {% if page.posts and page.posts.size > 0 %}
   <section class="post-list">
     {% for p in page.posts %}
-      {% include post-card.html post=p %}
+      <article class="post-card">
+        <a href="{{ p.url | relative_url }}" class="post-card__link">
+          <time class="post-card__date">{{ p.date | date: "%b %-d, %Y" }}</time>
+          <h2 class="post-card__title">{{ p.title }}</h2>
+          {% if p.excerpt and p.excerpt != '' %}
+            <p class="post-card__excerpt">{{ p.excerpt }}</p>
+          {% endif %}
+        </a>
+        <div class="post-card__meta">
+          {% if p.tier %}
+            <a href="{{ '/tags/' | append: p.tier | append: '.html' | relative_url }}" class="pill pill--{{ p.tier | downcase }}">{{ p.tier }}</a>
+          {% endif %}
+          {% if p.demand %}<span class="pill">demand {{ p.demand }}/5</span>{% endif %}
+          {% if p.competition %}<span class="pill">competition {{ p.competition }}/5</span>{% endif %}
+          {% for t in p.tags limit: 4 %}
+            <a href="{{ '/tags/' | append: t | append: '.html' | relative_url }}" class="pill pill--tag">#{{ t }}</a>
+          {% endfor %}
+        </div>
+      </article>
     {% endfor %}
   </section>
 {% else %}
