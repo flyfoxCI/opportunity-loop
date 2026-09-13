@@ -13,6 +13,7 @@ tags:
   - "education"
   - "finance"
   - "language"
+excerpt: "Competition score: 2. Speak Silq is real but small relative to market; Duolingo is broad but shallow in our vertical."
 ---
 
 > Tagline: *Not Duolingo. The language your grandparents speak.*
