@@ -1,0 +1,44 @@
+title: "Opportunity Loop"
+description: "Weekly TrustMRR startup direction radar. 3–5 selectable direction packages every Monday."
+
+# No `theme:` — we ship our own _layouts/default.html so Jekyll uses ours.
+# Custom layouts MUST be in _layouts/ and that dir MUST NOT be excluded.
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Don't use a global permalink — pages specify their own permalink in front-matter
+# (e.g., `permalink: /runs/<id>/`). Without this, Jekyll uses default behavior
+# (full path with .html) which works for docs/runs/<id>/VERDICT.md → VERDICT.html etc.
+
+defaults:
+  # All HTML pages without explicit layout: home.html or week.html get default.html
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: default
+
+exclude:
+  - loop/
+  - .github/
+  - SKILL.md
+  - install.sh
+  - stage_b.py
+  - publish.py
+  - requirements.txt
+  - _config.yml
+  - README.md
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  # IMPORTANT: _layouts/, _includes/, _sass/, assets/ MUST stay in the build.
+  # Removing them from this list was the bug that broke everything.
+
+github:
+  owner_name: flyfoxCI
+  repository_name: opportunity-loop
