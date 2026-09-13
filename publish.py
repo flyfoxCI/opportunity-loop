@@ -485,6 +485,32 @@ def _xml_escape(s: str) -> str:
     return html.escape(s, quote=True)
 
 
+def generate_search_index(posts: list[dict]) -> None:
+    """Write docs/search.json — consumed by assets/js/search.js for client-side filter."""
+    search_path = DOCS / "search.json"
+    payload = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "posts": [
+            {
+                "url": p["url"],
+                "title": p["title"],
+                "excerpt": p.get("excerpt", ""),
+                "tags": p.get("tags", []),
+                "tier": p.get("tier"),
+                "demand": p.get("demand"),
+                "competition": p.get("competition"),
+                "date": p.get("date", ""),
+            }
+            for p in posts
+        ],
+    }
+    search_path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    log(f"generated {search_path} ({len(posts)} posts)")
+
+
 def generate_feed(posts: list[dict]) -> None:
     now = format_datetime(datetime.now(timezone.utc))
     items = []
@@ -656,10 +682,11 @@ def main() -> None:
     posts = collect_all_posts(weeks)
     all_tags = collect_all_tags(posts)
 
-    # 6. Generate home, tag pages, RSS
+    # 6. Generate home, tag pages, RSS, search index
     generate_home_page(posts, weeks)
     generate_tag_pages(all_tags, posts)
     generate_feed(posts)
+    generate_search_index(posts)
 
     # 7. Commit + push
     git_commit_and_push()
