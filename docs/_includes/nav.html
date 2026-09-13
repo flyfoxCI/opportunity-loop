@@ -4,16 +4,33 @@
       <span class="site-nav__brand-mark">○</span>
       <span class="site-nav__brand-text">Opportunity Loop</span>
     </a>
+
     <div class="site-nav__links">
       <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}is-active{% endif %}">All</a>
-      {%- comment -%} Tag links — top 6 most common tags. Hardcoded for simplicity;
-          update when the tag list shifts significantly. {%- endcomment -%}
       <a href="{{ '/tags/GO.html' | relative_url }}" class="{% if page.tag == 'GO' %}is-active{% endif %}">GO</a>
       <a href="{{ '/tags/GO_NARROW.html' | relative_url }}" class="{% if page.tag == 'GO_NARROW' %}is-active{% endif %}">GO_NARROW</a>
       <a href="{{ '/tags/AI.html' | relative_url }}" class="{% if page.tag == 'AI' %}is-active{% endif %}">AI</a>
       <a href="{{ '/tags/SaaS.html' | relative_url }}" class="{% if page.tag == 'SaaS' %}is-active{% endif %}">SaaS</a>
       <a href="{{ '/tags/iOS.html' | relative_url }}" class="{% if page.tag == 'iOS' %}is-active{% endif %}">iOS</a>
-      <a href="{{ '/feed.xml' | relative_url }}" title="Subscribe via RSS">🔔 RSS</a>
     </div>
+
+    <div class="site-nav__search">
+      <span class="site-nav__search-icon">⌕</span>
+      <input
+        type="search"
+        id="site-search"
+        class="site-nav__search-input"
+        placeholder="Search directions…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <div id="site-search-results" class="site-nav__results" role="listbox" aria-label="Search results"></div>
+    </div>
+
+    <button id="theme-toggle" class="site-nav__theme-toggle" aria-label="Toggle theme">
+      <span id="theme-icon">☾</span>
+    </button>
+
+    <a href="{{ '/feed.xml' | relative_url }}" class="site-nav__links-rss" title="RSS feed" style="font-family: var(--font-mono); font-size: 12px; color: var(--muted);">RSS</a>
   </div>
 </nav>
