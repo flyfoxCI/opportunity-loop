@@ -1,0 +1,24 @@
+# Run output (gitignored — Pages is the archive, not the repo)
+loop/runs/
+loop/state/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# TinyFish CLI artifacts
+.tinyfish/
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Don't ignore seed_directions/ or PLAYBOOK.md — they're committed evidence
+!loop/seed_directions/

@@ -1,0 +1,65 @@
+{
+  "goal": {
+    "target_mrr_usd": 10000,
+    "mvp_days": 14,
+    "marketing_budget_usd": 300,
+    "mode": "solo"
+  },
+  "trustmrr": {
+    "api_url": "https://trustmrr.com/api/ai",
+    "startup_md_url": "https://trustmrr.com/startup/{slug}.md",
+    "timeout_sec": 45,
+    "min_last30_usd": 200,
+    "min_mrr_usd": 100,
+    "min_active_subs": 20,
+    "max_mrr_for_solo_focus_usd": 50000,
+    "prefer_mrr_band": [100, 5000]
+  },
+  "scoring": {
+    "go_min_demand": 3,
+    "go_max_competition": 3,
+    "watch_max_competition": 4,
+    "min_selectable_directions": 3,
+    "target_selectable_directions": 5,
+    "max_selectable_directions": 5,
+    "note": "Each full run must output 3–5 selectable directions (not 1). Prefer dual-gate GO; fill with GO_NARROW (unbundle of hotter markets) until min 3."
+  },
+  "kill_categories_keywords": [
+    "churnkey",
+    "faith sermon full stack",
+    "aeo enterprise",
+    "gambling",
+    "sweepstakes casino",
+    "crypto casino"
+  ],
+  "cluster_keywords": {
+    "ai_photo": ["photo", "image", "render", "staging", "headshot", "mannequin", "product photo"],
+    "ai_video_ugc": ["ugc", "video", "shorts", "reel", "faceless", "clip", "tiktok"],
+    "security_vibe": ["security", "scan", "vulnerab", "rls", "api key", "ssl", "pentest", "vibe"],
+    "churn_payment": ["churn", "cancel", "dunning", "failed payment", "recover", "pause"],
+    "aeo_seo": ["aeo", "seo", "visibility", "chatgpt", "perplexity", "rank", "geo"],
+    "newsletter": ["newsletter", "beehiiv", "mailchimp", "substack"],
+    "mobile_utility": ["ringtone", "breathing", "widget", "iphone", "android"],
+    "trading": ["trade", "trading", "prop firm", "sweep", "casino"],
+    "contractor": ["contractor", "hvac", "plumber", "roof", "field service"],
+    "linkedin_sales": ["linkedin", "outreach", "cold email", "mention"],
+    "domain_seo": ["domain", "backlink", "expired domain"],
+    "reddit_marketing": ["reddit", "subreddit", "mention"]
+  },
+  "x_queries": {
+    "pain": "({kw}) (painful OR broken OR hate OR expensive OR leak OR exposed OR \"looking for\")",
+    "recommend": "(\"looking for\" OR recommend OR \"anyone use\" OR \"alternative to\") ({kw})",
+    "competitor": "({competitor}) (cancel OR switched OR expensive OR \"too complex\" OR alternative)",
+    "shipped": "(\"just shipped\" OR \"built with\") ({kw})"
+  },
+  "outputs": {
+    "runs_dir": "runs",
+    "state_file": "state/last_run.json",
+    "keep_runs": 30
+  },
+  "schedule": {
+    "suggested_cron": "17 9 * * 1",
+    "timezone_note": "local machine TZ; Monday 09:17 weekly",
+    "claude_loop_example": "/loop 7d run the opportunity loop at loop/AGENT_PROMPT.md"
+  }
+}

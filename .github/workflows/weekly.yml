@@ -1,0 +1,124 @@
+name: weekly opportunity loop
+
+on:
+  schedule:
+    # Sunday 17:00 UTC = Monday 01:00 Beijing (UTC+8)
+    # Adjust if your local morning brief moves
+    - cron: '0 17 * * 0'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Why this manual run? (logged only)'
+        required: false
+        default: 'manual rerun'
+
+# Serialize weekly + manual runs to avoid state collisions
+concurrency:
+  group: opportunity-loop
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
+      ANTHROPIC_AUTH_TOKEN: ${{ secrets.ANTHROPIC_AUTH_TOKEN }}
+      ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || 'MiniMax-M3' }}
+      TINYFISH_API_KEY: ${{ secrets.TINYFISH_API_KEY }}
+      ANTHROPIC_LOG: critical
+      PYTHONUNBUFFERED: 1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+
+      - name: Set up Node (for TinyFish CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install TinyFish CLI
+        run: npm install -g tinyfish
+
+      - name: Auth TinyFish
+        if: env.TINYFISH_API_KEY != ''
+        run: tinyfish auth "$TINYFISH_API_KEY"
+
+      - name: Stage A — TrustMRR fetch + coarse filter
+        id: stage_a
+        run: |
+          set -euo pipefail
+          bash loop/run.sh
+          RUN_ID=$(jq -r '.last_run_id' loop/state/last_run.json)
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "STAGE A OK — run_id=$RUN_ID"
+
+      - name: Smoke check — TrustMRR API returned real data
+        run: |
+          python -c "
+          import json, sys
+          state = json.load(open('loop/state/last_run.json'))
+          raw = json.load(open(f'loop/runs/{state[\"last_run_id\"]}/trustmrr_raw.json'))
+          recent = raw.get('recentlyListedStartups', [])
+          if not recent:
+              print('FAIL: TrustMRR returned empty recentlyListedStartups — API may be down or require auth', file=sys.stderr)
+              sys.exit(2)
+          print(f'SMOKE OK: {len(recent)} recent listings')
+          "
+
+      - name: Stage B — LLM verification + direction packages
+        id: stage_b
+        run: |
+          set -euo pipefail
+          python stage_b.py
+          STATE=$(cat loop/state/last_run.json)
+          echo "$STATE"
+          SELECTABLES=$(echo "$STATE" | jq -r '.selectable_count // 0')
+          if [ "$SELECTABLES" -lt 3 ]; then
+            echo "::error::Stage B produced only $SELECTABLES selectables (minimum 3 required by AGENT_PROMPT.md Done definition)"
+            exit 3
+          fi
+          echo "STAGE B OK — $SELECTABLES selectables"
+
+      - name: Publish — copy to docs/ and regenerate index
+        id: publish
+        run: |
+          set -euo pipefail
+          python publish.py
+          echo "PUBLISH OK"
+
+      - name: Upload run artifacts (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: loop-runs-${{ steps.stage_a.outputs.run_id }}-failure
+          path: |
+            loop/runs/
+            loop/state/
+          retention-days: 14
+
+      - name: Summary
+        if: success()
+        run: |
+          RUN_ID=$(jq -r '.last_run_id' loop/state/last_run.json)
+          SELECTABLES=$(jq -r '.selectable_count' loop/state/last_run.json)
+          echo "## ✅ weekly opportunity loop — $RUN_ID" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Selectables: $SELECTABLES" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Pages: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Source run: loop/runs/$RUN_ID/" >> "$GITHUB_STEP_SUMMARY"

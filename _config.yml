@@ -1,0 +1,21 @@
+title: "Opportunity Loop — Weekly Direction Radar"
+description: "Weekly TrustMRR opportunity scanner. Auto-publishes 3–5 selectable startup direction packages every Monday morning (Beijing time)."
+theme: minima
+markdown: kramdown
+permalink: /:title/
+defaults:
+  - scope:
+      path: "runs"
+    values:
+      layout: null
+exclude:
+  - loop/
+  - .github/
+  - SKILL.md
+  - install.sh
+  - stage_b.py
+  - publish.py
+  - requirements.txt
+  - _config.yml
+  - README.md
+  - .gitignore
