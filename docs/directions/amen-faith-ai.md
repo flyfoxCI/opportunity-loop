@@ -13,7 +13,7 @@ tags:
   - "religion"
   - "mobile"
   - "vertical"
-excerpt: "Competition score: 2. One direct competitor (Sermon Scribe) at scale, but the category is wide (every Christian denomination + Islam + Judaism + Sikhism + Buddhism). Sermon Scribe owns ~10% of the addressable market at best."
+excerpt: "AI co-pilot for pastors/Imams/rabbis: sermon prep, liturgy, study guides, social clips"
 ---
 
 > Tagline: *Sermon Scribe, but for every faith — and twice as fast.*

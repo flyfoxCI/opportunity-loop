@@ -9,11 +9,11 @@ permalink: /directions/lingua-heritage-small-lang.html
 tags:
   - "AI"
   - "iOS"
+  - "SaaS"
   - "B2C"
   - "education"
   - "finance"
-  - "language"
-excerpt: "Competition score: 2. Speak Silq is real but small relative to market; Duolingo is broad but shallow in our vertical."
+excerpt: "Subscription app for \"heritage\" learners (kids of immigrants) — Tagalog, Yoruba, Hindi, Urdu, Vietnamese, Bengali, Punjabi"
 ---
 
 > Tagline: *Not Duolingo. The language your grandparents speak.*

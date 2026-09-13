@@ -11,7 +11,7 @@ tags:
   - "SaaS"
   - "mobile"
   - "vertical"
-excerpt: "Competition score: 2. 3dplotter is the only direct competitor. Etsy is fragmented. The AI-generation layer is genuinely new."
+excerpt: "AI-generated pen-plotter art + sticker/print-on-demand pipeline for hobbyists and small shops"
 ---
 
 > Tagline: *Turn "make me a plot" into a one-click subscription.*

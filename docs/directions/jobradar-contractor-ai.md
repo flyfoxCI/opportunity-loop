@@ -11,7 +11,7 @@ tags:
   - "SaaS"
   - "B2B"
   - "vertical"
-excerpt: "Competition score: 2. Direct lead-gen competitor exists (NextjobConnect), permit-data incumbents exist (BuildZoom), but no one is selling AI-curated, SMS-delivered, pay-per-lead permits for solo contractors."
+excerpt: "AI lead gen + permit-pull monitor for solo contractors (HVAC, plumbing, roofers, electricians)"
 ---
 
 > Tagline: *Permits, leads, and callback reminders — without the $400/mo CRM tax.*
