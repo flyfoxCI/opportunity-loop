@@ -1,10 +1,10 @@
 {
-  "slug": "nuria",
-  "name": "Nuria",
+  "slug": "magnetic-1",
+  "name": "Magnetic",
   "queries": [
     {
       "kind": "competition",
-      "query": "Nuria tool alternatives 2026",
+      "query": "Magnetic tool alternatives 2026",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
@@ -12,7 +12,7 @@
     },
     {
       "kind": "pain",
-      "query": "Nuria (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "query": "Magnetic (painful OR broken OR hate OR expensive OR \"looking for\")",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
@@ -20,7 +20,7 @@
     },
     {
       "kind": "recommend",
-      "query": "\"looking for\" OR recommend OR alternative Nuria",
+      "query": "\"looking for\" OR recommend OR alternative Magnetic",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",

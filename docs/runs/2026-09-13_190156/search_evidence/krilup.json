@@ -1,10 +1,10 @@
 {
-  "slug": "pawz",
-  "name": "Pawz AI: Pet Dance Video Maker",
+  "slug": "krilup",
+  "name": "Krilup",
   "queries": [
     {
       "kind": "competition",
-      "query": "Pawz AI: Pet Dance Video Maker tool alternatives 2026",
+      "query": "Krilup tool alternatives 2026",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
@@ -12,7 +12,7 @@
     },
     {
       "kind": "pain",
-      "query": "Pawz AI: Pet Dance Video Maker (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "query": "Krilup (painful OR broken OR hate OR expensive OR \"looking for\")",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
@@ -20,7 +20,7 @@
     },
     {
       "kind": "recommend",
-      "query": "\"looking for\" OR recommend OR alternative Pawz AI: Pet Dance Video Maker",
+      "query": "\"looking for\" OR recommend OR alternative Krilup",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
