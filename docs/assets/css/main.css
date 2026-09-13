@@ -13,41 +13,35 @@
   --font-serif: 'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
   --font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  /* Light theme — HeroUI-inspired (chroma=0.21, hue=148.67, lightness=0.77, base=0.002, radius=xs) */
-  --bg:           #FAFAF9;          /* zinc-50 — softer than zinc-100 */
+  /* Light theme — Apple-inspired (clean white, iOS blue accent) */
+  --bg:           #FFFFFF;          /* Apple pure white */
+  --bg-secondary: #F5F5F7;          /* Apple systemGroupedBackground */
   --bg-elev:      #FFFFFF;
-  --ink:          #111111;          /* HeroUI zinc-900 */
-  --ink-soft:     #3F3F46;          /* zinc-700 */
-  --muted:        #71717A;          /* zinc-500 */
-  --hairline:     #E4E4E7;          /* zinc-200 */
-  --hairline-strong: #111111;
-  --go:           #0F7A4B;          /* darker for text contrast on green pastel */
-  --go-bg:        #D4F4DD;          /* HeroUI green pastel */
-  --go-narrow:    #1E5BBF;          /* darker for text on blue pastel */
-  --go-narrow-bg: #DDE7FE;          /* HeroUI blue pastel */
-  --kill:         #B91C1C;
-  --watch:        #92400E;
-  --tag:          #52525B;          /* zinc-600 */
-  --tag-bg:       #ECECEE;          /* zinc-100/200 blend */
-  --code-bg:      #F4F4F5;          /* HeroUI zinc-100 */
-  --search-bg:    rgba(255,255,255,0.85);
-
-  /* HeroUI accent palette (used minimally for visual delight) */
-  --accent-mint:    #B5F3D2;
-  --accent-blue:    #A8C9FF;
-  --accent-cyan:    #A3EAF7;
-  --accent-purple:  #C9B8FF;
-  --accent-lime:    #D7F5B0;
-  --accent-yellow:  #F7E8A4;
-  --accent-pink:    #F8AECF;
-  --accent-peach:   #FBC7A3;
+  --ink:          #1D1D1F;          /* Apple label */
+  --ink-soft:     #424245;          /* Apple secondary label */
+  --muted:        #6E6E73;          /* Apple tertiary label */
+  --hairline:     #D2D2D7;          /* Apple separator (opaque) */
+  --hairline-strong: #1D1D1F;
+  --go:           #00875A;          /* Apple systemGreen */
+  --go-bg:        #E3F8EE;          /* Apple green tint */
+  --go-narrow:    #007AFF;          /* Apple systemBlue (primary) */
+  --go-narrow-bg: #E5F1FE;          /* Apple blue tint */
+  --accent:       #007AFF;          /* iOS blue — Apple primary */
+  --kill:         #FF3B30;          /* Apple systemRed */
+  --watch:        #FF9500;          /* Apple systemOrange */
+  --tag:          #424245;          /* Apple secondary label */
+  --tag-bg:       #F5F5F7;          /* Apple secondary bg */
+  --code-bg:      #F5F5F7;
+  --search-bg:    rgba(255,255,255,0.78);
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:    0 4px 16px rgba(0,0,0,0.08);
 
   /* Layout */
   --max-width:  960px;
-  --radius:     4px;                /* HeroUI extra-small */
-  --radius-sm:  3px;
-  --shadow-sm:  0 1px 2px rgba(17,17,17,0.04);
-  --shadow-md:  0 6px 18px rgba(17,17,17,0.06);
+  --radius:     10px;                /* Apple-ish subtle radius */
+  --radius-sm:  6px;
+  --shadow-sm:  0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.06);
 
   /* Type scale */
   --fs-xs:  12px;
@@ -60,47 +54,55 @@
   --fs-3xl: 44px;
 }
 
-/* Dark theme — HeroUI palette inverted */
+/* Dark theme — Spotify-inspired (#121212 base, #1DB954 green accent) */
 [data-theme="dark"] {
-  --bg:           #0A0A0A;
-  --bg-elev:      #161618;
-  --ink:          #FAFAFA;
-  --ink-soft:     #A1A1AA;
-  --muted:        #71717A;
-  --hairline:     #27272A;
-  --hairline-strong: #FAFAFA;
-  --go:           #6EE7B7;
-  --go-bg:        #14302A;
-  --go-narrow:    #93C5FD;
-  --go-narrow-bg: #18294A;
-  --kill:         #FCA5A5;
-  --watch:        #FCD34D;
-  --tag:          #A1A1AA;
-  --tag-bg:       #1F1F22;
-  --code-bg:      #161618;
-  --search-bg:    rgba(10,10,10,0.85);
+  --bg:           #121212;          /* Spotify baseBlack */
+  --bg-secondary: #181818;          /* Spotify baseElevation */
+  --bg-elev:      #181818;
+  --ink:          #FFFFFF;          /* Spotify white */
+  --ink-soft:     #B3B3B3;          /* Spotify brightGrey */
+  --muted:        #727272;          /* Spotify midGrey */
+  --hairline:     #282828;          /* Spotify subtle dividers */
+  --hairline-strong: #FFFFFF;
+  --go:           #1DB954;          /* Spotify brand green */
+  --go-bg:        #1A3D2A;          /* muted dark green */
+  --go-narrow:    #1DB954;          /* also green — Spotify uses single accent */
+  --go-narrow-bg: #1A3D2A;
+  --accent:       #1DB954;
+  --kill:         #E22134;          /* Spotify-style red */
+  --watch:        #FFA42B;
+  --tag:          #B3B3B3;
+  --tag-bg:       #282828;
+  --code-bg:      #181818;
+  --search-bg:    rgba(18,18,18,0.88);
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.5);
+  --shadow-md:    0 8px 24px rgba(0,0,0,0.5);
 }
 
 /* Follow system preference if no manual choice */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --bg:           #0A0A0A;
-    --bg-elev:      #161618;
-    --ink:          #FAFAFA;
-    --ink-soft:     #A1A1AA;
-    --muted:        #71717A;
-    --hairline:     #27272A;
-    --hairline-strong: #FAFAFA;
-    --go:           #6EE7B7;
-    --go-bg:        #14302A;
-    --go-narrow:    #93C5FD;
-    --go-narrow-bg: #18294A;
-    --kill:         #FCA5A5;
-    --watch:        #FCD34D;
-    --tag:          #A1A1AA;
-    --tag-bg:       #1F1F22;
-    --code-bg:      #161618;
-    --search-bg:    rgba(10,10,10,0.85);
+    --bg:           #121212;
+    --bg-secondary: #181818;
+    --bg-elev:      #181818;
+    --ink:          #FFFFFF;
+    --ink-soft:     #B3B3B3;
+    --muted:        #727272;
+    --hairline:     #282828;
+    --hairline-strong: #FFFFFF;
+    --go:           #1DB954;
+    --go-bg:        #1A3D2A;
+    --go-narrow:    #1DB954;
+    --go-narrow-bg: #1A3D2A;
+    --accent:       #1DB954;
+    --kill:         #E22134;
+    --watch:        #FFA42B;
+    --tag:          #B3B3B3;
+    --tag-bg:       #282828;
+    --code-bg:      #181818;
+    --search-bg:    rgba(18,18,18,0.88);
+    --shadow-sm:    0 1px 2px rgba(0,0,0,0.5);
+    --shadow-md:    0 8px 24px rgba(0,0,0,0.5);
   }
 }
 
