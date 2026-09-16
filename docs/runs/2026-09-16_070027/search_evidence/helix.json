@@ -1,10 +1,10 @@
 {
-  "slug": "musicx",
-  "name": "AI Music Generator(iOS+macOS)— MusicX",
+  "slug": "helix",
+  "name": "Anonymous startup",
   "queries": [
     {
       "kind": "competition",
-      "query": "AI Music Generator(iOS+macOS)— MusicX tool alternatives 2026",
+      "query": "Anonymous startup tool alternatives 2026",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
@@ -12,7 +12,7 @@
     },
     {
       "kind": "pain",
-      "query": "AI Music Generator(iOS+macOS)— MusicX (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "query": "Anonymous startup (painful OR broken OR hate OR expensive OR \"looking for\")",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
@@ -20,7 +20,7 @@
     },
     {
       "kind": "recommend",
-      "query": "\"looking for\" OR recommend OR alternative AI Music Generator(iOS+macOS)— MusicX",
+      "query": "\"looking for\" OR recommend OR alternative Anonymous startup",
       "ok": true,
       "results_count": 12,
       "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",

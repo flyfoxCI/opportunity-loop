@@ -1,4 +1,51 @@
 {
-  "generated_at": "2026-09-13T19:03:09.561130+00:00",
-  "posts": []
+  "generated_at": "2026-09-16T07:01:54.658930+00:00",
+  "posts": [
+    {
+      "url": "/directions/quran-unlock.html",
+      "title": "Direction: quran-unlock — Heritage-Language Scripture Companion",
+      "excerpt": "Heritage-language scripture companion: tiny AI app for non-Arabic Muslims learning Quran recitation + meaning, ships on iOS in 14 days",
+      "tags": [
+        "AI",
+        "iOS",
+        "SaaS",
+        "religion",
+        "education",
+        "finance"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-16T07:00:27+00:00"
+    },
+    {
+      "url": "/directions/publbee.html",
+      "title": "Direction: publbee — Blog-to-Social Repurposing for Newsletter Publishers",
+      "excerpt": "\"Buffer-for-newsletter-publishers\" — turn 1 blog post into LinkedIn/Threads/Mastodon/Bluesky drafts in 30s, with UTM-tagged canonical URL",
+      "tags": [
+        "AI",
+        "creator",
+        "social",
+        "video"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-16T07:00:27+00:00"
+    },
+    {
+      "url": "/directions/magicslides-app.html",
+      "title": "Direction: magicslides-app — Deck-Only for Indie Consultants",
+      "excerpt": "\"Gamma-but-for-deck-only\" — one-input → 10-slide deck with citations, locked to a single ICP: indie consultants doing client deliverables",
+      "tags": [
+        "AI",
+        "proposal",
+        "mobile"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-16T07:00:27+00:00"
+    }
+  ]
 }
