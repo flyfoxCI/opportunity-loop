@@ -1,0 +1,30 @@
+{
+  "slug": "nuria",
+  "name": "Nuria",
+  "queries": [
+    {
+      "kind": "competition",
+      "query": "Nuria tool alternatives 2026",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "pain",
+      "query": "Nuria (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "recommend",
+      "query": "\"looking for\" OR recommend OR alternative Nuria",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    }
+  ]
+}
