@@ -1,51 +1,86 @@
 {
-  "generated_at": "2026-09-16T07:01:54.658930+00:00",
+  "generated_at": "2026-09-16T14:09:54.127956+00:00",
   "posts": [
     {
-      "url": "/directions/quran-unlock.html",
-      "title": "Direction: quran-unlock — Heritage-Language Scripture Companion",
-      "excerpt": "Heritage-language scripture companion: tiny AI app for non-Arabic Muslims learning Quran recitation + meaning, ships on iOS in 14 days",
+      "url": "/directions/amen-faith-ai.html",
+      "title": "Direction: Amen — Faith / Religion AI co-pilot (GO)",
+      "excerpt": "AI co-pilot for pastors/Imams/rabbis: sermon prep, liturgy, study guides, social clips",
       "tags": [
         "AI",
-        "iOS",
         "SaaS",
+        "B2C",
         "religion",
-        "education",
-        "finance"
+        "mobile",
+        "vertical"
       ],
-      "tier": "GO_NARROW",
-      "demand": 4,
+      "tier": "GO",
+      "demand": 5,
       "competition": 2,
-      "date": "2026-09-16T07:00:27+00:00"
+      "date": "2026-09-13T03:51:34+00:00"
     },
     {
-      "url": "/directions/publbee.html",
-      "title": "Direction: publbee — Blog-to-Social Repurposing for Newsletter Publishers",
-      "excerpt": "\"Buffer-for-newsletter-publishers\" — turn 1 blog post into LinkedIn/Threads/Mastodon/Bluesky drafts in 30s, with UTM-tagged canonical URL",
+      "url": "/directions/whitelabel-vertical-saas.html",
+      "title": "Direction: WhiteLabel — Vertical AI co-pilot, sold to agencies & course creators (GO)",
+      "excerpt": "White-label \"AI co-pilot in a box\" for course creators / coaches / agencies — they rebrand and resell",
       "tags": [
         "AI",
+        "SaaS",
+        "B2B",
+        "B2C",
         "creator",
-        "social",
-        "video"
+        "mobile"
       ],
       "tier": "GO",
       "demand": 4,
       "competition": 2,
-      "date": "2026-09-16T07:00:27+00:00"
+      "date": "2026-09-13T03:51:34+00:00"
     },
     {
-      "url": "/directions/magicslides-app.html",
-      "title": "Direction: magicslides-app — Deck-Only for Indie Consultants",
-      "excerpt": "\"Gamma-but-for-deck-only\" — one-input → 10-slide deck with citations, locked to a single ICP: indie consultants doing client deliverables",
+      "url": "/directions/jobradar-contractor-ai.html",
+      "title": "Direction: JobRadar — AI lead gen + permit monitor for solo contractors (GO)",
+      "excerpt": "AI lead gen + permit-pull monitor for solo contractors (HVAC, plumbing, roofers, electricians)",
       "tags": [
         "AI",
-        "proposal",
-        "mobile"
+        "SaaS",
+        "B2B",
+        "vertical"
       ],
-      "tier": "GO_NARROW",
+      "tier": "GO",
       "demand": 4,
       "competition": 2,
-      "date": "2026-09-16T07:00:27+00:00"
+      "date": "2026-09-13T03:51:34+00:00"
+    },
+    {
+      "url": "/directions/lingua-heritage-small-lang.html",
+      "title": "Direction: Lingua — Heritage language learning for diaspora kids (GO)",
+      "excerpt": "Subscription app for \"heritage\" learners (kids of immigrants) — Tagalog, Yoruba, Hindi, Urdu, Vietnamese, Bengali, Punjabi",
+      "tags": [
+        "AI",
+        "iOS",
+        "SaaS",
+        "B2C",
+        "education",
+        "finance"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-13T03:51:34+00:00"
+    },
+    {
+      "url": "/directions/plothaus-3d-pen-plot.html",
+      "title": "Direction: PlotHaus — AI pen-plotter art + sticker pipeline for hobbyists & small shops (GO)",
+      "excerpt": "AI-generated pen-plotter art + sticker/print-on-demand pipeline for hobbyists and small shops",
+      "tags": [
+        "AI",
+        "SaaS",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-09-13T03:51:34+00:00"
     }
   ]
 }
