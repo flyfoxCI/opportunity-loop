@@ -1,10 +1,10 @@
-# Opportunity Loop — weekly TrustMRR startup-direction radar
+# Opportunity Loop — TrustMRR startup-direction radar (runs every 3 days)
 
-> **Mission:** every Monday morning, surface 3–5 selectable startup directions
-> from TrustMRR + X/web signals — each one a complete PRD + 14-day MVP +
+> **Mission:** every Tuesday and Friday morning, surface 3–5 selectable startup
+> directions from TrustMRR + X/web signals — each one a complete PRD + 14-day MVP +
 > 30-day marketing plan ready to ship.
 
-The system runs automatically via GitHub Action (`Sunday 17:00 UTC` = `Monday 01:00 Beijing`). Results publish to GitHub Pages as both weekly verdicts and a searchable history.
+The system runs automatically via GitHub Action (`Mon + Thu 17:00 UTC` = `Tue + Fri 01:00 Beijing`). Twice a week — fast enough to catch fresh TrustMRR listings within 72 hours. Results publish to GitHub Pages as a searchable history.
 
 **Live site:** `https://<your-github-user>.github.io/opportunity-loop/`
 
@@ -37,7 +37,7 @@ _config.yml                 Jekyll (Pages) config — minima theme
 **Pipeline flow:**
 
 ```
-       Sunday 17:00 UTC (cron) or manual trigger
+       Mon + Thu 17:00 UTC (cron, every ~3 days) or manual trigger
                         ↓
    ┌───────────────────────────────────────┐
    │  Stage A — loop/run.sh                │
@@ -106,8 +106,15 @@ Then in any Claude Code session, `/opportunity-loop` (or describe what you want)
 
 ### 5. (Optional) Adjust the cron
 
-`.github/workflows/weekly.yml` currently fires `0 17 * * 0` UTC = Monday 01:00 Beijing.
-Edit the cron expression if your timezone is different — see [crontab.guru](https://crontab.guru/).
+`.github/workflows/weekly.yml` currently fires `0 17 * * 1,4` UTC = **Tuesday + Friday 01:00 Beijing** (~every 3 days).
+Edit the cron expression if your cadence needs differ:
+
+- `'0 17 * * 0'` — once a week (Sun)
+- `'0 17 * * 1,4'` — twice a week (Mon + Thu) ← current
+- `'0 17 */2 * *'` — every 2 days
+- `'0 17 * * *'` — daily (not recommended, $9/mo LLM cost)
+
+See [crontab.guru](https://crontab.guru/).
 
 ---
 

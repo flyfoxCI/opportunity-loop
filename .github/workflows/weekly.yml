@@ -1,10 +1,11 @@
-name: weekly opportunity loop
+name: opportunity loop (every 3 days)
 
 on:
   schedule:
-    # Sunday 17:00 UTC = Monday 01:00 Beijing (UTC+8)
-    # Adjust if your local morning brief moves
-    - cron: '0 17 * * 0'
+    # Mon + Thu 17:00 UTC = Tue + Fri 01:00 Beijing (UTC+8)
+    # Twice/week (every ~3 days) — sweet spot for TrustMRR's fast-rotating listings
+    # Switch to '0 17 * * 0' for weekly; '*/2 * * *' for every 2 days; daily not recommended.
+    - cron: '0 17 * * 1,4'
   workflow_dispatch:
     inputs:
       reason:
