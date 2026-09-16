@@ -614,11 +614,14 @@ def main() -> None:
 
     log(f"publishing run {run_id}")
 
-    # Clean stale generated dirs
+    # Make sure docs/ exists. We DO NOT wipe the generated dirs — each run
+    # accumulates. Per-week folders stack under docs/runs/<id>/, direction
+    # files overwrite by slug (latest wins), tag pages are regenerated from
+    # the full accumulated set in generate_tag_pages() below.
     DOCS.mkdir(parents=True, exist_ok=True)
-    ensure_clean_dir(DOCS_DIRECTIONS)
-    ensure_clean_dir(DOCS_RUNS)
-    ensure_clean_dir(DOCS_TAGS)
+    DOCS_DIRECTIONS.mkdir(parents=True, exist_ok=True)
+    DOCS_RUNS.mkdir(parents=True, exist_ok=True)
+    DOCS_TAGS.mkdir(parents=True, exist_ok=True)
 
     # 1. Parse current run
     verdict_md = (run_dir / "VERDICT.md").read_text(encoding="utf-8")
@@ -642,16 +645,17 @@ def main() -> None:
     # 3. Slim week page
     generate_week_page(run_id, run_dir, selectables_with_meta)
 
-    # 4. Build weeks[] across all runs (from docs/runs/)
+    # 4. Build weeks[] across all runs (from docs/runs/ — preserved across runs)
     weeks = []
     for r in sorted(DOCS_RUNS.iterdir(), key=lambda p: p.name, reverse=True):
         verdict_path = r / "VERDICT.md"
         if not verdict_path.exists():
             continue
         summary = parse_verdict(verdict_path.read_text(encoding="utf-8"), r.name)
-        # Re-enrich from SOURCE direction files (loop/runs/<id>/directions/),
-        # NOT from docs/directions/ which has front-matter prepended.
-        source_dir = LOOP / "runs" / r.name / "directions"
+        # Re-enrich from each week's own direction files (under docs/runs/<id>/).
+        # This works for historical weeks too, since docs/runs/ accumulates
+        # across runs (we don't wipe it).
+        source_dir = r / "directions"
         for sel in summary["selectables"]:
             src_md = source_dir / f"{sel['slug']}.md"
             if src_md.exists():
