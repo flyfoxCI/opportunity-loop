@@ -1,20 +1,4 @@
----
-layout: post
-title: "Direction: publbee (Indie Newsletter Ops — narrow by ICP)"
-date: 2026-09-17T20:00:47+00:00
-week: "2026-09-17_200047"
-week_date: "2026-09-17T20:00:47+00:00"
-slug: "publbee"
-permalink: /directions/publbee.html
-tags:
-  - "AI"
-  - "SaaS"
-  - "B2B"
-  - "creator"
-  - "finance"
-  - "vertical"
-excerpt: "Publishing/newsletter platform at $34 MRR / 100 subs — narrow by ICP"
----
+# Direction: publbee (Indie Newsletter Ops — narrow by ICP)
 
 Slug: `publbee`
 Tier: **GO_NARROW**

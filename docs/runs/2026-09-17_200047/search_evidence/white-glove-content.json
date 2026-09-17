@@ -1,0 +1,30 @@
+{
+  "slug": "white-glove-content",
+  "name": "White Glove Content",
+  "queries": [
+    {
+      "kind": "competition",
+      "query": "White Glove Content tool alternatives 2026",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "pain",
+      "query": "White Glove Content (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "recommend",
+      "query": "\"looking for\" OR recommend OR alternative White Glove Content",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    }
+  ]
+}

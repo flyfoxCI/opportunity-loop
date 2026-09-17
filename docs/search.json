@@ -1,6 +1,71 @@
 {
-  "generated_at": "2026-09-16T14:36:13.223925+00:00",
+  "generated_at": "2026-09-17T20:01:28.446865+00:00",
   "posts": [
+    {
+      "url": "/directions/online-edtech.html",
+      "title": "Direction: online-edtech (Vertical AI Coach — pattern from validated Amen/Guild packs)",
+      "excerpt": "Anonymous EdTech at $1.4K MRR / 578 subs proving solo-scaleable online-learning infra",
+      "tags": [
+        "AI",
+        "SaaS",
+        "religion",
+        "education",
+        "finance",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 5,
+      "competition": 2,
+      "date": "2026-09-17T20:00:47+00:00"
+    },
+    {
+      "url": "/directions/peoplefinder.html",
+      "title": "Direction: peoplefinder (People Lookup Utility)",
+      "excerpt": "People search / lookup tool at $42 MRR / 176 subs — utility wedge",
+      "tags": [
+        "AI",
+        "SaaS",
+        "B2B"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-17T20:00:47+00:00"
+    },
+    {
+      "url": "/directions/sonora-ai.html",
+      "title": "Direction: sonora-ai (Narrow AI Sound Utility — iOS-first, Sleep vertical)",
+      "excerpt": "AI sound/noise app on iOS at $39 MRR / 194 subs — narrow by use case",
+      "tags": [
+        "AI",
+        "iOS",
+        "SaaS",
+        "language",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-17T20:00:47+00:00"
+    },
+    {
+      "url": "/directions/publbee.html",
+      "title": "Direction: publbee (Indie Newsletter Ops — narrow by ICP)",
+      "excerpt": "Publishing/newsletter platform at $34 MRR / 100 subs — narrow by ICP",
+      "tags": [
+        "AI",
+        "SaaS",
+        "B2B",
+        "creator",
+        "finance",
+        "vertical"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-17T20:00:47+00:00"
+    },
     {
       "url": "/directions/quran-unlock.html",
       "title": "Direction: quran-unlock — Heritage-Language Scripture Companion",
