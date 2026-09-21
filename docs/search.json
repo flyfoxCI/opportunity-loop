@@ -1,6 +1,85 @@
 {
-  "generated_at": "2026-09-17T20:01:28.446865+00:00",
+  "generated_at": "2026-09-21T20:48:28.076792+00:00",
   "posts": [
+    {
+      "url": "/directions/draftly.html",
+      "title": "Direction: draftly",
+      "excerpt": "AI email/personalization writer that learns your voice",
+      "tags": [
+        "AI",
+        "SaaS",
+        "B2B",
+        "B2C",
+        "education",
+        "creator"
+      ],
+      "tier": "GO",
+      "demand": 5,
+      "competition": 2,
+      "date": "2026-09-21T20:47:48+00:00"
+    },
+    {
+      "url": "/directions/easymix.html",
+      "title": "Direction: easymix",
+      "excerpt": "AI mix/mastering tool for bedroom producers",
+      "tags": [
+        "AI",
+        "education",
+        "creator",
+        "repair"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-21T20:47:48+00:00"
+    },
+    {
+      "url": "/directions/vectosolve.html",
+      "title": "Direction: vectosolve",
+      "excerpt": "Vector/illustration helper for indie designers",
+      "tags": [
+        "AI",
+        "B2C",
+        "creator",
+        "photo"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-21T20:47:48+00:00"
+    },
+    {
+      "url": "/directions/neume.html",
+      "title": "Direction: neume",
+      "excerpt": "Substack/newsletter analytics + growth",
+      "tags": [
+        "AI",
+        "creator",
+        "vertical",
+        "analytics"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-09-21T20:47:48+00:00"
+    },
+    {
+      "url": "/directions/sonora-ai-voice-notes.html",
+      "title": "Direction: sonora-ai-voice-notes (GO_NARROW)",
+      "excerpt": "Unbundle of voice-cloning/UGC space for iOS voice-memo creators only",
+      "tags": [
+        "AI",
+        "iOS",
+        "B2C",
+        "creator",
+        "video",
+        "mobile"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 4,
+      "date": "2026-09-21T20:47:48+00:00"
+    },
     {
       "url": "/directions/online-edtech.html",
       "title": "Direction: online-edtech (Vertical AI Coach — pattern from validated Amen/Guild packs)",
