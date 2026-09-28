@@ -1,18 +1,4 @@
----
-layout: post
-title: "Direction: VECTOSOLVE-like — Vector to Clean SVG"
-date: 2026-09-28T22:24:43+00:00
-week: "2026-09-28_222443"
-week_date: "2026-09-28T22:24:43+00:00"
-slug: "vectosolve"
-permalink: /directions/vectosolve.html
-tags:
-  - "AI"
-  - "SaaS"
-  - "photo"
-  - "vertical"
-excerpt: "Vector-to-clean-SVG conversion for craft/maker/print-on-demand sellers"
----
+# Direction: VECTOSOLVE-like — Vector to Clean SVG
 
 **Slug:** `vectosolve`
 **Tier:** GO

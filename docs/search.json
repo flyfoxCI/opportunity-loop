@@ -1,6 +1,80 @@
 {
-  "generated_at": "2026-09-24T20:19:37.582346+00:00",
+  "generated_at": "2026-09-28T22:25:38.077456+00:00",
   "posts": [
+    {
+      "url": "/directions/draftly-prd.html",
+      "title": "Direction: Draftly-Narrow — Solo SDR Reply Triage + Draft",
+      "excerpt": "AI cold-email reply classifier + draft writer for solo SDRs",
+      "tags": [
+        "AI"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 5,
+      "competition": 3,
+      "date": "2026-09-28T22:24:43+00:00"
+    },
+    {
+      "url": "/directions/vectosolve.html",
+      "title": "Direction: VECTOSOLVE-like — Vector to Clean SVG",
+      "excerpt": "Vector-to-clean-SVG conversion for craft/maker/print-on-demand sellers",
+      "tags": [
+        "AI",
+        "SaaS",
+        "photo",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-09-28T22:24:43+00:00"
+    },
+    {
+      "url": "/directions/appalchemy-mobile.html",
+      "title": "Direction: AppAlchemy-Narrow — Idea-to-TestFlight for Non-Dev Small Biz",
+      "excerpt": "AI \"describe your app idea → shippable mobile app\" for non-dev small biz",
+      "tags": [
+        "AI",
+        "iOS",
+        "Android",
+        "SaaS",
+        "B2B",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-09-28T22:24:43+00:00"
+    },
+    {
+      "url": "/directions/publbee-narrow.html",
+      "title": "Direction: Publbee-Narrow — Indie Newsletter AI Localization (2-4 langs)",
+      "excerpt": "AI localization tool for indie newsletter writers publishing to 2-4 languages",
+      "tags": [
+        "AI",
+        "B2B",
+        "creator",
+        "language",
+        "mobile"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 3,
+      "date": "2026-09-28T22:24:43+00:00"
+    },
+    {
+      "url": "/directions/swapit-build.html",
+      "title": "Direction: SwapIt-like — Habit Swap Tracker w/ Smart Alternatives",
+      "excerpt": "Habit/craving swap tracker with smart alternatives (smoking, sugar, doom-scrolling)",
+      "tags": [
+        "AI",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-09-28T22:24:43+00:00"
+    },
     {
       "url": "/directions/trade-hunterr.html",
       "title": "Direction — Trade Hunterr (GO_NARROW)",

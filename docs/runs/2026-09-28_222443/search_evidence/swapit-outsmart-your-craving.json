@@ -1,0 +1,30 @@
+{
+  "slug": "swapit-outsmart-your-craving",
+  "name": "SwapIt - Outsmart your craving",
+  "queries": [
+    {
+      "kind": "competition",
+      "query": "SwapIt - Outsmart your craving tool alternatives 2026",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "pain",
+      "query": "SwapIt - Outsmart your craving (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "recommend",
+      "query": "\"looking for\" OR recommend OR alternative SwapIt - Outsmart your craving",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    }
+  ]
+}
