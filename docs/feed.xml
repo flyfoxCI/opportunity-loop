@@ -6,8 +6,43 @@
     <description>Weekly TrustMRR startup direction radar — 3–5 selectable direction packages every Monday morning (Beijing time). $10K MRR · 14d MVP · ≤$300/30d marketing.</description>
     <atom:link href="https://flyfoxci.github.io/opportunity-loop/feed.xml" rel="self" type="application/rss+xml" />
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Sep 2026 22:25:38 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Oct 2026 21:36:24 +0000</lastBuildDate>
     <generator>opportunity-loop action</generator>
+  <item>
+    <title>Direction — Scantrader (narrow wedge)</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/scantrader.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/scantrader.html</guid>
+    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
+    <description><![CDATA[<p>Verified-trade scanner that ships a daily 5-ticker watchlist to your phone</p><p><span>GO</span> · <span>demand 5/5</span> · <span>competition 3/5</span></p><p>#AI #mobile #vertical</p>]]></description>
+  </item>
+  <item>
+    <title>Direction — Draftly (narrow wedge: Tweet → LinkedIn post)</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/draftly.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/draftly.html</guid>
+    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
+    <description><![CDATA[<p>Tweet → LinkedIn / X-thread drafter for solo founders</p><p><span>GO</span> · <span>demand 5/5</span> · <span>competition 2/5</span></p><p>#AI #mobile</p>]]></description>
+  </item>
+  <item>
+    <title>Direction — MyHair AI (narrow wedge: Black men&#x27;s fade preview)</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/myhair-ai.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/myhair-ai.html</guid>
+    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
+    <description><![CDATA[<p>Hairline / fade preview before the barbershop visit</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 3/5</span></p><p>#AI #SaaS #mobile #repair #vertical</p>]]></description>
+  </item>
+  <item>
+    <title>Direction — AppAlchemy (narrow wedge: text → Expo TestFlight build)</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/appalchemy.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/appalchemy.html</guid>
+    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
+    <description><![CDATA[<p>AI mobile app generator (text → TestFlight)</p><p><span>GO</span> · <span>demand 3/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #Android #SaaS #mobile</p>]]></description>
+  </item>
+  <item>
+    <title>Direction — FaithWall (GO_NARROW: lock-screen Bible verse widget for Gen-Z Christians)</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/faithwall.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/faithwall.html</guid>
+    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
+    <description><![CDATA[<p>Lock-screen Bible verse wallpaper for Gen-Z Christians</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #Android #religion #creator #video</p>]]></description>
+  </item>
   <item>
     <title>Direction: Draftly-Narrow — Solo SDR Reply Triage + Draft</title>
     <link>https://flyfoxci.github.io/opportunity-loop/directions/draftly-prd.html</link>
@@ -112,41 +147,6 @@
     <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/sonora-ai-voice-notes.html</guid>
     <pubDate>Mon, 21 Sep 2026 20:47:48 +0000</pubDate>
     <description><![CDATA[<p>Unbundle of voice-cloning/UGC space for iOS voice-memo creators only</p><p><span>GO_NARROW</span> · <span>demand 3/5</span> · <span>competition 4/5</span></p><p>#AI #iOS #B2C #creator #video #mobile</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: online-edtech (Vertical AI Coach — pattern from validated Amen/Guild packs)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/online-edtech.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/online-edtech.html</guid>
-    <pubDate>Thu, 17 Sep 2026 20:00:47 +0000</pubDate>
-    <description><![CDATA[<p>Anonymous EdTech at $1.4K MRR / 578 subs proving solo-scaleable online-learning infra</p><p><span>GO</span> · <span>demand 5/5</span> · <span>competition 2/5</span></p><p>#AI #SaaS #religion #education #finance #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: peoplefinder (People Lookup Utility)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/peoplefinder.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/peoplefinder.html</guid>
-    <pubDate>Thu, 17 Sep 2026 20:00:47 +0000</pubDate>
-    <description><![CDATA[<p>People search / lookup tool at $42 MRR / 176 subs — utility wedge</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #SaaS #B2B</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: sonora-ai (Narrow AI Sound Utility — iOS-first, Sleep vertical)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/sonora-ai.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/sonora-ai.html</guid>
-    <pubDate>Thu, 17 Sep 2026 20:00:47 +0000</pubDate>
-    <description><![CDATA[<p>AI sound/noise app on iOS at $39 MRR / 194 subs — narrow by use case</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #SaaS #language #mobile #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: publbee (Indie Newsletter Ops — narrow by ICP)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/publbee.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/publbee.html</guid>
-    <pubDate>Thu, 17 Sep 2026 20:00:47 +0000</pubDate>
-    <description><![CDATA[<p>Publishing/newsletter platform at $34 MRR / 100 subs — narrow by ICP</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #SaaS #B2B #creator #finance #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: quran-unlock — Heritage-Language Scripture Companion</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/quran-unlock.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/quran-unlock.html</guid>
-    <pubDate>Wed, 16 Sep 2026 07:00:27 +0000</pubDate>
-    <description><![CDATA[<p>Heritage-language scripture companion: tiny AI app for non-Arabic Muslims learning Quran recitation + meaning, ships on iOS in 14 days</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #SaaS #religion #education #finance</p>]]></description>
   </item>
   </channel>
 </rss>

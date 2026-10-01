@@ -1,16 +1,4 @@
----
-layout: post
-title: "Direction — Draftly (narrow wedge: Tweet → LinkedIn post)"
-date: 2026-10-01T21:34:04+00:00
-week: "2026-10-01_213404"
-week_date: "2026-10-01T21:34:04+00:00"
-slug: "draftly"
-permalink: /directions/draftly.html
-tags:
-  - "AI"
-  - "mobile"
-excerpt: "Tweet → LinkedIn / X-thread drafter for solo founders"
----
+# Direction — Draftly (narrow wedge: Tweet → LinkedIn post)
 
 **Tier:** GO
 **Slug:** `draftly`

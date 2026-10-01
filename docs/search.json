@@ -1,6 +1,82 @@
 {
-  "generated_at": "2026-09-28T22:25:38.077456+00:00",
+  "generated_at": "2026-10-01T21:36:24.531041+00:00",
   "posts": [
+    {
+      "url": "/directions/scantrader.html",
+      "title": "Direction — Scantrader (narrow wedge)",
+      "excerpt": "Verified-trade scanner that ships a daily 5-ticker watchlist to your phone",
+      "tags": [
+        "AI",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 5,
+      "competition": 3,
+      "date": "2026-10-01T21:34:04+00:00"
+    },
+    {
+      "url": "/directions/draftly.html",
+      "title": "Direction — Draftly (narrow wedge: Tweet → LinkedIn post)",
+      "excerpt": "Tweet → LinkedIn / X-thread drafter for solo founders",
+      "tags": [
+        "AI",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 5,
+      "competition": 2,
+      "date": "2026-10-01T21:34:04+00:00"
+    },
+    {
+      "url": "/directions/myhair-ai.html",
+      "title": "Direction — MyHair AI (narrow wedge: Black men's fade preview)",
+      "excerpt": "Hairline / fade preview before the barbershop visit",
+      "tags": [
+        "AI",
+        "SaaS",
+        "mobile",
+        "repair",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 3,
+      "date": "2026-10-01T21:34:04+00:00"
+    },
+    {
+      "url": "/directions/appalchemy.html",
+      "title": "Direction — AppAlchemy (narrow wedge: text → Expo TestFlight build)",
+      "excerpt": "AI mobile app generator (text → TestFlight)",
+      "tags": [
+        "AI",
+        "iOS",
+        "Android",
+        "SaaS",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-10-01T21:34:04+00:00"
+    },
+    {
+      "url": "/directions/faithwall.html",
+      "title": "Direction — FaithWall (GO_NARROW: lock-screen Bible verse widget for Gen-Z Christians)",
+      "excerpt": "Lock-screen Bible verse wallpaper for Gen-Z Christians",
+      "tags": [
+        "AI",
+        "iOS",
+        "Android",
+        "religion",
+        "creator",
+        "video"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-01T21:34:04+00:00"
+    },
     {
       "url": "/directions/draftly-prd.html",
       "title": "Direction: Draftly-Narrow — Solo SDR Reply Triage + Draft",
