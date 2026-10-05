@@ -6,8 +6,29 @@
     <description>Weekly TrustMRR startup direction radar — 3–5 selectable direction packages every Monday morning (Beijing time). $10K MRR · 14d MVP · ≤$300/30d marketing.</description>
     <atom:link href="https://flyfoxci.github.io/opportunity-loop/feed.xml" rel="self" type="application/rss+xml" />
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Oct 2026 21:36:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 23:07:43 +0000</lastBuildDate>
     <generator>opportunity-loop action</generator>
+  <item>
+    <title>Direction: trade-hunterr-leads — AI permit &amp; group-watcher for contractor leads</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/trade-hunterr-leads.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/trade-hunterr-leads.html</guid>
+    <pubDate>Mon, 05 Oct 2026 23:03:40 +0000</pubDate>
+    <description><![CDATA[<p>AI scanner that watches local building-permit feeds + contractor Facebook groups → fresh contractor leads with phone/email</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #SaaS #B2B #mobile #vertical</p>]]></description>
+  </item>
+  <item>
+    <title>Direction: myhair-ai-clinics — AI hairstyle try-on for independent salons</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/myhair-ai-clinics.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/myhair-ai-clinics.html</guid>
+    <pubDate>Mon, 05 Oct 2026 23:03:40 +0000</pubDate>
+    <description><![CDATA[<p>AI hairstyle try-on SaaS for independent hair salons / barbershops — embeddable on their booking page</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 3/5</span></p><p>#AI #SaaS #B2B #B2C #mobile</p>]]></description>
+  </item>
+  <item>
+    <title>Direction: jarvis-bet-picks — AI bankroll analytics for amateur US sports bettors</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/jarvis-bet-picks.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/jarvis-bet-picks.html</guid>
+    <pubDate>Mon, 05 Oct 2026 23:03:40 +0000</pubDate>
+    <description><![CDATA[<p>AI sports-picks app for US amateur bettors, model-only (no picks-as-a-service), analytics dashboard</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #SaaS #mobile #analytics</p>]]></description>
+  </item>
   <item>
     <title>Direction — Scantrader (narrow wedge)</title>
     <link>https://flyfoxci.github.io/opportunity-loop/directions/scantrader.html</link>
@@ -126,27 +147,6 @@
     <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/easymix.html</guid>
     <pubDate>Mon, 21 Sep 2026 20:47:48 +0000</pubDate>
     <description><![CDATA[<p>AI mix/mastering tool for bedroom producers</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #education #creator #repair</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: vectosolve</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/vectosolve.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/vectosolve.html</guid>
-    <pubDate>Mon, 21 Sep 2026 20:47:48 +0000</pubDate>
-    <description><![CDATA[<p>Vector/illustration helper for indie designers</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #B2C #creator #photo</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: neume</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/neume.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/neume.html</guid>
-    <pubDate>Mon, 21 Sep 2026 20:47:48 +0000</pubDate>
-    <description><![CDATA[<p>Substack/newsletter analytics + growth</p><p><span>GO</span> · <span>demand 3/5</span> · <span>competition 2/5</span></p><p>#AI #creator #vertical #analytics</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: sonora-ai-voice-notes (GO_NARROW)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/sonora-ai-voice-notes.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/sonora-ai-voice-notes.html</guid>
-    <pubDate>Mon, 21 Sep 2026 20:47:48 +0000</pubDate>
-    <description><![CDATA[<p>Unbundle of voice-cloning/UGC space for iOS voice-memo creators only</p><p><span>GO_NARROW</span> · <span>demand 3/5</span> · <span>competition 4/5</span></p><p>#AI #iOS #B2C #creator #video #mobile</p>]]></description>
   </item>
   </channel>
 </rss>

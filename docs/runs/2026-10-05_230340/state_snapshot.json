@@ -1,0 +1,13 @@
+{
+  "last_run_id": "2026-10-05_230340",
+  "last_run_utc": "2026-10-05T23:03:40.674173+00:00",
+  "api_url": "https://trustmrr.com/api/ai",
+  "counts": {
+    "unique": 49,
+    "passed": 27,
+    "go_candidate": 14
+  },
+  "run_dir": "runs/2026-10-05_230340",
+  "agent_stage": "pending",
+  "notes": ""
+}

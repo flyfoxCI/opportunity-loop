@@ -1,6 +1,55 @@
 {
-  "generated_at": "2026-10-01T21:36:24.531041+00:00",
+  "generated_at": "2026-10-05T23:07:43.643393+00:00",
   "posts": [
+    {
+      "url": "/directions/trade-hunterr-leads.html",
+      "title": "Direction: trade-hunterr-leads — AI permit & group-watcher for contractor leads",
+      "excerpt": "AI scanner that watches local building-permit feeds + contractor Facebook groups → fresh contractor leads with phone/email",
+      "tags": [
+        "AI",
+        "iOS",
+        "SaaS",
+        "B2B",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-05T23:03:40+00:00"
+    },
+    {
+      "url": "/directions/myhair-ai-clinics.html",
+      "title": "Direction: myhair-ai-clinics — AI hairstyle try-on for independent salons",
+      "excerpt": "AI hairstyle try-on SaaS for independent hair salons / barbershops — embeddable on their booking page",
+      "tags": [
+        "AI",
+        "SaaS",
+        "B2B",
+        "B2C",
+        "mobile"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 3,
+      "date": "2026-10-05T23:03:40+00:00"
+    },
+    {
+      "url": "/directions/jarvis-bet-picks.html",
+      "title": "Direction: jarvis-bet-picks — AI bankroll analytics for amateur US sports bettors",
+      "excerpt": "AI sports-picks app for US amateur bettors, model-only (no picks-as-a-service), analytics dashboard",
+      "tags": [
+        "AI",
+        "iOS",
+        "SaaS",
+        "mobile",
+        "analytics"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-05T23:03:40+00:00"
+    },
     {
       "url": "/directions/scantrader.html",
       "title": "Direction — Scantrader (narrow wedge)",
