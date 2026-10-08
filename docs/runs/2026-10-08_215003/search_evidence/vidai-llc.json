@@ -1,0 +1,30 @@
+{
+  "slug": "vidai-llc",
+  "name": "Vid.AI",
+  "queries": [
+    {
+      "kind": "competition",
+      "query": "Vid.AI tool alternatives 2026",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "pain",
+      "query": "Vid.AI (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "recommend",
+      "query": "\"looking for\" OR recommend OR alternative Vid.AI",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    }
+  ]
+}

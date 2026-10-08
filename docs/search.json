@@ -1,6 +1,68 @@
 {
-  "generated_at": "2026-10-05T23:07:43.643393+00:00",
+  "generated_at": "2026-10-08T21:51:50.610146+00:00",
   "posts": [
+    {
+      "url": "/directions/p7m-verification-audit.html",
+      "title": "P7M Verification Audit",
+      "excerpt": "Browser-based P7M/CAdES verification and evidence reports for Italian accountants, notarial offices, and procurement teams.",
+      "tags": [
+        "AI",
+        "B2B",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-08T21:50:03+00:00"
+    },
+    {
+      "url": "/directions/faith-sermon-studio.html",
+      "title": "Faith Sermon Studio",
+      "excerpt": "Sermon preparation and reusable content workspace for independent churches and small ministry teams.",
+      "tags": [
+        "AI",
+        "B2B",
+        "B2C",
+        "religion",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-08T21:50:03+00:00"
+    },
+    {
+      "url": "/directions/heritage-language-coach.html",
+      "title": "Heritage Language Coach",
+      "excerpt": "AI conversation and heritage-story coach for adults learning family languages.",
+      "tags": [
+        "AI",
+        "SaaS",
+        "B2C",
+        "education",
+        "finance",
+        "language"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-08T21:50:03+00:00"
+    },
+    {
+      "url": "/directions/oura-training-digest.html",
+      "title": "Oura Training Digest",
+      "excerpt": "Privacy-conscious training and recovery digest for Oura Ring owners who do not want to build their own app.",
+      "tags": [
+        "AI",
+        "SaaS",
+        "education",
+        "mobile"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 4,
+      "date": "2026-10-08T21:50:03+00:00"
+    },
     {
       "url": "/directions/trade-hunterr-leads.html",
       "title": "Direction: trade-hunterr-leads — AI permit & group-watcher for contractor leads",
