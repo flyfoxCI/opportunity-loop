@@ -1,6 +1,64 @@
 {
-  "generated_at": "2026-10-12T23:33:11.538668+00:00",
+  "generated_at": "2026-10-19T21:22:13.519026+00:00",
   "posts": [
+    {
+      "url": "/directions/static-forms.html",
+      "title": "Direction — Static Forms (Privacy-First Form Backend)",
+      "excerpt": "Privacy-first static form backend with zero-tracking, single binary deploy",
+      "tags": [
+        "AI",
+        "SaaS",
+        "analytics"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-19T21:20:28+00:00"
+    },
+    {
+      "url": "/directions/lista-narrow-reseller.html",
+      "title": "Direction — Reseller AI Crosslister (Narrow Wedge of Lista)",
+      "excerpt": "Reseller-specific AI crosslister (only Poshmark+eBay+Depop, no Mercari)",
+      "tags": [
+        "AI",
+        "SaaS",
+        "vertical"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 4,
+      "date": "2026-10-19T21:20:28+00:00"
+    },
+    {
+      "url": "/directions/contentcook-repurposer.html",
+      "title": "Direction — Long-Form to 30-Platform Repurposer",
+      "excerpt": "Long-form → 30-platform repurposer with human-in-loop",
+      "tags": [
+        "AI",
+        "creator",
+        "social",
+        "video"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-10-19T21:20:28+00:00"
+    },
+    {
+      "url": "/directions/pinpoint-vet-narrow.html",
+      "title": "Direction — Pet Med Dose Calculator + Reminder",
+      "excerpt": "Vet med dose calculator + reminder for pet owners (NOT human Rx)",
+      "tags": [
+        "AI",
+        "SaaS",
+        "B2C",
+        "mobile"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-10-19T21:20:28+00:00"
+    },
     {
       "url": "/directions/p7m-verification-audit.html",
       "title": "P7M Verification Audit",

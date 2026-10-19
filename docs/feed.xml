@@ -6,8 +6,36 @@
     <description>Weekly TrustMRR startup direction radar — 3–5 selectable direction packages every Monday morning (Beijing time). $10K MRR · 14d MVP · ≤$300/30d marketing.</description>
     <atom:link href="https://flyfoxci.github.io/opportunity-loop/feed.xml" rel="self" type="application/rss+xml" />
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Oct 2026 23:33:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 21:22:13 +0000</lastBuildDate>
     <generator>opportunity-loop action</generator>
+  <item>
+    <title>Direction — Static Forms (Privacy-First Form Backend)</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/static-forms.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/static-forms.html</guid>
+    <pubDate>Mon, 19 Oct 2026 21:20:28 +0000</pubDate>
+    <description><![CDATA[<p>Privacy-first static form backend with zero-tracking, single binary deploy</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #SaaS #analytics</p>]]></description>
+  </item>
+  <item>
+    <title>Direction — Reseller AI Crosslister (Narrow Wedge of Lista)</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/lista-narrow-reseller.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/lista-narrow-reseller.html</guid>
+    <pubDate>Mon, 19 Oct 2026 21:20:28 +0000</pubDate>
+    <description><![CDATA[<p>Reseller-specific AI crosslister (only Poshmark+eBay+Depop, no Mercari)</p><p><span>GO_NARROW</span> · <span>demand 3/5</span> · <span>competition 4/5</span></p><p>#AI #SaaS #vertical</p>]]></description>
+  </item>
+  <item>
+    <title>Direction — Long-Form to 30-Platform Repurposer</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/contentcook-repurposer.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/contentcook-repurposer.html</guid>
+    <pubDate>Mon, 19 Oct 2026 21:20:28 +0000</pubDate>
+    <description><![CDATA[<p>Long-form → 30-platform repurposer with human-in-loop</p><p><span>GO</span> · <span>demand 3/5</span> · <span>competition 2/5</span></p><p>#AI #creator #social #video</p>]]></description>
+  </item>
+  <item>
+    <title>Direction — Pet Med Dose Calculator + Reminder</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/pinpoint-vet-narrow.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/pinpoint-vet-narrow.html</guid>
+    <pubDate>Mon, 19 Oct 2026 21:20:28 +0000</pubDate>
+    <description><![CDATA[<p>Vet med dose calculator + reminder for pet owners (NOT human Rx)</p><p><span>GO_NARROW</span> · <span>demand 3/5</span> · <span>competition 2/5</span></p><p>#AI #SaaS #B2C #mobile</p>]]></description>
+  </item>
   <item>
     <title>P7M Verification Audit</title>
     <link>https://flyfoxci.github.io/opportunity-loop/directions/p7m-verification-audit.html</link>
@@ -119,34 +147,6 @@
     <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/publbee-narrow.html</guid>
     <pubDate>Mon, 28 Sep 2026 22:24:43 +0000</pubDate>
     <description><![CDATA[<p>AI localization tool for indie newsletter writers publishing to 2-4 languages</p><p><span>GO_NARROW</span> · <span>demand 3/5</span> · <span>competition 3/5</span></p><p>#AI #B2B #creator #language #mobile</p>]]></description>
-  </item>
-  <item>
-    <title>Direction: SwapIt-like — Habit Swap Tracker w/ Smart Alternatives</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/swapit-build.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/swapit-build.html</guid>
-    <pubDate>Mon, 28 Sep 2026 22:24:43 +0000</pubDate>
-    <description><![CDATA[<p>Habit/craving swap tracker with smart alternatives (smoking, sugar, doom-scrolling)</p><p><span>GO</span> · <span>demand 3/5</span> · <span>competition 2/5</span></p><p>#AI #mobile #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction — Trade Hunterr (GO_NARROW)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/trade-hunterr.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/trade-hunterr.html</guid>
-    <pubDate>Thu, 24 Sep 2026 20:16:43 +0000</pubDate>
-    <description><![CDATA[<p>&quot;Spotted a deal&quot; push alerts for **flipping** (dealer → private buyer) — beat the $24-33/mo trader journals with a sell-first, not track-first, UX.</p><p><span>GO_NARROW</span> · <span>demand 3/5</span> · <span>competition 4/5</span></p><p>#AI #mobile #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction — Goutsnap (GO_NARROW)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/goutsnap-gout-app.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/goutsnap-gout-app.html</guid>
-    <pubDate>Thu, 24 Sep 2026 20:16:43 +0000</pubDate>
-    <description><![CDATA[<p>AI gout trigger &amp; food logger for **men 45-70 with recurrent flares** — narrower than MyFitnessPal, broader than &quot;general nutrition.&quot;</p><p><span>GO_NARROW</span> · <span>demand 3/5</span> · <span>competition 3/5</span></p><p>#AI #iOS #education #mobile #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction — CalBox AI (GO_NARROW)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/calbox-ai-calories-tracker.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/calbox-ai-calories-tracker.html</guid>
-    <pubDate>Thu, 24 Sep 2026 20:16:43 +0000</pubDate>
-    <description><![CDATA[<p>AI photo calorie tracker for **home cooks** (not bodybuilders) — barcode-first + fridge-photo, not fitness bro.</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 4/5</span></p><p>#AI #iOS #video #photo #mobile #vertical</p>]]></description>
   </item>
   </channel>
 </rss>
