@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Heritage Language Coach"
-date: 2026-10-08T21:50:03+00:00
-week: "2026-10-08_215003"
-week_date: "2026-10-08T21:50:03+00:00"
+title: "Heritage Language Coach — Voice-First Family Language Practice"
+date: 2026-10-22T20:25:32+00:00
+week: "2026-10-22_202532"
+week_date: "2026-10-22T20:25:32+00:00"
 slug: "heritage-language-coach"
 permalink: /directions/heritage-language-coach.html
 tags:
@@ -13,260 +13,254 @@ tags:
   - "education"
   - "finance"
   - "language"
-excerpt: "AI conversation and heritage-story coach for adults learning family languages."
+excerpt: "Voice-first heritage-language practice for one language-family niche."
 ---
 
 ## 1. Why this direction
 
 ### TrustMRR evidence
 
-- The prior validated direction index cites **Speak Silq at approximately $12K MRR**.
-- It identifies heritage and small-language learning as a validated niche where general language platforms offer less culturally contextual practice.
-- The opportunity is strongest for adults who want to reconnect with family language, not children seeking broad school achievement.
+The prior validated research identifies **Speak Silq at approximately $12K MRR** as evidence that heritage and minority-language learning can support a substantial subscription business. It also notes that large language-learning products cover many languages but offer limited depth in family-specific language maintenance.
 
-### X/web evidence
+The category is especially attractive for a solo developer because:
 
-The supplied evidence did not contain usable X/web results. Discovery should include:
+- lessons and practice feedback can begin with templated content;
+- voice practice produces visible value;
+- family accounts improve retention;
+- one language-family niche can be defined through structured curriculum and community content.
 
-- `Speak Silq alternatives`;
-- `heritage language learning app`;
-- `learn Italian from grandmother`;
-- `family language app adult`;
-- `AI language coach heritage`;
-- `speak family language app`.
+The first niche must be narrow enough to support specialized vocabulary, cultural context, and level progression. A sensible test is **Italian for English-speaking families**, but validate it rather than assuming it is best.
 
-The product should make speaking practice emotionally relevant: family phrases, memories, pronunciation, stories, and respectful correction.
+### X and web evidence
 
-### Interpretation
+The Stage A TinyFish calls produced CLI help text only and did not return social evidence.
 
-This is a consumer subscription with a high-retention possibility but also a high acquisition cost. The MVP should focus on one narrow audience and one language workflow rather than launching a broad language app.
+Conduct and archive genuine searches such as:
 
-The product must avoid pretending to replace native speakers, cultural teachers, or professional language instruction.
+- `("heritage language" OR "family language") app (struggling OR tired OR "looking for")`
+- `("speak Italian" parents OR children OR family) app`
+- `("Italian for beginners" OR "learn Italian") Reddit`
+- `"just shipped" language learning app family`
+- `("heritage language learning" OR "bilingual children") competitor`
+
+Valid evidence requires URL, date, handle, quote, and engagement. Primary interviews with heritage-language educators and families are essential.
+
+### Customer and promise
+
+**ICP:** English-speaking adults in mixed-language households who want a practical 20-minute daily speaking habit with culturally relevant vocabulary.
+
+**Promise:** Learn and retain useful family and community phrases through short voice drills, spaced review, and optional family practice sessions.
 
 ## 2. Competitor table
 
-| Level | Competitor/type | Typical strength | Gap to exploit |
-|---|---|---|---|
-| L1 | Heritage-language learning apps | Emotional motivation and family content | Small content catalogs and limited adaptive conversation |
-| L1 | General language apps | Large content libraries and gamification | Generic, child-oriented, weak family/heritage context |
-| L2 | AI conversation tutors | Unlimited practice and immediate feedback | Can be unnatural, inaccurate, or culturally tone-deaf |
-| L2 | Private tutors/classes | Human feedback and accountability | Expensive and difficult to schedule |
-| L3 | YouTube/audio/podcast lessons | Authentic language exposure | Not personalized or structured |
-| L3 | Family/community groups | Emotional motivation | Inconsistent quality and no individual feedback |
-| L3 | Translation tools | Fast utility | No learning loop or retention |
+Check regional pricing and family-plan availability before launch.
 
-### Positioning
+| Level | Competitor or substitute | Typical pricing | Strength | Opening for this product |
+|---|---|---:|---|---|
+| L1 direct | Heritage-language apps and tutoring communities | Often $5–$30/month or class-based | Cultural specificity and human support | Structured daily practice, pronunciation feedback, family mode |
+| L1 direct | General language apps | $0–$20+/month | Excellent course infrastructure and brand trust | Heritage motivation, family phrases, adult heritage-learner mode |
+| L1 adjacent | AI conversation tutors | $10–$25+/month | Unlimited conversational practice | Purpose-built heritage progression and memory scaffolding |
+| L1 adjacent | Online tutors and communities | $10–$50+/lesson | Human correction and accountability | Lower-cost daily rehearsal before tutoring |
+| L2 adjacent | Duolingo, Babbel, Busuu | $0–$20+/month | Broad language catalog and polished habit loops | Deeper, narrower heritage curriculum |
+| L2 adjacent | YouTube and podcasts | Free to low cost | Authentic native speech | Structured spaced repetition and personal feedback |
+| L3 substitute | Flashcards and phone notes | Free | Flexible and familiar | Speech-first practice, adaptive review, fewer setup costs |
+| L3 substitute | Family members and community groups | Free | Natural interaction | Conversation prompts and progress visibility |
 
-“Speak the language your family actually uses—one conversation at a time.”
+**Competitive score:** 4/5. General language apps and tutoring create strong substitutes, so this is **GO_NARROW**.
 
 ## 3. PRD MVP
 
-### Target ICP
+### P0 — required for launch
 
-1. Adult heritage learners of Italian, Spanish, Portuguese, Polish, or another family language;
-2. People who want a 10-minute daily practice;
-3. Learners who already understand some grammar but lack conversational confidence;
-4. Users comfortable with text-first practice and optional voice.
+1. **Onboarding**
+   - heritage language;
+   - native language;
+   - current level;
+   - family/community goal;
+   - dialect preference where relevant.
+2. **15-day foundation path**
+   - practical phrases;
+   - listening;
+   - speaking;
+   - micro-review;
+   - one weekly conversation prompt.
+3. **Voice practice**
+   - browser recording;
+   - speech-to-text comparison;
+   - phrase-level pronunciation hints;
+   - user self-rating;
+   - no unreliable numerical accent score.
+4. **Spaced review**
+   - interval scheduling;
+   - due phrases;
+   - mastery states;
+   - short daily session.
+5. **Family mode**
+   - shared phrase deck;
+   - adult/child assignment;
+   - no direct messaging or child chat;
+   - parent-controlled privacy.
+6. **Progress**
+   - practice streak;
+   - words/phrases practiced;
+   - weekly listening and speaking minutes;
+   - exportable progress.
+7. **Safety**
+   - no child-directed open chat;
+   - minimal child data;
+   - parental controls;
+   - report only observed errors, not personality judgments.
+8. **Billing**
+   - Stripe;
+   - family monthly/annual plan;
+   - trial and cancellation.
 
-### P0
+### P1 — after validation
 
-- language and dialect selection;
-- onboarding with proficiency and goals;
-- daily 10-minute practice session;
-- scripted conversation paths;
-- text-to-speech playback;
-- optional voice recording;
-- pronunciation and transcription feedback;
-- phrasebook with family/use-case tags;
-- spaced repetition for learned phrases;
-- cultural-context notes;
-- progress dashboard;
-- subscription billing;
-- account deletion/export;
-- safety controls for minors and sensitive personal disclosures.
+- live small-group speaking sessions;
+- custom household vocabulary;
+- more dialects;
+- printable phrase sheets;
+- spaced-review import;
+- educator dashboard;
+- offline audio packs.
 
-### P1
+### P2 — later
 
-- personalized AI conversation mode;
-- memory-based roleplay scenarios;
-- family-tree and heritage journal;
-- pronunciation recordings;
-- weekly email reminders;
-- shared family challenge;
-- regional vocabulary packs;
-- transcript playback;
-- community review;
-- offline practice.
-
-### P2
-
-- live tutor referrals;
-- video lessons;
-- family multi-user plan;
-- advanced accent analysis;
-- curriculum partnerships;
-- migration stories and cultural archive;
-- schools and libraries;
-- regional expert content.
+- second heritage language;
+- placement assessment;
+- certified-tutor referral;
+- community audio submission;
+- richer pronunciation models;
+- school and diaspora-organization licensing.
 
 ### Non-goals
 
-- no claim of native fluency after a fixed period;
-- no generic Duolingo clone;
-- no broad language marketplace at launch;
-- no automatic translation of private family content by default;
-- no sensitive personal data required for onboarding;
-- no fake native-speaker personas;
-- no public leaderboard pressure;
-- no language instruction that ignores regional or cultural variation.
+- every language at launch;
+- accredited language certification;
+- child-facing open-ended chat;
+- human-level pronunciation judgment;
+- cultural claims unsupported by educators;
+- replacing tutors or community immersion;
+- competing as a broad Duolingo clone;
+- diagnostic claims about heritage identity or assimilation.
 
-### MVP acceptance criteria
+## 4. 14-day day-by-day build plan
 
-A new user can select a heritage goal, complete a ten-minute conversation or phrase practice, receive understandable corrections, and return the next day.
-
-## 4. 14-day build plan
-
-| Day | Deliverable |
+| Day | Solo deliverable |
 |---:|---|
-| 1 | Interview 10 heritage learners across two languages |
-| 2 | Select one initial language and define regional variants |
-| 3 | Map 50 high-frequency family phrases and scenarios |
-| 4 | Build onboarding, language settings, and privacy policy |
-| 5 | Implement phrase database and spaced-repetition logic |
-| 6 | Build text conversation endpoint with constrained prompt |
-| 7 | Add text-to-speech and optional recording |
-| 8 | Build pronunciation/transcript feedback UI |
-| 9 | Add daily practice, progress, and streak logic |
-| 10 | Add billing, usage limits, and abuse controls |
-| 11 | Test with 10 users; measure day-one and day-seven return |
-| 12 | Fix language quality, onboarding, and retention friction |
-| 13 | Run landing-page smoke test and collect waitlist |
-| 14 | Publish MVP and invite first paid cohort |
-
-### Technical approach
-
-- frontend/backend: TypeScript;
-- database: PostgreSQL;
-- speech: browser or managed TTS/STT;
-- model: provider-agnostic conversation layer;
-- content: curated phrase/scenario records with attribution and review status;
-- analytics: privacy-conscious activation and retention events;
-- safety: consent, age gating, crisis handling, and no sensitive-data retention by default.
+| 1 | Interview five heritage learners about retention, embarrassment, goals, and existing tools. |
+| 2 | Interview five family members or educators; select one language and one learner outcome. |
+| 3 | Interview five more; create and manually test a 15-day phrase curriculum. |
+| 4 | Build auth, profiles, learner progress, billing skeleton, and audio storage. |
+| 5 | Implement lessons, phrase playback, recording, transcription, and self-review. |
+| 6 | Add spaced review, mastery states, daily session generation, and progress metrics. |
+| 7 | Add family deck, assignments, parental controls, and privacy-safe profile handling. |
+| 8 | Add pronunciation hints, confidence labels, feedback, and failure fallbacks. |
+| 9 | Implement Stripe monthly/annual plans, trial, limits, and cancellation. |
+| 10 | Complete child privacy, consent, deletion, retention, and reporting safeguards. |
+| 11 | Test with 10 target learners; revise instructions and onboarding. |
+| 12 | Test browser permissions, accessibility, mobile layouts, and error recovery. |
+| 13 | Deliver one live speaking session and close at least 10 beta subscriptions. |
+| 14 | Ship, collect week-one retention data, and repair launch blockers. |
 
 ## 5. 30-day marketing calendar
 
-### Budget
+**Budget cap:** $250, with most acquisition through communities, educators, and referral.
 
-Total: **$280**.
-
-- Content/community tools: $70
-- Creative assets: $60
-- Paid smoke tests: $110
-- User incentives: $40
-
-### Calendar
-
-| Day | Activity | CTA |
-|---:|---|---|
-| 1 | Publish landing page: “Speak your family language” | Start 10-minute practice |
-| 2 | Invite 20 heritage learners personally | Join beta |
-| 3 | Publish Italian family-phrase lesson | Try lesson |
-| 4 | Share a 30-second speaking demo | Record a phrase |
-| 5 | Reach 20 language communities and family-history groups | Invite learner |
-| 6 | Publish privacy and AI-feedback explainer | Read FAQ |
-| 7 | Run $20 search test for heritage language learning | Start practice |
-| 8 | Email beta users after first session | Complete day two |
-| 9 | Publish “why my Duolingo streak did not transfer” story | Try coach |
-| 10 | Reach bilingual teachers and tutors | Partner |
-| 11 | Publish regional vocabulary article | Browse phrases |
-| 12 | Run $20 ad test on family-language queries | Try free lesson |
-| 13 | Host live conversation practice | Register |
-| 14 | Send activation reminder to incomplete users | Finish practice |
-| 15 | Publish learner story with permission | Start beta |
-| 16 | Reach family clubs and cultural associations | Invite |
-| 17 | Explain pronunciation feedback | Record phrase |
-| 18 | Post demo clips in language communities | Join waitlist |
-| 19 | Run $30 retargeting test | Continue streak |
-| 20 | Request testimonials from retained users | Share experience |
-| 21 | Publish family challenge | Invite family member |
-| 22 | Reach bilingual educators | Discuss classroom pilot |
-| 23 | Publish language pack waitlist | Vote for dialect |
-| 24 | Interview five more users | Validate pricing |
-| 25 | Add referral reward for active learners | Invite friend |
-| 26 | Publish learner retention report | Join beta |
-| 27 | Run final $30 ad test on best language keyword | Start practice |
-| 28 | Email lapsed users with one low-friction CTA | Resume |
-| 29 | Review retention, speech errors, and support volume | Choose language |
-| 30 | Publish roadmap and request paid cohort | Subscribe |
-
-### KPIs
-
-- 150 qualified visits;
-- 40 first sessions;
-- 20 day-two returns;
-- 10 day-seven returns;
-- 5 paid users;
-- ≥40% week-four retention;
-- ≥3.5/5 usefulness rating;
-- median session completion ≥8 minutes.
+| Day/channel | Action | Budget |
+|---|---|---:|
+| 1–3 | Launch one-language landing page with an actual lesson demo | $0 |
+| 4 | Publish “15 phrases my Italian family never taught me” | $0 |
+| 5 | Ask five educators to review the foundation curriculum | $0 |
+| 6 | Share a free downloadable phrase deck in relevant communities | $0 |
+| 7 | Run a 20-minute family speaking workshop | $0 |
+| 8 | Personally onboard ten learners | $0 |
+| 9 | Request learner recordings only with consent; publish a progress story | $0 |
+| 10 | Post a spaced-repetition explainer | $0 |
+| 11 | Contact five heritage-language educators and community organizers | $0 |
+| 12 | Run a $100 diaspora newsletter sponsorship | $100 |
+| 13 | Review day-one and day-seven activation | $0 |
+| 14 | Fix onboarding or pronunciation-feedback friction | $0 |
+| 15 | Publish a weekly family practice prompt | $0 |
+| 16 | Run a live conversation session | $0 |
+| 17 | Invite five beta families to referral | $0 |
+| 18 | Publish a parent privacy explainer | $0 |
+| 19 | Approach three community newsletters | $0 |
+| 20 | Add household vocabulary customization based on demand | $0 |
+| 21 | Compare the product honestly with general language apps | $0 |
+| 22 | Interview one churned or inactive learner | $0 |
+| 23 | Test annual versus monthly family pricing | $0 |
+| 24 | Publish a short learner milestone story | $0 |
+| 25 | Run a second educator review session | $0 |
+| 26 | Launch a referral reward worth one month, not cash | $0 |
+| 27 | Personally contact all highly engaged trial users | $0 |
+| 28 | Review week-two retention, speech-practice rate, and support | $0 |
+| 29 | Ship the most requested retention feature | $0 |
+| 30 | Decide whether to retain language, narrow audience, or kill | $0 |
 
 ## 6. Unit economics to $10K MRR
 
-### Pricing hypothesis
+### Pricing
 
-- Free: 7-minute daily practice, limited conversations;
-- Plus: $9/month;
-- Family: $15/month;
-- Annual: $79/year;
-- optional tutor referral commission later.
+- Individual: **$12/month**
+- Family: **$19/month**
+- Educator/community: **$49/month for 10 learners**
 
-At $9/month, $10K MRR requires approximately 1,112 paying subscribers. At $15/month, 667 subscribers. This is difficult with a $300 budget, so organic partnerships and referrals are essential.
+Assume average realized ARPU of **$15/month**.
 
-Target gross margin:
+| Metric | Assumption |
+|---|---:|
+| Speech-to-text/model allocation | $2–3 |
+| CDN/storage | $1 |
+| Support | $1 |
+| Payment/overhead allocation | $1 |
+| Contribution/account/month | about $9–10 |
 
-- model cost: ≤$0.80 per active user/month;
-- speech cost: ≤$0.70;
-- hosting/support/payment: ≤$0.70;
-- target contribution margin: ≥60–70%.
+- Customers needed: $10,000 / $15 = approximately **667 paid accounts**.
+- At 82% gross margin, target variable cost is approximately $1,800/month.
+- A 5% monthly logo churn rate requires approximately 33 new paid accounts each month merely to maintain 667 accounts.
+- Annual plans can materially reduce churn and acquisition pressure; target 25% annual conversion by month three.
 
-Use cached phrases and lower-cost models for practice to control variable costs.
+### Retention assumptions
 
-### Growth levers
+A durable language product needs:
 
-- heritage communities;
-- genealogy groups;
-- family challenges;
-- language teachers;
-- cultural festivals;
-- partner with diaspora organizations;
-- SEO content around phrases and family memories;
-- referral rewards;
-- annual plan to improve cash flow.
+- 7-day activation above 45%;
+- week-four retention above 30%;
+- three voice sessions per week for at least 50% of retained learners;
+- family-plan share above 25%;
+- monthly churn below 5% after onboarding stabilization.
 
 ## 7. Kill criteria
 
-Stop or reposition if:
+Kill or re-niche if any occur by Day 30:
 
-1. fewer than 4 of 10 interviewees report strong emotional motivation to learn;
-2. fewer than 25% of users return on day two;
-3. fewer than 10% of users reach day seven;
-4. pronunciation feedback is rated below 3/5;
-5. paid conversion is below 2% after 200 qualified visitors;
-6. model/speech costs prevent ≥50% contribution margin;
-7. users expect culturally authentic correction that the MVP cannot provide;
-8. community distribution partnerships are unavailable;
-9. privacy concerns around voice data cannot be resolved;
-10. the product attracts only casual curiosity, not repeated practice.
+- fewer than 30 target-family interviews;
+- fewer than 20 complete onboarding;
+- fewer than 10 record three speaking drills in the first week;
+- fewer than 8 pay;
+- fewer than 5 return in week four;
+- users prefer generic AI conversation and ignore the structured path;
+- pronunciation feedback is consistently perceived as wrong or discouraging;
+- educators reject the curriculum’s cultural assumptions;
+- child privacy cannot be implemented safely;
+- monthly churn exceeds 10%;
+- gross margin falls below 70%;
+- learner demand cannot be concentrated in one language with 20+ qualified interviewees.
 
-## 8. Expansion path
+## Wedge (required for GO_NARROW)
 
-1. more languages and regional packs;
-2. heritage family challenges;
-3. live tutor referrals;
-4. grandparent/family interview capture;
-5. printable phrasebooks;
-6. cultural memory prompts;
-7. group learning for families;
-8. school/library partnerships;
-9. voice-first long-term practice;
-10. optional expert-reviewed content marketplace.
+**Refuse to build:**
+
+- all languages at launch;
+- open-ended child chat;
+- accreditation or testing;
+- immigration, identity, or assimilation advice;
+- unsupported dialect judgments;
+- replacement for human tutors;
+- a broad general-language course catalog;
+- expensive 3D avatars and social features;
+- claims that speech recognition establishes fluency.
+
+The MVP serves **English-speaking heritage-language learners in one selected language**, focuses on **one practical family/community outcome**, and provides **structured voice practice and review only**.
