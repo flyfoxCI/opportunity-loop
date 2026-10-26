@@ -1,0 +1,30 @@
+{
+  "slug": "flashcards-ai-quiz-maker",
+  "name": "Flashcards: AI Quiz Maker",
+  "queries": [
+    {
+      "kind": "competition",
+      "query": "Flashcards: AI Quiz Maker tool alternatives 2026",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "pain",
+      "query": "Flashcards: AI Quiz Maker (painful OR broken OR hate OR expensive OR \"looking for\")",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    },
+    {
+      "kind": "recommend",
+      "query": "\"looking for\" OR recommend OR alternative Flashcards: AI Quiz Maker",
+      "ok": true,
+      "results_count": 12,
+      "stdout": "The TinyFish CLI is @tiny-fish/cli.\n\nRun it with:\n  npx @tiny-fish/cli\n\nOr install it globally:\n  npm install --global @tiny-fish/cli\n  tinyfish\n\nDocumentation:\n  https://docs.tinyfish.ai/cli\n\n",
+      "stderr": ""
+    }
+  ]
+}

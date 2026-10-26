@@ -6,8 +6,36 @@
     <description>Weekly TrustMRR startup direction radar — 3–5 selectable direction packages every Monday morning (Beijing time). $10K MRR · 14d MVP · ≤$300/30d marketing.</description>
     <atom:link href="https://flyfoxci.github.io/opportunity-loop/feed.xml" rel="self" type="application/rss+xml" />
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Oct 2026 20:27:37 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2026 21:24:16 +0000</lastBuildDate>
     <generator>opportunity-loop action</generator>
+  <item>
+    <title>Supascribe — AI Newsletter Production Workspace</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/supascribe.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/supascribe.html</guid>
+    <pubDate>Mon, 26 Oct 2026 21:22:34 +0000</pubDate>
+    <description><![CDATA[<p>Turn source material into publish-ready newsletters, with a focused solo-creator workflow.</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #creator #social #mobile</p>]]></description>
+  </item>
+  <item>
+    <title>Static Forms — Conversion-Focused Form Hosting for Agencies and Indie Hackers</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/static-forms.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/static-forms.html</guid>
+    <pubDate>Mon, 26 Oct 2026 21:22:34 +0000</pubDate>
+    <description><![CDATA[<p>Launch conversion-focused static forms without a heavyweight form-builder backend.</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #B2B #finance #social #mobile</p>]]></description>
+  </item>
+  <item>
+    <title>Faith AI — Sermon and Ministry Study Production Assistant</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/faith-ai.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/faith-ai.html</guid>
+    <pubDate>Mon, 26 Oct 2026 21:22:34 +0000</pubDate>
+    <description><![CDATA[<p>Help faith leaders turn services, notes, and recordings into reusable sermon and study materials.</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #B2B #religion #social #mobile #vertical</p>]]></description>
+  </item>
+  <item>
+    <title>Vertical B2B White-Label — Branded Client Portal for One Specialist SaaS Niche</title>
+    <link>https://flyfoxci.github.io/opportunity-loop/directions/vertical-b2b-whitelabel.html</link>
+    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/vertical-b2b-whitelabel.html</guid>
+    <pubDate>Mon, 26 Oct 2026 21:22:34 +0000</pubDate>
+    <description><![CDATA[<p>Give one vertical SaaS provider a branded client portal rather than a generic white-label platform.</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #SaaS #B2B #social #mobile #vertical</p>]]></description>
+  </item>
   <item>
     <title>Vertical AI Coach — Evidence-Grounded Practice Coach for Real-Estate Agents</title>
     <link>https://flyfoxci.github.io/opportunity-loop/directions/vertical-ai-coach.html</link>
@@ -119,34 +147,6 @@
     <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/jarvis-bet-picks.html</guid>
     <pubDate>Mon, 05 Oct 2026 23:03:40 +0000</pubDate>
     <description><![CDATA[<p>AI sports-picks app for US amateur bettors, model-only (no picks-as-a-service), analytics dashboard</p><p><span>GO_NARROW</span> · <span>demand 4/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #SaaS #mobile #analytics</p>]]></description>
-  </item>
-  <item>
-    <title>Direction — Scantrader (narrow wedge)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/scantrader.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/scantrader.html</guid>
-    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
-    <description><![CDATA[<p>Verified-trade scanner that ships a daily 5-ticker watchlist to your phone</p><p><span>GO</span> · <span>demand 5/5</span> · <span>competition 3/5</span></p><p>#AI #mobile #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction — Draftly (narrow wedge: Tweet → LinkedIn post)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/draftly.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/draftly.html</guid>
-    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
-    <description><![CDATA[<p>Tweet → LinkedIn / X-thread drafter for solo founders</p><p><span>GO</span> · <span>demand 5/5</span> · <span>competition 2/5</span></p><p>#AI #mobile</p>]]></description>
-  </item>
-  <item>
-    <title>Direction — MyHair AI (narrow wedge: Black men&#x27;s fade preview)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/myhair-ai.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/myhair-ai.html</guid>
-    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
-    <description><![CDATA[<p>Hairline / fade preview before the barbershop visit</p><p><span>GO</span> · <span>demand 4/5</span> · <span>competition 3/5</span></p><p>#AI #SaaS #mobile #repair #vertical</p>]]></description>
-  </item>
-  <item>
-    <title>Direction — AppAlchemy (narrow wedge: text → Expo TestFlight build)</title>
-    <link>https://flyfoxci.github.io/opportunity-loop/directions/appalchemy.html</link>
-    <guid isPermaLink="true">https://flyfoxci.github.io/opportunity-loop/directions/appalchemy.html</guid>
-    <pubDate>Thu, 01 Oct 2026 21:34:04 +0000</pubDate>
-    <description><![CDATA[<p>AI mobile app generator (text → TestFlight)</p><p><span>GO</span> · <span>demand 3/5</span> · <span>competition 2/5</span></p><p>#AI #iOS #Android #SaaS #mobile</p>]]></description>
   </item>
   </channel>
 </rss>

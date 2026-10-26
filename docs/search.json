@@ -1,6 +1,71 @@
 {
-  "generated_at": "2026-10-22T20:27:37.256564+00:00",
+  "generated_at": "2026-10-26T21:24:16.753217+00:00",
   "posts": [
+    {
+      "url": "/directions/supascribe.html",
+      "title": "Supascribe — AI Newsletter Production Workspace",
+      "excerpt": "Turn source material into publish-ready newsletters, with a focused solo-creator workflow.",
+      "tags": [
+        "AI",
+        "creator",
+        "social",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-26T21:22:34+00:00"
+    },
+    {
+      "url": "/directions/static-forms.html",
+      "title": "Static Forms — Conversion-Focused Form Hosting for Agencies and Indie Hackers",
+      "excerpt": "Launch conversion-focused static forms without a heavyweight form-builder backend.",
+      "tags": [
+        "AI",
+        "B2B",
+        "finance",
+        "social",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-26T21:22:34+00:00"
+    },
+    {
+      "url": "/directions/faith-ai.html",
+      "title": "Faith AI — Sermon and Ministry Study Production Assistant",
+      "excerpt": "Help faith leaders turn services, notes, and recordings into reusable sermon and study materials.",
+      "tags": [
+        "AI",
+        "B2B",
+        "religion",
+        "social",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-26T21:22:34+00:00"
+    },
+    {
+      "url": "/directions/vertical-b2b-whitelabel.html",
+      "title": "Vertical B2B White-Label — Branded Client Portal for One Specialist SaaS Niche",
+      "excerpt": "Give one vertical SaaS provider a branded client portal rather than a generic white-label platform.",
+      "tags": [
+        "AI",
+        "SaaS",
+        "B2B",
+        "social",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-10-26T21:22:34+00:00"
+    },
     {
       "url": "/directions/vertical-ai-coach.html",
       "title": "Vertical AI Coach — Evidence-Grounded Practice Coach for Real-Estate Agents",
