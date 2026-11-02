@@ -1,263 +1,295 @@
 ---
 layout: post
-title: "Contractor Lead Radar — Local Lead Alerts for One Trade"
-date: 2026-10-22T20:25:32+00:00
-week: "2026-10-22_202532"
-week_date: "2026-10-22T20:25:32+00:00"
+title: "Contractor Lead Radar"
+date: 2026-11-02T23:47:21+00:00
+week: "2026-11-02_234721"
+week_date: "2026-11-02T23:47:21+00:00"
 slug: "contractor-lead-radar"
 permalink: /directions/contractor-lead-radar.html
 tags:
   - "AI"
   - "B2B"
   - "mobile"
-excerpt: "AI-screened local service-lead alerts for one contractor trade."
+excerpt: "Lead-monitoring and qualification service for one contractor trade"
 ---
 
-## 1. Why this direction
+## Why this direction
 
 ### TrustMRR evidence
 
-The prior validated direction pack cites **NextjobConnect at approximately $5K MRR** as evidence that contractor-focused AI lead generation can monetize. The same research characterizes many players as early-stage rather than mature, while the category still requires buyers to move from vague inquiries to qualified, contactable demand.
+- The prior validated direction index cites **NextjobConnect at approximately $5K MRR**, supporting real willingness to pay for contractor-focused lead generation.
+- The broader opportunity is not empty, so this is not positioned as a pure full-market GO. It is a **GO_NARROW** with competition score 4.
+- The narrow wedge is one trade in one geography rather than “AI leads for contractors” in general.
+- A solo MVP can deliver value by monitoring public job and permit sources, normalizing listings, qualifying them, and alerting a contractor by email or SMS. It does not need autonomous sales outreach in the first release.
 
-The narrow MVP is:
+### X/web evidence
 
-- one trade: residential HVAC;
-- one geography: one metropolitan area;
-- one lead format: public permit/building signals enriched with business and contact context;
-- one action: review and claim a qualified alert.
+- Contractors complain that generic lead services send irrelevant, duplicated, or low-intent leads and that paying per lead feels risky.
+- Searches should target a selected trade, such as:
+  - `contractor leads exhausted`
+  - `HVAC lead service too expensive`
+  - `roofing leads not worth it`
+  - `electrician job leads spam`
+  - `contractor leads just shipped`
+- Local Facebook contractor groups, trade forums, Reddit trade communities, and home-service communities provide channels for demand discovery, but they also reveal incumbent lead brokers and marketplaces.
+- The strongest opening is therefore not more lead volume; it is **cleaner local lead intelligence with transparent source attribution**.
 
-This avoids building a nationwide directory, cold-call system, CRM, marketplace, and automation suite at once.
+## Competitor table
 
-### X and web evidence
+| Level | Product | Positioning | Typical pricing | Implication |
+|---|---|---|---:|---|
+| L1 | NextjobConnect | Contractor-oriented lead/job discovery and outreach | Around $5K MRR listing; verify plan pricing | Closest commercial proof |
+| L1 | Thumbtack | Local home-service marketplace and lead generation | Lead/contractor pricing varies | Major marketplace and lead source |
+| L1 | Angi | Home-service marketplace | Subscription plus lead/enhancement pricing | Large incumbent with broad category coverage |
+| L1 | Houzz | Home-services discovery and leads | Freemium plus marketing products | Strong marketplace and CRM alternative |
+| L1 | Porch | Home-services marketplace | Marketplace and provider products | Adjacent incumbent |
+| L2 | Modernize | Home-improvement lead generation | Vendor and buyer pricing varies | Focused lead marketplace |
+| L2 | HomeRun | Home-improvement lead marketplace | Subscription/lead pricing | Direct category competitor |
+| L2 |247 Quotes, lead brokers | HVAC, roofing, and remodeling lead networks | Per-lead or monthly plans | Crowded broker category |
+| L3 | Google Business Profile, Local Services Ads, Facebook groups | Free discovery and lead channels | CPC/ad spend | Free and highly effective substitutes |
 
-The Stage A TinyFish payloads returned only CLI help text and therefore do not constitute social demand verification.
+### Competitive conclusion
 
-Run and archive genuine results for:
+Competition score is 4. The product must not enter as another general contractor lead broker. Its explicit wedge is **one trade, one service area, source-attributed public leads, and no cold calling without approval**.
 
-- `HVAC leads (expensive OR useless OR spam OR "looking for")`
-- `("HVAC lead service" OR "contractor leads") review`
-- `("home service leads" OR "HVAC leads") (Reddit OR X)`
-- `"just shipped" HVAC lead software`
-- `contractor "competitor hate" leads`
+## Wedge
 
-A valid social handle should be added only with a post URL, date, pain quote, and product/category relevance. Until then, use contractor Facebook groups, trade associations, public contractor forums, and 15 direct interviews for primary evidence.
+### Narrow scope
 
-### Customer and promise
+- Choose exactly one trade, such as HVAC repair.
+- Choose one metropolitan service area.
+- Monitor only a small set of legal, useful signals such as:
+  - public permit applications
+  - service-request posts in permitted community groups
+  - public company job postings indicating expansion
+  - selected marketplace listings, where terms permit
+- Return a weekly ranked list with source, recency, location, urgency indicators, and evidence.
+- Let the contractor approve an outreach draft; do not auto-send messages.
 
-**ICP:** owner-operators or small HVAC sales teams that currently depend on ads, marketplaces, referrals, or purchased lists.
+### What this product refuses to build
 
-**Promise:** Receive a short weekly list of locally verifiable HVAC opportunities with source evidence, dedupe status, and a clear confidence level.
+- No support for multiple trades in the MVP
+- No nationwide coverage
+- No general-purpose CRM
+- No automated cold calling or mass texting
+- No scraped or repackaged lead resale
+- No invented lead scoring without visible evidence
+- No guaranteed-job or guaranteed-revenue claims
+- No consumer finance, lending, insurance, or contracting recommendations
+- No general-purpose consumer home-improvement marketplace
 
-## 2. Competitor table
+### Why the wedge can work
 
-Verify all pricing during Week 1. Many competitors use undisclosed quote-based pricing.
+- A local vertical improves relevance and source quality.
+- Concentration reduces data-provider cost and integration complexity.
+- Manual review and source links can produce trust before automation.
+- One trade gives the product a recognizable identity and enables concentrated outreach.
 
-| Level | Competitor or substitute | Typical pricing model | Strength | Opening for this product |
-|---|---|---:|---|---|
-| L1 direct | HVAC-specific lead vendors | Often $300–$1,500+/month or per lead | Pre-sold inventory and local relationships | Transparent methodology, exclusive verified signals, contractor control |
-| L1 direct | Local contractor lead marketplaces | Subscription, pay-per-lead, or auction | Large existing supply and easy discovery | Complement rather than compete with high-ticket aggregators |
-| L1 direct | Permit-data resellers | $50–$500+/month depending on coverage | Rich public records | HVAC interpretation, deduplication, and action ranking |
-| L2 adjacent | Generic agencies and lead brokers | Project or retainer pricing | Human curation and local sales | Automated repeatability and lower minimum order |
-| L2 adjacent | Google Local Services, Angi, Thumbtack, and Nextdoor | Pay-per-lead or advertising | Existing demand and trust | First-party opportunity and account intelligence |
-| L2 adjacent | CRM automation vendors | $30–$100+/seat/month | Workflow integration | Better top-of-funnel opportunity signal |
-| L3 substitute | Yelp, Google search, and referrals | Often free or performance-based | Familiar and trusted | Concise alerting and source transparency |
-| L3 substitute | Spreadsheet/scraping workflows | Tooling cost only | Flexible | Maintained data, quality labels, and no-code review |
+## PRD MVP
 
-**Competitive score:** 4/5. The category has meaningful providers, so the direction is **GO_NARROW**.
+### Target customer
 
-## 3. PRD MVP
+Owner-operator or small sales manager in one selected home-service trade, ideally with 2–20 sales staff.
 
-### P0 — required for launch
+### Primary outcome
 
-1. **Service-area configuration**
-   - trade fixed to HVAC;
-   - postal-code list;
-   - target residential/commercial mix.
-2. **Signal ingestion**
-   - one or two public source types;
-   - source URL and retrieval timestamp;
-   - jurisdiction and licensing context where available.
-3. **Entity resolution**
-   - company normalization;
-   - deduplication;
-   - prior-seen status.
-4. **Qualification**
-   - service-type match;
-   - location match;
-   - recency;
-   - confidence and evidence.
-5. **Lead feed**
-   - claim;
-   - hide;
-   - annotate;
-   - export;
-   - “not relevant” feedback.
-6. **Usage and billing**
-   - Stripe;
-   - 14-day trial;
-   - fair-use limits;
-   - self-serve cancellation.
-7. **Compliance controls**
-   - terms review;
-   - source licensing;
-   - no bypass of logins or anti-bot controls;
-   - contact details only from lawful public sources;
-   - no automated calling or texting.
+Receive a manageable, evidence-backed weekly lead/opportunity list without paying for opaque, duplicated leads.
 
-### P1 — after validation
+### P0
 
-- more permit types;
-- technician capacity and territory rules;
-- CRM export;
-- customer contact enrichment;
-- weekly digest;
-- team permissions;
-- source-specific precision reports.
+- Select trade and service-area configuration
+- User signup and account
+- Source adapter framework for at least two signal types
+- Source attribution:
+  - original URL
+  - timestamp
+  - text excerpt
+  - location
+  - confidence/status
+- Manual review queue
+- Deduplication
+- Basic qualification fields:
+  - trade relevance
+  - geography
+  - recency
+  - evidence keyword
+  - estimated urgency
+- Weekly digest by email
+- Optional daily urgent-alert email
+- User feedback:
+  - relevant
+  - not relevant
+  - contacted
+  - won
+  - lost
+- CSV export
+- Stripe subscription and plan limits
+- Source-policy and prohibited-use documentation
 
-### P2 — later
+### P1
 
-- additional trades;
-- nationwide coverage;
-- automated outreach with explicit opt-in;
-- contractor collaboration;
-- appointment scheduling;
-- AI call summaries;
-- reputation and review integrations.
+- SMS digest
+- CRM push for Zapier
+- Saved searches
+- Custom qualification rules
+- Opportunity history and outcome analytics
+- Team assignment
+- Source-health reporting
+
+### P2
+
+- Bid/estimate integrations
+- Automated outreach
+- More trades and regions
+- Phone enrichment
+- Pipeline forecasting
+- Marketplace listing
 
 ### Non-goals
 
-- guaranteed jobs or revenue;
-- nationwide coverage at launch;
-- every contractor trade;
-- brokered lead sales in MVP;
-- automated cold calls or spam;
-- bypass of platforms or access controls;
-- private or non-public data;
-- replacement for a CRM, scheduler, or marketing agency;
-- unverifiable “AI score” without evidence.
+- No homeowner marketplace
+- No contractor directory
+- No full CRM
+- No mortgage, insurance, or financing products
+- No unverifiable “exclusive” lead claims
+- No mass-scraped directories
+- No initial native mobile app
 
-## 4. 14-day day-by-day build plan
+### Technical approach
 
-| Day | Solo deliverable |
-|---:|---|
-| 1 | Interview 5 HVAC owners about current lead sources, losses, geography, and qualification criteria. |
-| 2 | Interview 5 more; select one metro and one signal type; manually assemble 20 sample opportunities. |
-| 3 | Ask five prospects to rank and explain the sample; define confidence labels and exclusions. |
-| 4 | Build auth, database, billing skeleton, service-area configuration, and source adapters. |
-| 5 | Add entity normalization, deduplication, source URL, timestamps, and raw-record snapshots. |
-| 6 | Add deterministic qualification rules plus model-assisted categorization with citations. |
-| 7 | Build claim/hide/export/annotate feed, feedback capture, and audit history. |
-| 8 | Add Stripe, trial, limits, cancellation, admin controls, and usage metering. |
-| 9 | Complete compliance review, privacy terms, source-attribution display, and deletion workflow. |
-| 10 | Run source failures, duplicate, stale-data, and provider outage tests. |
-| 11 | Deliver 20 concierge weekly alerts manually and observe contractor behavior. |
-| 12 | Fix relevance and UX based on at least eight users; add quality dashboard. |
-| 13 | Close five paid design-partner accounts or collect explicit no-go decisions. |
-| 14 | Ship only if precision, compliance, and willingness-to-pay criteria pass; otherwise pivot the signal or kill. |
+- Web app and scheduled ingestion workers
+- PostgreSQL for opportunities, users, and feedback
+- Object storage for source snapshots where lawful and permitted
+- Rule-based classification first; ML only where language volume justifies it
+- Links to original evidence
+- Human-review dashboard
+- Idempotent adapters and deduplication hashes
+- Usage-based data/API budget caps
+- Privacy, retention, and deletion policies
 
-## 5. 30-day marketing calendar
+### Pricing
 
-**Budget cap:** $250, including a small contractor-community sponsorship test.
+- **Solo:** $49/month, one area, 25 reviewed opportunities/month
+- **Pro:** $149/month, one area, 100 opportunities, multiple users
+- **Pilot:** $299/month with concierge source curation during the first 20 customers
 
-| Day/channel | Action | Budget |
-|---|---|---:|
-| 1–3 | Publish one-page offer with real sample signals and transparent methodology | $0 |
-| 4 | Interview prospects about “leads I paid for but could not use” | $0 |
-| 5 | Post a sanitized sample feed in relevant HVAC groups | $0 |
-| 6 | Personally deliver a free HVAC permit/opportunity audit | $0 |
-| 7 | Publish source-by-source quality comparison | $0 |
-| 8 | Run a live teardown of ten sample records | $0 |
-| 9 | Contact five local HVAC associations or trainers | $0 |
-| 10 | Ask every activated user to label relevance | $0 |
-| 11 | Add the strongest user quote to landing page | $0 |
-| 12 | Launch a $75 local newsletter sponsorship | $75 |
-| 13 | Onboard every trial manually | $0 |
-| 14 | Review precision, claims, and feedback by source | $0 |
-| 15 | Publish “why cheap HVAC leads are expensive” with measurable examples | $0 |
-| 16 | Approach ten owner-operators with a personalized source audit | $0 |
-| 17 | Add source freshness and confidence explanations | $0 |
-| 18 | Seek a contractor-community or vendor partnership | $0 |
-| 19 | Request case study from first paying account | $0 |
-| 20 | Review false positives and complaints | $0 |
-| 21 | Contact prior design partners who did not convert | $0 |
-| 22 | Publish weekly aggregate signal report | $0 |
-| 23 | Test a $99 starter plan against a $199 quality plan | $0 |
-| 24 | Build referral loop for contractors | $0 |
-| 25 | Run a second source-quality teardown | $0 |
-| 26 | Close ten qualified personal outreach conversations | $0 |
-| 27 | Restrict geography or source if economics fail | $0 |
-| 28 | Publish compliance and sourcing policy | $0 |
-| 29 | Review retention, lead usefulness, support load, and margins | $0 |
-| 30 | Make continue/narrow/kill decision | $0 |
+## 14-day day-by-day build plan
 
-## 6. Unit economics to $10K MRR
+| Day | Deliverable | Acceptance criterion |
+|---:|---|---|
+| 1 | Select trade and metro area | One trade, one geography, and 10 source samples chosen |
+| 2 | Interview 15 local contractors | One recurring lead-quality problem confirmed |
+| 3 | Legal/source-policy review and adapter design | Each source has documented access and use constraints |
+| 4 | Ingestion and normalization prototype | Ten records captured with evidence |
+| 5 | Deduplication and relevance rules | Duplicate and out-of-area records rejected |
+| 6 | Opportunity review queue | User can inspect, approve, reject, and annotate records |
+| 7 | Weekly email digest | Digest includes source links and actionable fields |
+| 8 | Feedback capture | Relevant/contacted/won/lost states work end to end |
+| 9 | Urgent-alert workflow | One test alert is sent within five minutes |
+| 10 | Signup, Stripe billing, and plan limits | Purchase and quota enforcement work |
+| 11 | CSV export and outcome analytics | User can export and view simple conversion metrics |
+| 12 | Onboarding and empty-state UX | A new user configures a niche in under ten minutes |
+| 13 | QA, source failure handling, and cost caps | Broken adapters fail safely without misleading records |
+| 14 | Pilot launch | Five local design partners receive reviewed opportunities |
 
-### Pricing hypothesis
+## 30-day marketing calendar
 
-- Local: **$149/month**
-- Pro territory: **$299/month**
-- small team: **$499/month for 5 users**
+**Budget: $200 maximum**
 
-Average realized ARPU assumption: **$220/month**.
+| Day | Activity | Budget | KPI |
+|---:|---|---:|---|
+| 1 | Publish trade-and-city-specific landing page | $0 | 75 local targeted visits |
+| 2 | Post a sample anonymized opportunity digest | $0 | 10 contractor replies |
+| 3 | Visit 20 local contractor websites | $0 | 15 qualified contacts |
+| 4 | Send a personal comparison email | $0 | 5 replies |
+| 5 | Publish “why this lead is qualified” example | $0 | 8 demo requests |
+| 6 | Hold a 20-minute contractor workflow session | $0 | 8 attendees |
+| 7 | Onboard five pilot contractors | $0 | 5 activated accounts |
+| 8 | Ask pilots for source-quality feedback | $0 | 10 corrections |
+| 9 | Publish a fixed-up delivery-process post | $0 | 10 qualified leads |
+| 10 | Contact local trade associations | $0 | 3 conversations |
+| 11 | Publish weekly-digest video | $0 | 100 targeted views |
+| 12 | Ask five pilot customers for referrals | $0 | 4 referrals |
+| 13 | Review opportunity relevance rate | $0 | ≥70% “relevant” |
+| 14 | Audit source compliance | $0 | No unresolved violations |
+| 15 | Add one permitted source only if needed | $0 | Stable ingestion |
+| 16 | Publish anonymized outcome data | $0 | 6 qualified leads |
+| 17 | Contact 20 complementary local vendors | $0 | 10 replies |
+| 18 | Create a contractor Facebook-group educational post | $0 | 15 comments |
+| 19 | Host a lead-quality clinic | $0 | 10 attendees |
+| 20 | Review first-week usage and feedback | $0 | 60% weekly-open rate |
+| 21 | Ask customers which fields they actually use | $0 | Top 3 fields identified |
+| 22 | Publish contractor-specific FAQ | $0 | 8 trials |
+| 23 | Contact three agency/consulting partners | $0 | 2 partner conversations |
+| 24 | Ask pilots to quantify contacted/won outcomes | $0 | 5 outcome records |
+| 25 | Improve scoring using feedback | $0 | Relevant rate ≥80% |
+| 26 | Request paid conversion from active pilots | $0 | 3 paid accounts |
+| 27 | Publish a “source transparency” case study | $0 | 10 qualified leads |
+| 28 | Run a local contractor referral challenge | $0 | 5 referrals |
+| 29 | Optimize pricing and onboarding | $0 | Trial-to-paid ≥10% |
+| 30 | Review MRR, retention, data risk, and support load | $0 | Continue/iterate decision |
 
-### Cost and margin
+Budget allocation: $150 narrowly targeted local sponsorship, $50 outreach/design tools, $0 contingency.
 
-| Metric | Assumption |
-|---|---:|
-| Data acquisition/API allocation | $25/customer/month |
-| Enrichment and infrastructure | $20 |
-| Support and operations | $15 |
-| Payments and overhead allocation | $10 |
-| Contribution/customer/month | about $150 |
+### Organic channels
 
-Target gross margin: approximately 82%.
+- Direct contractor outreach
+- Local trade associations and supplier-referral networks
+- Facebook contractor groups with permission
+- Local SEO for “[trade] leads in [city]”
+- Partner with complementary services such as inspectors or equipment suppliers
+- Public sample digests that demonstrate evidence quality
 
-### Customers required
+## Unit economics to $10K MRR
 
-- $10K MRR / $220 ARPU = **46 customers**.
-- At 5% monthly churn, gross additions must exceed roughly 2.3 customers per month to hold a 46-customer base.
-- Early target: 3–5 HVAC firms in one metro area, then expand only after precision is proven.
+### Base case
 
-### CAC and payback
+- Blended ARPA: $149/month
+- Customers required:  
+  `10,000 / 149 = 68`
+- Alternative: 60 Pro customers at $149 plus 12 Solo customers at $49 = $9,528; add 3 Pro customers to exceed $10K
 
-Assumptions:
+### Funnel
 
-- founder-led outreach CAC: $150–$250;
-- referral CAC: $75–$150;
-- paid CAC may exceed $400;
-- contribution: $150/month;
-- paid CAC payback at $250 CAC: 1.7 months.
+- 2,000 qualified local leads over 90 days
+- 20% activate a pilot: 400
+- 17% of activated users pay: 68
+- Need sustained weekly engagement because this product delivers recurring intelligence, not a one-time artifact
 
-Do not scale paid acquisition until qualified-opportunity rate, source licensing, and user retention are established.
+### Cost assumptions
 
-## 7. Kill criteria
+- Source/API and data storage: $10–$30 per customer/month
+- Email/SMS and hosting: $5–$15 per customer/month
+- Manual review and support: target under 20 minutes per customer/month
+- Gross margin target: ≥70%
+- If a source charges materially more than $40 per active customer, remove it or raise pricing
 
-Kill or re-niche if any occur by Day 30:
+### $10K MRR mix
 
-- fewer than 20 qualified HVAC interviews;
-- fewer than 10 users inspect sample signals;
-- fewer than 4 pay;
-- fewer than 3 report the feed as useful in the next four weeks;
-- fewer than 40% of delivered opportunities pass user relevance review;
-- no source can be used lawfully and economically at launch;
-- median customer records reviewed per week is too low to justify price;
-- each customer requires manual data repair beyond 20 minutes weekly;
-- gross margin falls below 70%;
-- the product depends on scraped personal data or access-control circumvention;
-- users primarily demand guaranteed jobs or managed appointment setting rather than qualified signals.
+- 55 Pro customers at $149 = $8,195
+- 15 Solo customers at $49 = $735
+- 7 Pilot/Pro customers at $149 = $1,043
+- Total: 77 customers and $9,973; one additional customer exceeds $10K
 
-## Wedge (required for GO_NARROW)
+### Guardrails
 
-**Refuse to build:**
+- Never promise exclusive leads unless contractually verified.
+- Track relevance and contact rate, not only MRR.
+- Keep all outreach manual or user-approved in the MVP.
+- Do not expand geography before the first area demonstrates retention.
+- Avoid paid ad scale until one local channel shows positive contribution margin.
 
-- every trade at launch;
-- nationwide coverage before local retention;
-- guaranteed leads or appointment outcomes;
-- lead brokerage;
-- automated cold calling, texting, or email;
-- private databases;
-- scraping behind logins or bypassing platform controls;
-- replacement CRM, scheduler, website, or ads platform;
-- AI scores without visible evidence.
+## Kill criteria
 
-The MVP covers **one HVAC trade in one metropolitan area**, uses **publicly and lawfully accessible building or permit signals**, and delivers **evidenced alerts only**.
+Kill or reposition if any of the following occurs by day 30:
+
+- Fewer than five of 15 contractors agree that lead quality is a top-three monthly problem.
+- Fewer than three pilots agree to pay at least $99/month.
+- Less than 60% of delivered opportunities are rated relevant.
+- Fewer than 40% of retained users open at least three of four weekly digests.
+- A required source violates terms, cannot be used lawfully, or costs more than $40 per customer monthly.
+- Manual review consumes more than 30 minutes per customer weekly.
+- No outcome feedback is recorded for at least 30% of pilot opportunities.
+- The same generic lead appears in more than 10% of weekly digests.
+- Lead volume is too low to make the plan valuable at $149/month.
+- The product requires a sales team, national coverage, or cold outreach before reaching repeatability.
