@@ -1,6 +1,66 @@
 {
-  "generated_at": "2026-11-02T23:49:01.544057+00:00",
+  "generated_at": "2026-11-05T22:34:51.166120+00:00",
   "posts": [
+    {
+      "url": "/directions/store-stock-checker.html",
+      "title": "Store Stock Checker — Product Direction",
+      "excerpt": "A focused stock-alert and restock-monitoring service for independent retailers",
+      "tags": [
+        "AI",
+        "B2B",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-05T22:33:25+00:00"
+    },
+    {
+      "url": "/directions/faith-sermon-assistant.html",
+      "title": "Faith Sermon Assistant — Product Direction",
+      "excerpt": "An AI workspace that turns a pastor’s sermon source material into reusable church communications",
+      "tags": [
+        "AI",
+        "religion",
+        "language",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-05T22:33:25+00:00"
+    },
+    {
+      "url": "/directions/heritage-language-coach.html",
+      "title": "Heritage Language Coach — Product Direction",
+      "excerpt": "A conversation-first heritage-language coach for families reconnecting with ancestral languages",
+      "tags": [
+        "AI",
+        "education",
+        "finance",
+        "language",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-05T22:33:25+00:00"
+    },
+    {
+      "url": "/directions/vertical-cert-coach.html",
+      "title": "Vertical Certification Coach — Product Direction",
+      "excerpt": "An AI study coach for one regulated certification, initially compounding-advisor exams",
+      "tags": [
+        "AI",
+        "education",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 4,
+      "date": "2026-11-05T22:33:25+00:00"
+    },
     {
       "url": "/directions/faith-sermon-ai.html",
       "title": "Faith Sermon AI",
