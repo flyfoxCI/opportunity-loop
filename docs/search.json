@@ -1,6 +1,64 @@
 {
-  "generated_at": "2026-11-05T22:34:51.166120+00:00",
+  "generated_at": "2026-11-10T00:35:56.990415+00:00",
   "posts": [
+    {
+      "url": "/directions/getfunneled.html",
+      "title": "Get Funneled — Opportunity Direction",
+      "excerpt": "A focused landing-page funnel builder that turns one service offer into a conversion-ready page, variants, and lead capture in minutes.",
+      "tags": [
+        "B2B",
+        "education",
+        "social",
+        "proposal",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-10T00:32:56+00:00"
+    },
+    {
+      "url": "/directions/static-forms.html",
+      "title": "Static Forms — Opportunity Direction",
+      "excerpt": "A privacy-first static-site form backend for developers who want reliable form handling without a server or heavyweight form platform.",
+      "tags": [
+        "AI",
+        "B2B",
+        "education",
+        "creator",
+        "finance"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-10T00:32:56+00:00"
+    },
+    {
+      "url": "/directions/chart-scanner-ai.html",
+      "title": "Chart Scanner AI — Opportunity Direction",
+      "excerpt": "A chart-analysis assistant for one investor cohort, limited to chart screenshots, structured interpretation, and watchlist-ready summaries.",
+      "tags": [
+        "AI"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 4,
+      "date": "2026-11-10T00:32:56+00:00"
+    },
+    {
+      "url": "/directions/catalogohoy.html",
+      "title": "CatalogoHoy — Opportunity Direction",
+      "excerpt": "A catalog-production assistant for one local-commerce niche, converting product lists into consistent print-ready and social-ready catalog layouts.",
+      "tags": [
+        "AI",
+        "vertical"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-11-10T00:32:56+00:00"
+    },
     {
       "url": "/directions/store-stock-checker.html",
       "title": "Store Stock Checker — Product Direction",
