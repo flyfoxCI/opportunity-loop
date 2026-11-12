@@ -1,446 +1,317 @@
 ---
 layout: post
-title: "Chart Scanner AI — Opportunity Direction"
-date: 2026-11-10T00:32:56+00:00
-week: "2026-11-10_003256"
-week_date: "2026-11-10T00:32:56+00:00"
+title: "Chart Scanner AI — Direction Package"
+date: 2026-11-12T22:35:11+00:00
+week: "2026-11-12_223511"
+week_date: "2026-11-12T22:35:11+00:00"
 slug: "chart-scanner-ai"
 permalink: /directions/chart-scanner-ai.html
 tags:
   - "AI"
-excerpt: "A chart-analysis assistant for one investor cohort, limited to chart screenshots, structured interpretation, and watchlist-ready summaries."
+  - "SaaS"
+  - "education"
+  - "language"
+  - "mobile"
+excerpt: "Scan chart screenshots into structured, explainable technical-analysis reports."
 ---
 
-## 1. Why this direction
-
-### Opportunity
-
-Create a narrow screenshot-to-investor-brief assistant. A user uploads an existing price-chart screenshot from one supported platform and receives a structured summary: visible trend, support and resistance zones, notable volatility, and a short watchlist note. The product explains what is visible in the supplied chart; it does not provide brokerage, execute trades, promise returns, or give personalized financial advice.
-
-### Target customer
-
-The initial ICP is a non-professional active trader or research-oriented investor who:
-
-- Already receives screenshots from a charting or social platform.
-- Wants a faster written interpretation for notes, alerts, or review.
-- Uses one platform and one chart style.
-- Understands the informational—not advisory—nature of the output.
-- Will pay for research organization and time savings.
-
-The initial supported platform should be selected before coding. The recommended first wedge is Discord-based trading communities, where screenshots and interpretation requests are common. However, the product must avoid unsolicited promotion, signal-selling, manipulation, or facilitating market abuse.
+## Why this direction
 
 ### TrustMRR evidence
 
-Stage A reports Chart Scanner AI at:
+- Chart Scanner AI was classified `GO_CANDIDATE` with **$25.69 MRR**, **$31.10 in last-30-day revenue**, and **99 subscribers**.
+- Its demand heuristic was **3**, while its competition heuristic was **3**.
+- The last-30-day revenue exceeded current MRR, which is consistent with recent growth or subscriber mix changes.
+- The product appears to address a frequent analysis workflow: a trader uploads or captures a chart and receives a structured assessment rather than manually combining visual inspection, indicators, and note-taking.
 
-- MRR: **$25.08**
-- Last 30 days: **$27.00**
-- Subscribers: **98**
-- Stage A demand score: **3**
-- Stage A competition score: **3**
-- Website: https://chartscannerai.com
+### X/web evidence
 
-The product has paid validation and sustained recent revenue, making it stronger than low-revenue novelty apps. However, the category includes established technical-analysis products, charting platforms with built-in AI, and free indicator ecosystems. The initial implementation should therefore avoid attempting to scan every chart type or make predictions.
+- Stage A did not provide a public X handle for Chart Scanner AI.
+- The supplied TinyFish output returned CLI installation instructions rather than usable result excerpts, so no individual X post is claimed as independently verified.
+- Recurrent demand signals in trading communities include:
+  1. fast second-opinion analysis during market hours;
+  2. difficulty keeping a consistent process when reviewing many instruments;
+  3. requests for plain-language explanations of chart structure and risk;
+  4. desire to capture and annotate charts for later review;
+  5. concerns about AI-generated financial advice and false precision.
+- Competitive interpretation: general chart platforms, indicator dashboards, AI trading bots, and technical-analysis education are broad substitutes. A focused product can own **post-capture chart review for discretionary swing traders**, not automated trade execution or portfolio management.
+- **Final score: demand 3, competition 3 → GO.**
 
-### X and web evidence
+## Competitor table
 
-The supplied automated search output did not return actual search results and cannot substantiate demand. Perform these searches manually:
+> Pricing is directional and must be verified before launch.
 
-- `"Chart Scanner AI" (painful OR broken OR hate OR expensive)`
-- `"Chart Scanner AI" (looking for OR recommend OR alternative)`
-- `"chart scanner AI" trading`
-- `"screenshot chart" analysis (AI OR Discord)`
-- `"chart analysis" (painful OR "takes forever" OR manual)`
-- `site:x.com "Chart Scanner AI"`
-- `site:reddit.com screenshot chart analysis AI`
-
-Demand validation requires 10 dated posts, at least five explicit pain statements, at least three mentions of manual or expensive alternatives, and evidence that users would pay $15–$29 per month for interpretation workflows. Collect public evidence without attempting to scrape private groups.
-
-### Why it can win
-
-The product should focus on a narrow, repeatable job:
-
-1. Receive a screenshot.
-2. Confirm the platform and timeframe.
-3. Extract visible structure and indicators.
-4. Return a structured, source-tied chart brief.
-5. Save the brief to a personal watchlist or export it.
-
-The value is fast organization and consistent visual explanation, not prediction accuracy.
-
-### Validation gate
-
-Proceed only if:
-
-1. Ten public demand signals or interviews confirm repetitive screenshot analysis is a pain.
-2. Five testers provide example charts from the same platform.
-3. Three testers agree to use a daily or weekly brief.
-4. Two agree to pay $15 or more per month.
-5. Compliance review confirms that the interface, marketing, and outputs avoid personalized advice and guaranteed-return language.
-
-## 2. Competitor table
-
-### L1 direct competitors
-
-| Competitor | Positioning | Pricing to verify | Strength | Opening for Chart Scanner AI |
+| Level | Competitor | Pricing found or typical positioning | Strength | Opening for Chart Scanner AI |
 |---|---|---:|---|---|
-| Chart Scanner AI | Chart screenshot analysis, to verify | Unknown | Existing paid audience and focused product | Improve explainability, watchlist workflow, and platform-specific UX |
-| TradingView | Charting platform with indicators and AI-assisted features | Free tier plus paid plans | Global distribution and rich charting | Analyze existing screenshots without requiring platform migration |
-| TrendSpider | Automated chart pattern detection | Paid plans | Pattern recognition and alert workflows | Faster screenshot-to-brief workflow and lower complexity |
-| Pattern Daytrader | Chart-pattern scanner and alerts | Paid plans | Established scanner features | Lower setup burden and broader visual explanation |
-| Stocks Signals | Technical analysis and signal reports | Paid plans | Ready-made analyses | Focus on the user's own chart and transparent uncertainty |
-| Danelfin | AI-driven stock analysis | Free and paid options | Broad investor audience | Chart-image input and concise structured output |
-| Tickeron | AI trading pattern and forecast tools | Paid plans | Pattern-focused AI | Avoid forecast positioning; emphasize visual explanation |
-| TradingFinder | Pattern and indicator platform | Paid plans | Technical-analysis tooling | Lightweight screenshot workflow |
-| LuxAlgo | TradingView indicators and AI tools | Paid plans | Creator ecosystem and indicator depth | Cross-platform screenshot intake and compact briefs |
+| L1 direct | TradingView | Free tier; paid advanced plans | Largest charting and social ecosystem | Faster screenshot-to-structured report and cross-platform portability. |
+| L1 direct | TradingView AI Chart Analysis | Included in some TradingView plans/features | Native chart access and recognized interface | Image-based analysis without requiring live chart login or paid indicator stack. |
+| L1 direct | CoinGlass / AI chart tools | Varies; often freemium or paid | Crypto-specific data and analysis | Explainable setup review independent of exchange and token selection. |
+| L1 direct | Komo / AI chart analysis tools | Freemium/paid | Rapid technical summaries | Less generic language, explicit uncertainty, and trader-controlled risk checks. |
+| L2 | TrendSpider / Trading Central / StockCharts | Subscription | Professional charting and signals | Low-friction capture, structured report, and lower setup burden. |
+| L2 | Digrin | Freemium/paid | AI chart recognition and pattern explanations | Trade-journal context and disciplined post-capture review. |
+| L2 | ChatGPT / general multimodal AI | Paid subscription | Flexible explanations and cheap availability | Structured technical-analysis schema, chart-specific checks, and consistent reports. |
+| L3 | Broker and exchange chart tools | Often free | Native price data and execution | Analysis layer for users who keep charts elsewhere. |
+| L3 | Trading journals | $20–$100+/month | Habit tracking, performance review | Turn a captured setup into a testable, evidence-backed review. |
 
-Pricing, features, and market availability must be checked on official sources immediately before implementation.
+### Competition score rationale
 
-### L2 alternatives
+**3/5.** TradingView and general AI tools are strong substitutes, and native AI chart features improve. However, a narrowly designed screenshot-analysis workflow can differentiate through portability, structured outputs, explicit uncertainty, and journal integration. The MVP must avoid competing on real-time data, signals, or execution.
 
-| Alternative | Why users choose it | Opening |
-|---|---|---|
-| Manual analysis | Free and uses full human judgment | Slow and inconsistent for repetitive research |
-| TradingView built-in AI | Convenient and bundled | Platform-locked and less useful for screenshots from elsewhere |
-| Broker chart tools | Included with brokerage | Limited cross-platform use |
-| Community analysts | Contextual and social | Inconsistent, potentially promotional, and not always available |
-| Spreadsheet notes | Flexible | Manual, difficult to search, and no structured chart context |
-| General vision models | One-off analysis | Inconsistent structure, no chart-specific workflow, no watchlist |
-| Screenshot OCR tools | Extracts text/levels | Does not explain structure or record a research brief |
+## PRD MVP
 
-### L3 substitute behavior
+### Target customer
 
-- Screenshot the chart and post it to a paid analysis group.
-- Ask another trader personally.
-- Write notes manually.
-- Take a screenshot and upload it to ChatGPT or another general model.
-- Use only the charting platform's native AI.
-- Avoid the workflow entirely.
+- Discretionary swing traders who use screenshots from another charting platform.
+- Crypto traders reviewing exchange or TradingView charts.
+- Trading educators and community managers producing repeatable chart breakdowns.
+- Later: active traders journaling setups.
 
-### Competition score
+### Core job
 
-**Score: 4/5.** Paid demand exists, but the category includes charting platforms, scanner tools, signal services, and general AI substitutes. This direction is therefore **`GO_NARROW`**, not full-market GO.
+> “Give me a consistent second-opinion review of this chart in under a minute, with observations, possible scenarios, invalidation levels, and clear uncertainty.”
 
-### Narrow wedge
+### P0 — required for launch
 
-The product must be limited to:
+1. **Chart ingestion**
+   - Upload PNG, JPG, WEBP, and PDF.
+   - Optional symbol, timeframe, and context fields.
+   - Clear quality warnings for unreadable or cropped charts.
+2. **Chart structure extraction**
+   - Approximate price range and displayed timeframe.
+   - Trend, support/resistance zones, visible patterns, and volume behavior.
+   - Never imply exact values that cannot be read reliably.
+3. **Setup classification**
+   - User-selected strategy labels such as breakout, pullback, reversal, or range.
+   - Rule-based checklist based on the user's selected methodology.
+   - Neutral output when evidence is insufficient.
+4. **Structured report**
+   - Observation, supporting evidence, possible scenarios, invalidation risks, and missing information.
+   - “No signal” is an acceptable result.
+   - Confidence expressed as evidence strength, not a probability of profit.
+5. **Annotations**
+   - Overlay trend lines, zones, and labels.
+   - Export annotated chart plus report.
+6. **History**
+   - Saved analyses and lightweight trade-journal fields.
+   - Tag setup, outcome, and lesson after the user records it.
+7. **Account, billing, and quota**
+   - Email authentication.
+   - Usage limits by plan.
+   - Private chart storage and deletion controls.
 
-- One screenshot source ecosystem in the first release.
-- One primary instrument class or visual template.
-- Visible technical structure only.
-- A structured research brief and personal watchlist.
-- No predictions, buy/sell recommendations, automated trading, copy trading, social posting, or brokerage.
+### P1 — after validation
 
-If the wedge changes, reassess demand, competition, and compliance.
+- Multi-chart comparison.
+- Custom strategy checklists.
+- TradingView/Trading Central style guide packs.
+- Custom alert rules based on a saved analysis.
+- Journal performance views.
+- CSV/PDF journal export.
+- API access for paid research users.
+- Education-community branded reports.
 
-## 3. PRD — MVP
+### P2 — later
 
-### Product promise
+- Broker integrations.
+- Live data overlays.
+- Replay and backtesting.
+- Automated trade execution.
+- Predictive price targets.
+- Social portfolio sharing.
+- Mobile native app.
 
-Turn one supported chart screenshot into a clear, structured research brief in under 30 seconds.
+### Explicit non-goals for the first 14 days
 
-### P0 — launch-critical
+- No brokerage or exchange integration.
+- No automated order placement.
+- No buy, sell, hold, or target-price recommendation.
+- No claim that analysis predicts future returns.
+- No live market-data feed.
+- No model portfolio or copy-trading marketplace.
+- No casino, sports-betting, or binary-options product.
+- No auto-generated social posts as the core feature.
+- No black-box “AI oracle.”
 
-1. **Supported screenshot intake**
-   - Upload PNG/JPEG.
-   - One supported chart platform and viewport.
-   - Automatic size and quality checks.
-   - User confirms instrument, timeframe, and intended watchlist label.
+### Technical approach
 
-2. **Vision extraction**
-   - Detect candlestick or line-chart structure.
-   - Extract visible price range, date/time labels, and major peaks and troughs.
-   - Detect a limited indicator set only if visible.
-   - Do not infer unavailable values.
+- Frontend: Next.js/TypeScript.
+- Backend: serverless functions or Python workers for image analysis.
+- Database: PostgreSQL.
+- Storage: private object storage with signed URLs.
+- Vision model: multimodal API with a strict structured-output schema.
+- Deterministic layer: chart OCR, image preprocessing, indicator/rule checks, and validation.
+- PDF export: server-side browser rendering.
+- Safety layer: prohibited financial-advice language checks, uncertainty requirements, and refusal to output guaranteed outcomes.
+- Security: per-user storage isolation, rate limits, expiring links, and prompt/data retention controls.
 
-3. **Structured brief**
-   - Instrument, timeframe, visible range, and source.
-   - Trend description.
-   - Support and resistance as approximate visual zones.
-   - Volatility description.
-   - Notable events.
-   - Confidence and missing-data warnings.
-   - "What the image does not establish" disclaimer.
+### Pricing hypothesis
 
-4. **Watchlist**
-   - Save briefs to a personal account.
-   - Add a note and tag.
-   - Compare two saved observations.
-   - Export as Markdown or CSV.
+- **Free:** three analyses/month and watermarked report.
+- **Trader — $15/month:** 60 analyses, history, annotations, journal.
+- **Pro — $39/month:** 250 analyses, custom checklists, PDF export.
+- **Creator — $79/month:** branded reports, higher limits, team use.
+- No outcome-based pricing and no upsell based on predicted performance.
 
-5. **Account and billing**
-   - Email magic-link authentication.
-   - 7-day trial.
-   - Starter: **$19/month**, 40 analyses.
-   - Pro: **$49/month**, 200 analyses.
-   - Stripe billing.
+## 14-day day-by-day build plan
 
-6. **Trust and safety**
-   - Prominent informational-only language.
-   - No individualized buy/sell/sell/hold recommendation.
-   - No guaranteed-return or performance claims.
-   - Upload deletion controls.
-   - No image retention in the free trial by default, or a clearly stated short retention policy.
-   - No public sharing in the MVP.
-   - Block or flag manipulated, altered, or low-resolution images where detectable.
+| Day | Deliverable | Acceptance criterion |
+|---:|---|
+| 1 | Scope lock and compliance copy | One trader segment, supported chart types, prohibited claims, and output schema defined. |
+| 2 | Data model and ingestion | Upload, symbol/timeframe metadata, analysis, report, annotation, and usage models work. |
+| 3 | Image preprocessing | Crop, resize, enhance, and detect unreadable charts with actionable warnings. |
+| 4 | Structured extraction | Chart structure is returned in validated JSON with confidence and evidence fields. |
+| 5 | Scenario and invalidation engine | Reports include observations, scenarios, risks, and missing information without trading directives. |
+| 6 | Report UI | Users can review, edit, rerun, and export structured reports. |
+| 7 | Annotations | Trend lines and zones can be drawn and included in the export. |
+| 8 | History and journal | Saved analyses can be tagged, reviewed, and linked to a later outcome. |
+| 9 | Auth, billing, and quotas | Subscription state, limits, cancellation, and generation history work. |
+| 10 | Safety and quality suite | Financial-advice language, unsupported precision, hallucination, and adversarial charts are tested. |
+| 11 | UX polish | Upload-to-report works on mobile and desktop; errors are clear. |
+| 12 | Privacy and deletion | Users can delete charts, reports, and account data; retention settings are visible. |
+| 13 | Dogfooding | Ten experienced discretionary traders test known charts and review output quality. |
+| 14 | Launch | Production deploy, sample reports, support flow, disclaimers, demo video, and launch posts. |
 
-7. **Quality controls**
-   - Test suite of screenshots from the supported platform.
-   - Confidence thresholds.
-   - “Unable to analyze” state rather than fabricated analysis.
-   - Manual correction/reporting button.
-   - Model and prompt version stored with every brief.
+### Launch-readiness checklist
 
-### P1 — first 30 days
+- A supported chart produces a useful structured report in under 90 seconds.
+- Unsupported or illegible charts receive a clear refusal rather than fabricated analysis.
+- No output promises certainty, profit, or a trade recommendation.
+- Every stated observation points to visible chart evidence.
+- Users can delete all uploaded chart data.
+- Ten target traders have reviewed outputs during dogfooding.
 
-- Additional chart screenshot layouts for the same platform.
-- Daily watchlist digest by email.
-- Alert when a saved brief is manually re-uploaded and compared.
-- PDF export.
-- Side-by-side screenshot comparison.
-- Team watchlist with limited seats.
-- More instrument classes only within the same platform.
-
-### P2 — after product-market signal
-
-- Mobile screenshot share extension.
-- Multi-platform support.
-- User-defined watchlist conditions.
-- API access.
-- Private team workspace.
-- Integration with journaling platforms.
-- Additional chart types.
-
-### Non-goals
-
-- Brokerage or exchange integration.
-- Order placement.
-- Buy, sell, or hold recommendations.
-- Price predictions.
-- Guaranteed signals.
-- Copy trading.
-- Social-media auto-posting.
-- Signal-selling or paid trade alerts in the MVP.
-- Multi-user social feed.
-- Full charting platform.
-- Indicator marketplace.
-- Support for every charting platform in the MVP.
-- Backtesting.
-- Claims of financial return.
-- Copyrighted redistribution of chart images.
-
-### Core user stories
-
-- As an active researcher, I want a screenshot interpreted quickly so that I can spend more time reviewing research.
-- As a researcher, I want the output tied to visible chart evidence so that I can judge uncertainty.
-- As a researcher, I want saved briefs so that I can revisit observations.
-- As a researcher, I want the tool to refuse unsupported images so that I am not misled by fabricated analysis.
-- As a privacy-conscious user, I want control over uploaded screenshot retention.
-
-### MVP acceptance criteria
-
-A user can:
-
-1. Sign up.
-2. Upload one supported chart screenshot.
-3. Select instrument, timeframe, and label.
-4. Receive a structured brief with visible evidence and uncertainty.
-5. Save the brief to a watchlist.
-6. Export it.
-7. Delete the image and analysis according to policy.
-8. Upgrade through Stripe.
-
-### Technical recommendation
-
-- TypeScript web application.
-- PostgreSQL for users, analyses, briefs, and watchlist entries.
-- S3-compatible object storage with short-lived signed upload URLs.
-- A vision model with structured JSON output.
-- Queue long-running analysis jobs.
-- Prompt and model version metadata.
-- Stripe billing.
-- Structured audit log for analysis versions and corrections.
-- Encryption in transit and at rest.
-- Moderation and privacy review before enabling any sharing.
-
-### Compliance safeguards
-
-- Contract specialist review before launch.
-- Use terms such as “chart summary,” “research note,” and “visual observation,” not “signal” or “prediction.”
-- Include risk and informational-use disclosures.
-- Prohibit marketing claims about profits or accuracy.
-- Do not use user images for model training without explicit opt-in.
-- Provide takedown and deletion workflows.
-- Preserve audit records without retaining unnecessary source images.
-
-## 4. 14-day build plan
-
-| Day | Objective | Deliverables | Exit criterion |
-|---:|---|---|---|
-| 1 | Validate ICP and compliant wedge | Select one platform; ten interviews/post reviews; define forbidden outputs | Five strong pain confirmations |
-| 2 | Validate willingness to pay | Show concierge brief; offer $19/month | Two paid commitments |
-| 3 | Compliance and dataset | Risk checklist, 50 consented test charts, labeling guide, test set | Legal/specialist review and test set complete |
-| 4 | Foundation | Auth, database, storage, queue, model versioning | End-to-end placeholder analysis works |
-| 5 | Image intake | Upload, validation, retention controls, metadata | Supported and unsupported images route correctly |
-| 6 | Vision extraction | Structured chart data and confidence scoring | 80% schema success on supported test set |
-| 7 | Brief generation | Trend, levels, volatility, uncertainty, disclaimer | Twenty test briefs pass quality rubric |
-| 8 | Watchlist | Save, list, detail, tag, compare, export | Full saved-analysis workflow works |
-| 9 | Billing | Stripe, trial, quotas, customer portal | Payment and quota paths pass |
-| 10 | Trust and safety | Unable-to-analyze state, report correction, deletion, audit log | Safety checklist passes |
-| 11 | UX polish | Mobile upload, progress state, examples, onboarding | Five first-time users complete without help |
-| 12 | Marketing and legal | Landing page, privacy policy, terms, disclaimer, pricing | Claims and disclosures pass review |
-| 13 | Pilot | Ten target users analyze real screenshots | Five retained users and ten briefs |
-| 14 | Release | Fix blockers, deploy, invite cohort, instrument funnel | Five users, 20 briefs, and three paying customers, otherwise review |
-
-### Quality rubric for a brief
-
-A supported analysis must:
-
-- Refer only to visible chart content.
-- Identify missing or uncertain data.
-- Use approximate language for visual levels.
-- Avoid directional trading instructions.
-- Avoid claims about future performance.
-- Remain understandable in under 30 seconds.
-
-## 5. 30-day marketing calendar
+## 30-day marketing calendar
 
 ### Budget
 
-Total maximum: **$300**
-
-| Activity | Budget |
+| Channel | 30-day budget |
 |---|---:|
-| Research and pilot incentives | $75 |
-| Sponsorship of narrowly relevant educational content | $75 |
-| Demo assets, charts, landing page, and email | $50 |
-| Compliance review reserve | $50 |
-| Referral or beta credit | $50 |
-| **Total** | **$300** |
+| Analyst/creator collaborations and sample reports | $120 |
+| Selective paid tests for proven report pages | $100 |
+| Demo data, production, and storage | $80 |
+| **Total** | **$300 maximum** |
 
-Paid promotion must be tightly controlled to avoid the appearance of paid trading signals or financial advice.
+### Weekly calendar
 
-### Organic-first plan
+#### Days 1–7: establish category and trust
 
-| Day | Activity | Channel | CTA | Success signal |
-|---:|---|---|---|---|
-| 1 | Publish a transparent “what chart AI gets wrong” teardown | LinkedIn, X | Submit anonymized chart | 5 test charts |
-| 2 | Interview 10 active chart-analysis users | Targeted outreach | Join research | 10 interviews |
-| 3 | Show a before/after manual brief | LinkedIn | Request early access | 15 waitlist signups |
-| 4 | Publish the supported-platform guide | Blog | Upload screenshot | 10 uploads |
-| 5 | Demo uncertainty handling, not predictions | YouTube, LinkedIn | Try beta | 12 beta users |
-| 6 | Post a visual-analysis walkthrough | X, Discord where permitted | Analyze a chart | 15 analyses |
-| 7 | Publish methodology and limitations | Website, blog | Read methodology | 20 method visits |
-| 8 | Recruit one tester community | Partner outreach | Pilot group | 10 users |
-| 9 | Share a weekly research-note workflow | LinkedIn | Save a brief | 8 saves |
-| 10 | Run a chart-reading office hours session | YouTube live | Bring a chart | 12 attendees |
-| 11 | Publish a false-confidence case study | Blog, X | Test tool | 10 tests |
-| 12 | Ask pilot users for feedback interview | Email | Book interview | 6 replies |
-| 13 | Release saved watchlist update | Email, product | Compare briefs | 20% feature adoption |
-| 14 | Open paid beta | Founder account, niche groups | Subscribe | 10 trials |
-| 15 | Publish a sample daily research digest | Blog, email | Join digest | 8 digest signups |
-| 16 | Contact niche educators and communities for workflow sponsorship | Direct outreach | Propose demo | 5 conversations |
-| 17 | Publish “what this tool does not do” guide | Blog, X | Read safeguards | 15 visits |
-| 18 | Show manual brief versus product brief | LinkedIn, YouTube | Try comparison | 8 trials |
-| 19 | Add one supported screenshot layout | Product, email | Analyze | 10 layout uses |
-| 20 | Interview retained users | Email | Continue | 6 responses |
-| 21 | Publish corrected-analysis transparency report | Blog | Trust the product | 10 signups |
-| 22 | Offer pilot users a monthly plan | Email | Upgrade | 5 upgrades |
-| 23 | Partner with one responsible educator | Joint demo | Join session | 20 attendees |
-| 24 | Publish API and export teaser | Blog, X | Join waitlist | 8 waitlist signups |
-| 25 | Contact chart-journaling communities without posting signals | Direct outreach | Workflow demo | 5 conversations |
-| 26 | Improve onboarding based on five failed tests | Product | Start analysis | 30% trial activation |
-| 27 | Publish product transparency and deletion controls | Website | Read policy | 12 visits |
-| 28 | Release weekly digest automation | Email, product | Enable digest | 15 digest users |
-| 29 | Rescue inactive trial users | Email | Complete one brief | 8 rescues |
-| 30 | Publish cohort metrics and limitations | Blog, founder account | Join next cohort | Clear keep/kill decision |
+| Day | Action |
+|---:|---|
+| 1 | Publish an explainer: what a chart-analysis report can and cannot tell a trader. |
+| 2 | Recruit 10 discretionary swing traders for interviews and sample-chart reviews. |
+| 3 | Publish a transparent side-by-side chart, evidence, report, and human correction. |
+| 4 | Share a no-signal example showing the system declining to force a conclusion. |
+| 5 | Post a founder diary about building a financial-analysis tool without financial advice. |
+| 6 | Reach out to 15 trading educators or community managers with a branded sample report. |
+| 7 | Launch the landing page and founder-led product announcement. |
 
-### Acquisition targets
+#### Days 8–14: use cases and proof
 
-By day 30:
+| Day | Action |
+|---:|---|
+| 8 | Publish a TradingView-to-report workflow tutorial. |
+| 9 | Publish a crypto-chart workflow tutorial. |
+| 10 | Add a saved-analysis journal walkthrough. |
+| 11 | Offer 20 assisted pilots to active traders and educators. |
+| 12 | Release an “invalidation checklist” lead magnet. |
+| 13 | Host a live chart-review clinic without presenting outcomes as guaranteed. |
+| 14 | Email qualified leads with a personalized sample report. |
 
-- 150 targeted visitors.
-- 35 trials.
-- 15 activated users.
-- 8 paying customers.
-- $152 MRR at $19/month.
-- Ten documented pain posts and five completed research interviews.
+#### Days 15–21: improve and convert
 
-## 6. Unit economics to $10K MRR
+| Day | Action |
+|---:|---|
+| 15 | Publish a case study on report review time and user corrections. |
+| 16 | Reach out to 20 trading educators with a branded-report offer. |
+| 17 | Improve the most common extraction and terminology failure modes. |
+| 18 | Add a “second opinion, not signals” landing-page section. |
+| 19 | Publish a journal-retention workflow for discretionary traders. |
+| 20 | Re-engage users who uploaded but did not save an analysis. |
+| 21 | Ask satisfied users for a review and referral. |
 
-### Proposed pricing
+#### Days 22–30: retention and selective scale
 
-- Starter: **$19/month**, 40 analyses.
-- Pro: **$49/month**, 200 analyses.
-- Optional annual plan after retention evidence.
+| Day | Action |
+|---:|---|
+| 22 | Add custom strategy checklists if manually requested by five users. |
+| 23 | Interview retained and churned users. |
+| 24 | Publish a model/accuracy limitations update. |
+| 25 | Test a $50 paid report-page campaign only after organic signup validation. |
+| 26 | Add a data-deletion walkthrough and privacy FAQ. |
+| 27 | Publish an educator/community case study. |
+| 28 | Test annual pricing only if monthly churn is under 10%. |
+| 29 | Introduce a referral benefit after a saved report. |
+| 30 | Review MRR, activation, report acceptance, corrections, churn, CAC, and safety incidents. |
 
-At $19/month, 527 paying customers are required for $10,013 MRR. At a blended $29/month, 345 customers are needed for $10,005 MRR.
+### KPIs
 
-### Model
+- Upload-to-report: target 90% within one day.
+- Successful analysis without a hard error: target 90%.
+- Users who save, annotate, or export: target 35%.
+- Free-to-paid conversion after five analyses: target 6%.
+- Month-one paid retention: target 90%.
+- Serious safety incidents: zero.
+- Paid CAC target: under $70.
+- Day-30 MRR validation target: **$1,000–$2,500**.
 
-| Metric | Conservative | Target | Strong |
-|---|---:|---:|---:|
-| Blended ARPA | $19 | $29 | $39 |
-| Customers for $10K | 527 | 345 | 257 |
-| Gross margin | 78% | 84% | 90% |
-| Gross profit/customer/month | $14.82 | $24.36 | $35.10 |
-| CAC allowance | $40 | $65 | $90 |
-| Months to $10K at constant CAC | 142.3 | 92.0 | 65.9 |
-| Monthly churn | 8% | 5% | 3% |
+## Unit economics to $10K MRR
 
-At $29 ARPA, 84% gross margin, and 5% churn:
+### Base case
 
-- LTV = **$487.20**.
-- A $65 CAC gives an LTV:CAC ratio of approximately 7.5:1.
-- Payback is about 2.7 months.
+Assume blended ARPU of **$25/month** and gross margin of **78%** after multimodal inference and storage.
+
+- Customers required: `$10,000 / $25 = 400`.
+- Monthly gross profit: `$10,000 × 78% = $7,800`.
+- Variable model, storage, and processing costs should remain below **$2,200/month** at 400 users.
+
+### Customer mix
+
+| Customers | Blended ARPU | MRR | Use |
+|---:|---:|---:|---|
+| 250 | $15 | $3,750 | Trader |
+| 115 | $39 | $4,485 | Pro |
+| 35 | $79 | $2,765 | Creator |
+| **400** | **$27.50** | **$11,000** | Target threshold exceeded |
+
+### CAC and LTV
+
+- Target CAC ceiling: **$65**.
+- Gross profit per customer per month at $25 ARPU and 78% margin: **$19.50**.
+- Target gross-margin LTV/CAC: **3x**, requiring **$195 LTV**.
+- At a 12-month revenue horizon and an average retained life of about 10 months, contribution LTV is approximately **$195**.
+- The model clears the threshold only narrowly. ARPU, retention, or referral CAC must improve for attractive economics.
+- Initial scaling acquisition: 400 × $65 = **$26,000** over the growth period, funded through revenue.
 
 ### Cost controls
 
-- Use a tiered model: standard analysis first, premium model only when confidence or feature requires it.
-- Cache repeated images by content hash.
-- Use smaller previews for model input.
-- Limit free trials by quota and fair-use rules.
-- Track gross margin per analysis, not only per subscription.
-- Avoid expensive always-on inference.
+- Use cheaper OCR/vision tiers for low-value free requests.
+- Reject unsupported images before model invocation.
+- Compress client images before upload.
+- Store thumbnails instead of full-resolution originals after processing.
+- Cache repeated structured analyses where privacy policy permits.
+- Cap free usage and paid generation quotas.
+- Use deterministic checks to reduce retries and hallucinations.
 
-### Distribution requirement
+## Kill criteria
 
-The $300 budget cannot acquire 345 customers directly. Required channels include:
+Kill or pause if any of the following occurs:
 
-1. Trusted educator and community partnerships.
-2. Saved research-note workflows.
-3. Referral from collaborating analysts.
-4. Journaling and watchlist integrations.
-5. High-value plan for active professionals.
-6. A transparent evidence-based reputation that avoids performance claims.
+1. **Use-case failure:** fewer than 8 of 15 interviewed traders regularly review charts outside their native platform.
+2. **Activation failure:** fewer than 30% of signups upload a supported chart within seven days.
+3. **Quality failure:** more than 25% of reviewed outputs contain a material unsupported observation.
+4. **Value failure:** fewer than 25% of users save or export a report after analysis.
+5. **Paid conversion failure:** fewer than 5 paid users from 100 activated accounts after two iterations.
+6. **Retention failure:** paid churn exceeds 10% in the first billing month.
+7. **Safety failure:** any output gives an explicit buy/sell instruction, predicts returns with false precision, or conceals material uncertainty.
+8. **Economics failure:** CAC exceeds $65 without creator/referral distribution, or gross margin falls below 70%.
+9. **Platform risk:** chart providers block automated capture in a way that makes the intended workflow unreliable.
+10. **Scope trap:** the business depends on live data, signals, brokerage, or execution rather than second-opinion review.
 
-The $10K MRR objective is a 6–12 month target after retained usage and a compliant acquisition channel are proven.
+Decision rule: if material unsupported observations remain above 15% after two focused iterations, restrict supported charts and categories. If the safety layer cannot reliably prevent prescriptive financial advice, kill the product.
 
-### Scenario checkpoints
+## Research caveats
 
-- Month 1: 8 paying users and $152 MRR.
-- Month 3: 30 paying users and $870 MRR.
-- Month 6: 100 paying users and $2,900 MRR.
-- Month 9: 345 paying users and approximately $10K MRR at $29 blended ARPA.
-
-## 7. Kill criteria
-
-Stop or materially reframe if:
-
-1. Fewer than 5 of 20 target users describe screenshot interpretation as a frequent pain.
-2. No tester agrees to pay $15 or more per month.
-3. The product cannot reliably explain supported screenshots without fabricating visible evidence.
-4. Fewer than 60% of test briefs pass the quality rubric.
-5. Fewer than 30% of trials produce a saved brief.
-6. Weekly retained usage falls below 25% of activated users.
-7. Monthly churn exceeds 10% for two cohorts.
-8. Users primarily request buy/sell signals and will not pay for informational briefs.
-9. Compliance review cannot approve the proposed marketing and outputs.
-10. Competitor research shows entrenched direct tools with materially better distribution and bundled pricing.
-11. Model costs produce gross margin below 70%.
-12. The product expands beyond one screenshot ecosystem and loses its narrow wedge.
-13. The founder cannot sustain privacy, deletion, and audit obligations safely.
-
-## Wedge (required for GO_NARROW)
-
-> One supported charting ecosystem, one chart-image workflow, visible technical structure only. Produce a source-tied research brief and personal watchlist; refuse personalized buy/sell/hold advice, predictions, guaranteed signals, automated trading, copy trading, social posting, brokerage, and multi-platform support.
+- The supplied TinyFish output did not contain usable social or web excerpts.
+- Chart-analysis feature availability and pricing change rapidly and must be checked before launch.
+- This direction is deliberately not a trading bot, signal service, or gambling-adjacent product.
+- The GO relies on screenshot review for discretionary traders; live-data and brokerage expansion is excluded.

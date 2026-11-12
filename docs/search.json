@@ -1,6 +1,81 @@
 {
-  "generated_at": "2026-11-10T00:35:56.990415+00:00",
+  "generated_at": "2026-11-12T22:37:01.478289+00:00",
   "posts": [
+    {
+      "url": "/directions/static-forms.html",
+      "title": "Static Forms — Direction Package",
+      "excerpt": "Publish structured landing pages with static form endpoints and zero application server.",
+      "tags": [
+        "AI",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-12T22:35:11+00:00"
+    },
+    {
+      "url": "/directions/canvasninjaapp.html",
+      "title": "CanvasNinja — Direction Package",
+      "excerpt": "Turn lesson content into polished classroom worksheets and visual learning packs.",
+      "tags": [
+        "AI",
+        "education",
+        "finance"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-12T22:35:11+00:00"
+    },
+    {
+      "url": "/directions/chart-scanner-ai.html",
+      "title": "Chart Scanner AI — Direction Package",
+      "excerpt": "Scan chart screenshots into structured, explainable technical-analysis reports.",
+      "tags": [
+        "AI",
+        "SaaS",
+        "education",
+        "language",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 3,
+      "date": "2026-11-12T22:35:11+00:00"
+    },
+    {
+      "url": "/directions/amen-faith-ai.html",
+      "title": "Amen Faith AI — Direction Package",
+      "excerpt": "AI-assisted sermon preparation, study materials, and ministry workflow tools.",
+      "tags": [
+        "AI",
+        "B2B",
+        "religion",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-11-12T22:35:11+00:00"
+    },
+    {
+      "url": "/directions/3d-printer-pen-plotter.html",
+      "title": "3D Printer Pen Plotter — Direction Package",
+      "excerpt": "Browser-based calibration, vector conversion, and print-planning for pen-plotter and 3D-printer hobbyists.",
+      "tags": [
+        "AI",
+        "proposal",
+        "mobile",
+        "vertical"
+      ],
+      "tier": "GO",
+      "demand": 3,
+      "competition": 2,
+      "date": "2026-11-12T22:35:11+00:00"
+    },
     {
       "url": "/directions/getfunneled.html",
       "title": "Get Funneled — Opportunity Direction",
