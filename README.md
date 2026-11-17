@@ -10,6 +10,40 @@ The system runs automatically via GitHub Action (`Mon + Thu 17:00 UTC` = `Tue + 
 
 ---
 
+## Radar v2 (daily signals site)
+
+**The daily radar is the product.** It owns the site root (`/` redirects to `/radar/`), updates
+every day, shows what changed since yesterday, and publishes an RSS feed (`/radar/feed.xml`).
+The weekly LLM loop below is retired as a schedule: `weekly.yml` is manual-only, and its build
+packages live on at `/archive/`.
+
+`radar/` is the v2 layer from the PRD: a daily, LLM-free job that tracks movement across free
+(tier-1) sources and publishes `docs/radar/` — **Today** (rising products + directions worth a
+look), **Directions** (landscape, verified earners, App Store charts, Reddit demand, a 72-hour
+validation kit per niche), **Check an idea** (runs in the browser, live Reddit search) and **Method**.
+
+| Source | How | Label |
+|---|---|---|
+| TrustMRR | public `api/ai` + every historical `trustmrr_raw.json` (backfill) | verified |
+| App Store | Apple RSS top-grossing / top-free per genre + iTunes Lookup | verified rank / estimated ratings |
+| GitHub | Trending page, stars today | verified |
+| Reddit | [Arctic Shift](https://arctic-shift.photon-reddit.com) `posts/search` per direction subreddit | verified counts |
+| Causal trace | TinyFish CLI on the day's top spikes (CI only) | inferred |
+
+```bash
+python -m radar collect --backfill   # first time: load history + all sources (~5 min)
+python -m radar collect              # daily
+python -m radar build                # analyze + trace (if tinyfish) + write docs/radar/
+```
+
+Storage: `data/snapshots/<day>.jsonl.gz` is committed (append-only, one small file per day);
+`data/radar.sqlite` is a gitignored cache rebuilt from those files on demand.
+Directions and their keywords/subreddits live in `radar/taxonomy.py`.
+CI: `.github/workflows/radar-daily.yml` (06:30 UTC). Paid sources (keyword volume, X API, app
+revenue estimates) are tier 2 and deliberately not wired in.
+
+---
+
 ## Architecture
 
 ```

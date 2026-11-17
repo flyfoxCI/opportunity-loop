@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Check an idea · Opportunity Radar</title><meta name="description" content="What is moving in indie software, why, and what to build next.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="radar.css">
+<link rel="alternate" type="application/rss+xml" title="Opportunity Radar daily" href="feed.xml">
+<script>try{var t=localStorage.getItem("radar-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head><body>
+<nav class="nav"><div class="wrap">
+<a class="brand" href="index.html"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="4.5" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><path d="M10 10 L16 4.5" stroke="currentColor" stroke-width="1.5"/><circle cx="14.2" cy="12.6" r="1.8" fill="var(--signal)"/></svg>Opportunity Radar</a>
+<a class="link" href="index.html">Today</a><a class="link" href="directions/index.html">Directions</a>
+<a class="link on" href="check.html">Check an idea</a><a class="link" href="method.html">Method</a>
+<a class="link" href="../archive/">Build packages</a>
+<span class="spacer"></span><button class="theme-btn" data-theme-toggle aria-label="Switch light or dark theme">◐</button>
+</div></nav>
+<main class="wrap"><header class="mast"><div class="eyebrow"><span>Idea check</span><span>runs in your browser</span></div>
+<h1>Is anyone paying for this, and is anyone asking?</h1>
+<p class="lede">Describe what you want to build and for whom. We match it against verified products and our directions, then read Reddit live for people asking for it.</p></header>
+<section><form id="check-form" data-src="data.json" class="panel pad">
+<label for="idea" class="eyebrow" style="display:block;margin-bottom:8px">Your idea in one sentence</label>
+<textarea id="idea" name="idea" placeholder="e.g. invoice reminders for freelance designers that chase late payments by email"></textarea>
+<div class="row" style="margin-top:12px;justify-content:space-between"><button class="btn" type="submit" disabled>Check the evidence</button>
+<div class="row"><span class="tiny faint">Try</span>
+<button type="button" class="chip" data-example="calorie tracker that logs meals from a photo for people on GLP-1">GLP-1 meal tracker</button>
+<button type="button" class="chip" data-example="quote and invoice app for roofing contractors that turns a site photo into an estimate">Roofing estimates</button>
+<button type="button" class="chip" data-example="tool that finds reddit threads where people ask for a product like mine">Reddit lead finder</button></div></div></form></section>
+<div id="check-out"></div></main>
+<footer><div class="wrap">Opportunity Loop v2. Every figure carries a label: <span class="badge b-verified">verified</span>
+<span class="badge b-estimated">estimated</span> or <span class="badge b-inferred">inferred</span>.
+Sources: TrustMRR, Apple charts, GitHub Trending, Reddit via Arctic Shift, TinyFish.
+Updated daily. <a href="feed.xml">Follow by RSS</a></div></footer>
+<script src="radar.js"></script></body></html>

@@ -410,7 +410,7 @@ def generate_home_page(posts: list[dict], weeks: list[dict]) -> None:
         "layout: home",
         f"title: {_yaml_quote('Weekly TrustMRR direction radar')}",
         f"description: {_yaml_quote('3–5 selectable startup direction packages every Monday morning.')}",
-        "permalink: /",
+        "permalink: /archive/",  # the daily radar owns /
     ]
     fm.append("posts:")
     for p in posts:
