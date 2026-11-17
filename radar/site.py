@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 from datetime import datetime, timezone
 from html import escape
@@ -11,6 +12,7 @@ from pathlib import Path
 from .store import ROOT
 
 OUT = ROOT / "docs" / "radar"
+SITE_URL = os.environ.get("RADAR_SITE_URL", "https://flyfoxci.github.io/opportunity-loop/radar/")
 STATIC = Path(__file__).parent / "static"
 SRC_NAMES = {"trustmrr": "TrustMRR", "appstore": "App Store", "github": "GitHub", "reddit": "Reddit"}
 SRC_GLYPH = {"trustmrr": "MRR", "appstore": "iOS", "github": "GH"}
@@ -60,19 +62,21 @@ def page(title: str, body: str, base: str, active: str, description: str = "") -
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="{base}radar.css">
+<link rel="alternate" type="application/rss+xml" title="Opportunity Radar daily" href="{base}feed.xml">
 <script>try{{var t=localStorage.getItem("radar-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}}catch(e){{}}</script>
 </head><body>
 <nav class="nav"><div class="wrap">
 <a class="brand" href="{base}index.html">{LOGO}Opportunity Radar</a>
 {link("index.html", "Today", "today")}{link("directions/index.html", "Directions", "directions")}
 {link("check.html", "Check an idea", "check")}{link("method.html", "Method", "method")}
-<a class="link" href="{base}../index.html">Build packages</a>
+<a class="link" href="{base}../archive/">Build packages</a>
 <span class="spacer"></span><button class="theme-btn" data-theme-toggle aria-label="Switch light or dark theme">◐</button>
 </div></nav>
 <main class="wrap">{body}</main>
 <footer><div class="wrap">Opportunity Loop v2. Every figure carries a label: <span class="badge b-verified">verified</span>
 <span class="badge b-estimated">estimated</span> or <span class="badge b-inferred">inferred</span>.
-Sources: TrustMRR, Apple charts, GitHub Trending, Reddit via Arctic Shift, TinyFish.</div></footer>
+Sources: TrustMRR, Apple charts, GitHub Trending, Reddit via Arctic Shift, TinyFish.
+Updated daily. <a href="{base}feed.xml">Follow by RSS</a></div></footer>
 <script src="{base}radar.js"></script></body></html>"""
 
 
@@ -121,9 +125,10 @@ def signal_row(s: dict, base: str) -> str:
 <div class="read"><div class="x">{E(head)}</div><div class="v">{E(sub)}</div></div>{trace}</article>"""
 
 
-def rank_row(i: int, d: dict, base: str) -> str:
+def rank_row(i: int, d: dict, base: str, m: dict | None = None) -> str:
+    delta = rank_delta(d, i, m) if m else ""
     return f"""<li data-slug="{E(d['slug'])}" data-f="{E(d['verdict'])} {E(d['group'])}"><span class="n">{i:02d}</span>
-<div class="t"><a href="{base}directions/{E(d['slug'])}.html">{E(d['name'])}</a><p>{E(d['why'])}</p></div>
+<div class="t"><a href="{base}directions/{E(d['slug'])}.html">{E(d['name'])}</a>{delta}<p>{E(d['why'])}</p></div>
 <span class="vp">{verdict_pill(d['verdict'])}</span><span class="s">{d['score']:.2f}</span>{meter(d, compact=True)}</li>"""
 
 
@@ -148,19 +153,94 @@ def health_line(m: dict) -> str:
     return '<div class="health">' + "".join(out) + "</div>"
 
 
-def lead_block(d: dict) -> str:
+def lead_block(d: dict, m: dict | None = None) -> str:
     st = d["stats"]
+    delta = rank_delta(d, 1, m) if m else ""
     facts = [("Verified products (TrustMRR)", st["tm_players"]), ("At $1K+ MRR", st["tm_earners_1k"]),
              ("Top verified MRR", money(st["tm_top_mrr"])), ("Apps in US top-grossing", st["app_grossing"]),
              ("Buyer-intent Reddit posts / week", f'{st["reddit_posts"]:g}')]
     return f"""<div class="panel lead"><div>
-<div class="row">{verdict_pill(d['verdict'])}<span class="eyebrow">{E(d['group'])} · ranked #1 today</span></div>
+<div class="row">{verdict_pill(d['verdict'])}<span class="eyebrow">{E(d['group'])} · ranked #1 today</span>{delta}</div>
 <h2><a href="directions/{E(d['slug'])}.html">{E(d['name'])}</a></h2>
 <p class="why">{E(d['why'])}. {E(VERDICT_TXT[d['verdict']])}</p>
 <div class="actions"><a class="btn" href="directions/{E(d['slug'])}.html#kit">Get the 72-hour kit</a>
 <a class="btn ghost" href="directions/{E(d['slug'])}.html">Open the landscape</a></div></div>
 <div><div class="scorebig"><b>{d['score']:.2f}</b><span class="tiny muted">score · confidence {d['confidence']:.1f}</span></div>
 {meter(d)}<ul class="facts">{''.join(f'<li><span>{k}</span><b>{v}</b></li>' for k, v in facts)}</ul></div></div>"""
+
+
+# ------------------------------------------------------------------ daily briefing + history
+
+def briefing(m: dict) -> dict:
+    """The day's finding in words, shared by the page, the RSS item and the history file."""
+    dirs = m["directions"]
+    lead = dirs[0]
+    n_enter = sum(1 for d in dirs if d["verdict"] == "ENTER")
+    n_narrow = sum(1 for d in dirs if d["verdict"] == "NARROW")
+    top_mult = max((s for s in m["signals"] if s.get("mult") and s["source"] == "trustmrr"),
+                   key=lambda s: s["mult"], default=None)
+    if n_enter:
+        head_txt = f'{lead["name"]} clears the evidence bar today'
+        head_html = f'<em>{E(lead["name"])}</em> clears the evidence bar today'
+    else:
+        head_txt = f'No niche clears the bar today, {lead["name"]} comes closest'
+        head_html = f'No niche clears the bar today, <em>{E(lead["name"])}</em> comes closest'
+    lede = (f'{lead["why"]}. {plural(n_narrow, "more direction")} {"is" if n_narrow == 1 else "are"} real but need a narrow wedge.'
+            + (f' Fastest verified mover: {top_mult["name"]}, MRR ×{top_mult["mult"]:.1f} in {top_mult["window"]}.' if top_mult else ""))
+    changes = []
+    prev = m.get("prev") or {}
+    if prev:
+        before = prev["ranks"]
+        new_enter = [d["name"] for d in dirs if d["verdict"] == "ENTER" and before.get(d["slug"], [0, ""])[1] != "ENTER"]
+        dropped = [d["name"] for d in dirs if d["verdict"] != "ENTER" and before.get(d["slug"], [0, ""])[1] == "ENTER"]
+        if new_enter:
+            changes.append(f'New to ENTER: {", ".join(new_enter)}.')
+        if dropped:
+            changes.append(f'Dropped out of ENTER: {", ".join(dropped)}.')
+        if not changes:
+            changes.append("No change in the ENTER list.")
+    return {"day": m["generated"][:10], "headline": head_txt, "headline_html": head_html, "lede": lede,
+            "changes": " ".join(changes), "n_enter": n_enter, "n_narrow": n_narrow,
+            "enter": [d["name"] for d in dirs if d["verdict"] == "ENTER"]}
+
+
+def load_prev(day: str) -> dict | None:
+    """The most recent history file from before `day`."""
+    hist = OUT / "history"
+    older = sorted(f for f in hist.glob("*.json") if f.stem < day) if hist.exists() else []
+    return json.loads(older[-1].read_text()) if older else None
+
+
+def rank_delta(d: dict, rank: int, m: dict) -> str:
+    prev = m.get("prev")
+    if not prev:
+        return ""
+    was = prev["ranks"].get(d["slug"])
+    if not was:
+        return '<span class="delta">new</span>'
+    old_rank, old_verdict = was[0], was[1]
+    bits = []
+    if old_verdict != d["verdict"]:
+        bits.append(f'was {old_verdict}')
+    if old_rank != rank:
+        bits.append(("▲" if old_rank > rank else "▼") + str(abs(old_rank - rank)))
+    if not bits:
+        return ""
+    cls = "up" if (old_rank > rank or (d["verdict"] == "ENTER" and old_verdict != "ENTER")) else "down"
+    return f'<span class="delta {cls}" title="vs {E(prev["day"])}">{" · ".join(bits)}</span>'
+
+
+def feed_xml(history: list[dict]) -> str:
+    items = []
+    for h in sorted(history, key=lambda h: h["day"], reverse=True)[:30]:
+        pub = datetime.strptime(h["day"], "%Y-%m-%d").strftime("%a, %d %b %Y 07:00:00 +0000")
+        desc = " ".join(x for x in (h.get("changes", ""), h["lede"], "ENTER today: " + (", ".join(h["enter"]) or "none") + ".") if x)
+        items.append(f"<item><title>{E(h['day'])}: {E(h['headline'])}</title><link>{E(SITE_URL)}</link>"
+                     f"<guid isPermaLink=\"false\">radar-{E(h['day'])}</guid><pubDate>{pub}</pubDate>"
+                     f"<description>{E(desc)}</description></item>")
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Opportunity Radar</title>'
+            f'<link>{E(SITE_URL)}</link><description>Daily briefing: which indie niches have paying customers and buyers asking now</description>'
+            + "".join(items) + "</channel></rss>\n")
 
 
 # ------------------------------------------------------------------ pages
@@ -179,21 +259,17 @@ def index_page(m: dict) -> str:
     counts = {k: v for k, v in taken.items() if v}
     chips = '<button class="on" data-v="all">All</button>' + "".join(
         f'<button data-v="{k}">{SRC_NAMES[k]}</button>' for k in counts)
-    n_enter = sum(1 for d in dirs if d["verdict"] == "ENTER")
-    n_narrow = sum(1 for d in dirs if d["verdict"] == "NARROW")
+    b = briefing(m)
+    n_enter, n_narrow = b["n_enter"], b["n_narrow"]
     intent = sum(d["stats"]["reddit_posts"] for d in dirs)
-    top_mult = max((s for s in m["signals"] if s.get("mult") and s["source"] == "trustmrr"), key=lambda s: s["mult"], default=None)
-    day = m["generated"][:10]
-    weekday = datetime.strptime(day, "%Y-%m-%d").strftime("%A %d %B %Y")
-    if n_enter:
-        headline = f'<em>{E(lead["name"])}</em> clears the evidence bar today'
-    else:
-        headline = f'No niche clears the bar today, <em>{E(lead["name"])}</em> comes closest'
-    lede = (f'{E(lead["why"])}. {plural(n_narrow, "more direction")} {"is" if n_narrow == 1 else "are"} real but need a narrow wedge.'
-            + (f' Fastest verified mover: {E(top_mult["name"])}, MRR ×{top_mult["mult"]:.1f} in {E(top_mult["window"])}.' if top_mult else ""))
+    weekday = datetime.strptime(b["day"], "%Y-%m-%d").strftime("%A %d %B %Y")
+    headline = b["headline_html"]
+    lede = E(b["lede"])
+    since = (f'<p class="since"><span>Since {E(datetime.strptime(m["prev"]["day"], "%Y-%m-%d").strftime("%a %d %b"))}</span> {E(b["changes"])}</p>'
+             if m.get("prev") else "")
     body = f"""
 <header class="mast"><div class="eyebrow"><span>Daily briefing</span><span>{E(weekday)}</span><span>updated {E(m['generated'][11:])}</span></div>
-<h1>{headline}</h1><p class="lede">{lede}</p>
+<h1>{headline}</h1><p class="lede">{lede}</p>{since}
 <div class="ledger"><div><b>{n_enter}</b><span>enter</span></div><div><b>{n_narrow}</b><span>narrow</span></div>
 <div><b>{len(m['signals'])}</b><span>products moving</span></div><div><b>{intent:,.0f}</b><span>buyer asks on Reddit / week</span></div>
 <div><b>{m['snapshot_days']}</b><span>days of MRR history</span></div></div>
@@ -202,12 +278,12 @@ def index_page(m: dict) -> str:
 <section id="watching" hidden><div class="sec-head"><div><h2>Directions you watch</h2><p>Saved in this browser</p></div></div>
 <div class="panel"><ol class="rank"></ol></div></section>
 
-<section><div class="sec-head"><h2>Lead direction</h2></div>{lead_block(lead)}</section>
+<section><div class="sec-head"><h2>Lead direction</h2></div>{lead_block(lead, m)}</section>
 
 <section><div class="sec-head"><div><h2>Also ranked</h2>
 <p>Score = money, momentum, demand, gap and fit, discounted when few sources agree. The dark bar marks each direction's strongest part.</p></div>
 <a href="directions/index.html">All {len(dirs)} directions →</a></div>
-<div class="panel"><ol class="rank">{''.join(rank_row(i + 2, d, '') for i, d in enumerate(rest))}</ol></div></section>
+<div class="panel"><ol class="rank">{''.join(rank_row(i + 2, d, '', m) for i, d in enumerate(rest))}</ol></div></section>
 
 <section><div class="sec-head"><div><h2>Moving now</h2><p>MRR growth between our own snapshots, young apps already in the top-grossing charts, and GitHub repos gaining stars fast</p></div>
 <div class="filters" data-filter-for="#sig-grid">{chips}</div></div>
@@ -216,7 +292,7 @@ def index_page(m: dict) -> str:
 <section><div class="sec-head"><div><h2>Buyers asking on Reddit</h2><p>Posts asking for a tool, an alternative or a fix, most-discussed first. Each one is a person to talk to.</p></div></div>
 <div class="panel threads">{''.join(thread_row(t, True, '') for t in m['hot_threads']) or '<p class="empty">No Reddit data yet.</p>'}</div></section>
 
-<ol id="all-dir-rows" hidden>{''.join(rank_row(i + 1, d, '') for i, d in enumerate(dirs))}</ol>
+<ol id="all-dir-rows" hidden>{''.join(rank_row(i + 1, d, '', m) for i, d in enumerate(dirs))}</ol>
 """
     return page("Opportunity Radar", body, "", "today")
 
@@ -329,7 +405,7 @@ def direction_page(d: dict, m: dict) -> str:
 <li><span>Day 3</span><div><b>Decide.</b> <span class="pass">Pass:</span> {E(kit['pass_bar'])}. <span class="kill">Kill:</span> {E(kit['kill_bar'])}.</div></li>
 </ol></div></section>
 
-{('<section><div class="sec-head"><div><h2>Build packages</h2><p>Full PRD, 14-day build plan and 30-day marketing from earlier loop runs</p></div></div><div class="tbl-wrap"><table><thead><tr><th>Package</th><th>Tier</th><th class="num">Date</th></tr></thead><tbody>' + pkgs + '</tbody></table></div></section>') if pkgs else ''}
+{('<section><div class="sec-head"><div><h2>Build packages</h2><p>Full PRD, 14-day build plan and 30-day marketing from earlier weekly loop runs (archive)</p></div></div><div class="tbl-wrap"><table><thead><tr><th>Package</th><th>Tier</th><th class="num">Date</th></tr></thead><tbody>' + pkgs + '</tbody></table></div></section>') if pkgs else ''}
 """
     return page(f"{d['name']} · Opportunity Radar", body, base, "directions", d["why"])
 
@@ -401,6 +477,15 @@ def data_json(m: dict) -> dict:
 
 def write(m: dict) -> None:
     (OUT / "directions").mkdir(parents=True, exist_ok=True)
+    (OUT / "history").mkdir(parents=True, exist_ok=True)
+    day = m["generated"][:10]
+    m["prev"] = load_prev(day)
+    b = briefing(m)
+    snap = {k: b[k] for k in ("day", "headline", "lede", "changes", "enter", "n_enter", "n_narrow")}
+    snap["ranks"] = {d["slug"]: [i + 1, d["verdict"], d["score"]] for i, d in enumerate(m["directions"])}
+    (OUT / "history" / f"{day}.json").write_text(json.dumps(snap, ensure_ascii=False, indent=0), encoding="utf-8")
+    history = [json.loads(f.read_text()) for f in sorted((OUT / "history").glob("*.json"))]
+    (OUT / "feed.xml").write_text(feed_xml(history), encoding="utf-8")
     for f in ("radar.css", "radar.js"):
         shutil.copy(STATIC / f, OUT / f)
     (OUT / "index.html").write_text(index_page(m), encoding="utf-8")

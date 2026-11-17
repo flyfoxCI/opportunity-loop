@@ -12,6 +12,11 @@ The system runs automatically via GitHub Action (`Mon + Thu 17:00 UTC` = `Tue + 
 
 ## Radar v2 (daily signals site)
 
+**The daily radar is the product.** It owns the site root (`/` redirects to `/radar/`), updates
+every day, shows what changed since yesterday, and publishes an RSS feed (`/radar/feed.xml`).
+The weekly LLM loop below is retired as a schedule: `weekly.yml` is manual-only, and its build
+packages live on at `/archive/`.
+
 `radar/` is the v2 layer from the PRD: a daily, LLM-free job that tracks movement across free
 (tier-1) sources and publishes `docs/radar/` — **Today** (rising products + directions worth a
 look), **Directions** (landscape, verified earners, App Store charts, Reddit demand, a 72-hour
