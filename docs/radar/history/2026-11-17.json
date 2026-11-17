@@ -1,212 +1,212 @@
 {
 "day": "2026-11-17",
 "headline": "AI assistants & agents clears the evidence bar today",
-"lede": "8 verified products at $1K+ MRR; 24 apps in US top-grossing charts; 17.2 buyer-intent Reddit posts a week; 4 growing 30%+ a month. 12 more directions are real but need a narrow wedge. Fastest verified mover: Agent Media, MRR ×16.3 in 30 days.",
+"lede": "10 verified products at $1K+ MRR; 24 apps in US top-grossing charts; 17.2 buyer-intent Reddit posts a week; 5 growing 30%+ a month. 13 more directions are real but need a narrow wedge. Fastest verified mover: INXANITY Labs — Browser Gaming & AI Modding Platform, MRR ×16.0 in 30 days.",
 "changes": "",
 "enter": [
 "AI assistants & agents",
-"Notes, tasks & productivity",
 "Website & app builders",
-"Study, exams & tutoring",
-"Trading & investing tools"
+"Notes, tasks & productivity",
+"Trading & investing tools",
+"Study, exams & tutoring"
 ],
 "n_enter": 5,
-"n_narrow": 12,
+"n_narrow": 13,
 "ranks": {
 "ai-agents": [
 1,
 "ENTER",
-0.664
-],
-"productivity": [
-2,
-"ENTER",
-0.662
+0.704
 ],
 "nocode-sites": [
+2,
+"ENTER",
+0.684
+],
+"productivity": [
 3,
 "ENTER",
-0.628
-],
-"study-edtech": [
-4,
-"ENTER",
-0.611
+0.657
 ],
 "trading-investing": [
+4,
+"ENTER",
+0.657
+],
+"study-edtech": [
 5,
 "ENTER",
-0.603
+0.614
 ],
-"ai-video": [
+"mobile-utility": [
 6,
 "NARROW",
-0.655
+0.732
 ],
-"devtools": [
+"ai-video": [
 7,
 "NARROW",
-0.632
+0.655
 ],
 "ecommerce": [
 8,
 "NARROW",
-0.629
+0.641
 ],
-"mobile-utility": [
+"devtools": [
 9,
 "NARROW",
-0.624
+0.632
 ],
 "audio-voice": [
 10,
 "NARROW",
-0.607
+0.595
 ],
 "design-tools": [
 11,
 "NARROW",
-0.597
+0.585
 ],
 "ai-photo": [
 12,
 "NARROW",
-0.553
+0.556
 ],
 "lead-gen": [
 13,
 "NARROW",
-0.53
+0.546
+],
+"analytics": [
+14,
+"NARROW",
+0.507
 ],
 "nutrition": [
-14,
+15,
 "NARROW",
 0.497
 ],
 "personal-finance": [
-15,
+16,
 "NARROW",
 0.487
 ],
 "mental-health": [
-16,
-"NARROW",
-0.482
-],
-"dating-social": [
 17,
 "NARROW",
-0.459
-],
-"jobs-career": [
-18,
-"WATCH",
-0.449
-],
-"habit-fitness": [
-19,
-"WATCH",
-0.424
+0.47
 ],
 "real-estate": [
-20,
-"WATCH",
-0.422
+18,
+"NARROW",
+0.45
 ],
 "legal-docs": [
+19,
+"WATCH",
+0.444
+],
+"jobs-career": [
+20,
+"WATCH",
+0.429
+],
+"habit-fitness": [
 21,
 "WATCH",
-0.416
+0.424
 ],
 "faith": [
 22,
 "WATCH",
 0.41
 ],
-"analytics": [
+"seo-aeo": [
 23,
 "WATCH",
-0.405
-],
-"seo-aeo": [
-24,
-"WATCH",
-0.369
+0.402
 ],
 "forms-surveys": [
-25,
+24,
 "WATCH",
-0.339
+0.338
 ],
 "travel": [
-26,
+25,
 "WATCH",
 0.338
 ],
 "trades-field": [
+26,
+"WATCH",
+0.335
+],
+"health-medical": [
 27,
 "WATCH",
-0.334
+0.322
 ],
 "social-scheduling": [
 28,
 "WATCH",
-0.312
+0.308
 ],
-"health-medical": [
+"dating-social": [
 29,
 "WATCH",
-0.309
-],
-"language": [
-30,
-"WATCH",
-0.289
+0.307
 ],
 "pets": [
+30,
+"WATCH",
+0.285
+],
+"language": [
 31,
 "WATCH",
-0.289
-],
-"family-kids": [
-32,
-"WATCH",
-0.278
-],
-"booking-scheduling": [
-33,
-"WATCH",
-0.268
-],
-"support-chatbot": [
-34,
-"WATCH",
-0.266
+0.279
 ],
 "newsletter-email": [
-35,
+32,
+"WATCH",
+0.274
+],
+"family-kids": [
+33,
 "WATCH",
 0.264
 ],
+"booking-scheduling": [
+34,
+"WATCH",
+0.261
+],
 "security": [
+35,
+"WATCH",
+0.26
+],
+"support-chatbot": [
 36,
 "WATCH",
-0.264
+0.257
 ],
 "payments-churn": [
 37,
 "WATCH",
-0.249
+0.251
 ],
 "reddit-community": [
 38,
 "WATCH",
-0.236
+0.22
 ],
 "content-repurpose": [
 39,
 "WATCH",
-0.21
+0.209
 ]
 }
 }
