@@ -1,6 +1,68 @@
 {
-  "generated_at": "2026-11-12T22:37:01.478289+00:00",
+  "generated_at": "2026-11-17T00:41:01.744076+00:00",
   "posts": [
+    {
+      "url": "/directions/jobradar-contractor-leads.html",
+      "title": "JobRadar — Contractor Lead Qualification",
+      "excerpt": "Rank and qualify local contractor leads from public job-board data without replacing the contractor’s existing sales process.",
+      "tags": [
+        "AI",
+        "B2B",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 3,
+      "date": "2026-11-17T00:39:25+00:00"
+    },
+    {
+      "url": "/directions/faith-sermon-workbench.html",
+      "title": "Faith Sermon Workbench",
+      "excerpt": "Turn a church’s sermon archive, service notes, and recurring themes into searchable sermon research and first drafts.",
+      "tags": [
+        "AI",
+        "B2B",
+        "religion",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 3,
+      "date": "2026-11-17T00:39:25+00:00"
+    },
+    {
+      "url": "/directions/heritage-language-coach.html",
+      "title": "Heritage Language Coach",
+      "excerpt": "Coach heritage-language learners with conversational practice, family vocabulary, and structured progress tracking.",
+      "tags": [
+        "AI",
+        "B2C",
+        "education",
+        "finance",
+        "language",
+        "mobile"
+      ],
+      "tier": "GO",
+      "demand": 4,
+      "competition": 2,
+      "date": "2026-11-17T00:39:25+00:00"
+    },
+    {
+      "url": "/directions/contractor-vertical-coach.html",
+      "title": "Contractor Vertical Coach — Roofers’ Revenue Operations",
+      "excerpt": "Give one contractor trade an AI business coach for estimating, follow-up, and recurring revenue operations.",
+      "tags": [
+        "AI",
+        "B2B",
+        "B2C",
+        "proposal",
+        "vertical"
+      ],
+      "tier": "GO_NARROW",
+      "demand": 4,
+      "competition": 4,
+      "date": "2026-11-17T00:39:25+00:00"
+    },
     {
       "url": "/directions/static-forms.html",
       "title": "Static Forms — Direction Package",
