@@ -22,3 +22,6 @@ venv/
 
 # Don't ignore seed_directions/ or PLAYBOOK.md — they're committed evidence
 !loop/seed_directions/
+
+# Radar v2: SQLite is a rebuildable cache; data/snapshots/*.jsonl.gz is what gets committed
+data/radar.sqlite*
