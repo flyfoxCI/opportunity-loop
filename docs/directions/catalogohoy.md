@@ -1,430 +1,362 @@
 ---
 layout: post
-title: "CatalogoHoy — Opportunity Direction"
-date: 2026-11-10T00:32:56+00:00
-week: "2026-11-10_003256"
-week_date: "2026-11-10T00:32:56+00:00"
+title: "CatalogoHoy — Spanish-Language Product Catalog Builder"
+date: 2026-11-17T10:32:16+00:00
+week: "2026-11-17_103216"
+week_date: "2026-11-17T10:32:16+00:00"
 slug: "catalogohoy"
 permalink: /directions/catalogohoy.html
 tags:
   - "AI"
-  - "vertical"
-excerpt: "A catalog-production assistant for one local-commerce niche, converting product lists into consistent print-ready and social-ready catalog layouts."
+  - "B2C"
+  - "language"
+  - "mobile"
+  - "analytics"
+excerpt: "Turn a product link into a conversion-ready Spanish-language catalog page with consistent output."
 ---
+
+**Tier:** GO_NARROW  
+**Demand:** 3/5  
+**Competition:** 3/5  
+**Target:** $10,000 MRR  
+**MVP:** 14 days, solo  
+**Marketing budget:** ≤ $300 for 30 days  
 
 ## 1. Why this direction
 
-### Opportunity
-
-Build a focused catalog-production assistant for a single local-commerce niche. A merchant uploads a structured product list and receives consistent catalog pages, social cards, and a simple PDF export. The product should solve repeat production work rather than become a general design suite.
-
-### Target customer
-
-The initial ICP is one of:
-
-- A local boutique selling 20–100 products.
-- A small wholesale distributor producing seasonal catalogs.
-- A specialty food or beauty merchant with frequent seasonal assortments.
-- A marketplace seller whose customers use catalogs for purchasing.
-
-Choose exactly one segment. The recommended first segment is independent home and lifestyle boutiques because their products are visually coherent and catalog creation is a recurring workflow.
-
 ### TrustMRR evidence
 
-Stage A reports CatalogoHoy at:
+- CatalogoHoy reports approximately **$4.67 MRR**, **$21.77 in last-30-day revenue**, and **31 subscribers**.
+- Last-30 revenue is substantially above current MRR, which may indicate recent conversions, prepaid plans, or timing effects; the discrepancy requires verification before relying on it.
+- The product appears to address catalog creation for Spanish-speaking merchants or consumers.
+- The revenue is small, so the strongest signal is the existence of a localized workflow rather than proven scale.
+- The narrow opportunity is not “another catalog builder.” It is a repeatable import-to-catalog output for one platform and one merchant type.
 
-- MRR: **$3.59**
-- Last 30 days: **$17.49**
-- Subscribers: **23**
-- Stage A demand score: **3**
-- Stage A competition score: **2**
-- Website: https://catalogohoy.com
-- X handle: `@so_tic0`
+### X/web evidence
 
-Revenue is currently small but last-30-days revenue materially exceeds current MRR, suggesting a recent increase or timing volatility. The listing nevertheless confirms a functioning product and some customer interest. The stronger opportunity comes from constraining the product to one catalog workflow and one merchant niche.
+- The identified X handle is `@so_tic0`.
+- The supplied TinyFish output did not expose result bodies, so no quotes or engagement metrics are claimed.
+- The public social hypothesis is that independent merchants want product descriptions and catalogs in natural Spanish without rebuilding each listing manually.
+- Direct outreach to Spanish-speaking merchants is essential because generic web demand will not validate this localization wedge.
 
-### X and web evidence
+### Thesis
 
-The supplied Stage A search output did not contain usable search results. Run and archive:
+Build a **Spanish-language catalog generator for independent sellers**. A merchant imports a CSV or pastes a product list, selects a brand style, and receives a clean, shareable catalog with:
 
-- `"CatalogoHoy" (painful OR broken OR hate OR expensive)`
-- `"CatalogoHoy" (looking for OR recommend OR alternative)`
-- `"catalog maker" (painful OR expensive OR "takes too long")`
-- `"product catalog" small business (Canva OR template OR manual)`
-- `"seasonal catalog" merchant pain`
-- `site:x.com "CatalogoHoy"`
-- `site:reddit.com small business product catalog design`
+- natural Spanish descriptions;
+- consistent formatting;
+- product images;
+- prices and optional contact links;
+- PDF/online catalog export;
+- one-click updates.
 
-Demand validation requires 10 dated posts and 10 merchant interviews, with at least five confirming recurring catalog work and at least three agreeing to pay $29–$79 for a monthly workflow.
+The product’s value is linguistic consistency plus operational speed, not proprietary AI technology.
 
-### Why it can win
+### Initial ICP
 
-The product should not compete with Canva on general design freedom. It should turn merchant data into a finished, consistent deliverable:
+- Independent Latin American or Spanish-speaking sellers with 10–100 products.
+- Start with one commerce workflow: **CSV to shareable catalog** for Instagram, WhatsApp, or a simple hosted link.
+- Do not promise synchronization with every marketplace in the MVP.
 
-1. Upload products from CSV, spreadsheet, or a structured form.
-2. Select one catalog template.
-3. Auto-create product spreads and social previews.
-4. Correct generated copy and imagery.
-5. Export print-ready PDF and social assets.
+### Validation questions
 
-The value is saved production time and consistent output.
-
-### Validation gate
-
-Proceed only if:
-
-1. Ten interviews confirm catalog production is recurring and painful.
-2. Five merchants provide a real recent catalog or product feed.
-3. Three agree to test a concierge catalog.
-4. Two agree to pay $49 or more per month.
-5. The chosen niche has no dominant vertical catalog product below $49 with materially better output quality.
+1. Are merchants copying the same products into multiple formats?
+2. Which output is used most often: PDF, image carousel, WhatsApp list, or hosted link?
+3. Are natural Spanish descriptions worth paying for?
+4. How often does the catalog change?
+5. Can one import workflow replace a recurring manual task?
 
 ## 2. Competitor table
 
-### L1 direct competitors
+### L1 — direct alternatives
 
-| Competitor | Positioning | Pricing to verify | Strength | Opening for CatalogoHoy |
-|---|---|---:|---|---|
-| CatalogoHoy | Catalog creation, to verify | Unknown | Existing product and local-market fit | Specialized template, faster batch workflow, stronger data import |
-| Canva | General design suite with catalog templates | Free plus paid plans | Ubiquitous, broad template library | Product-feed automation and batch catalog output |
-| Adobe Express | General design and print assets | Free plus paid plans | Print ecosystem and brand controls | Faster structured generation and lower specialist overhead |
-| VistaCreate | Print marketing and catalogs | Paid plans | Print-shop integration, templates | Faster catalog generation and lower design complexity |
-| Marq / Brandfolder / others | Brand-governed collateral | Paid plans | Brand consistency and templates | Focus on independent merchants and product data |
-| Lucidpress | Online and print design | Free plus paid plans | Familiar design workflow | Automation from product data |
-| DesQgn / DSers / Sellbrite | Product and order management with some collateral | Varies | E-commerce catalog workflows | Standalone design output for non-platform merchants |
+| competitor | likely offer/pricing | strength | weakness / opening | evidence confidence |
+|---|---|---|---|---|
+| CatalogoHoy | Localized catalog product with approximately $5 MRR and 31 subscribers | Existing localization focus and audience | Opportunity to specialize by merchant type and output channel | High for metrics; medium for feature set |
+| Canva | General catalog and brochure templates | Familiar editing and strong templates | Requires manual product copy, layout, and multilingual consistency | High |
+| Adobe Express | Catalog/product-list templates | Polished assets and broad brand tools | General-purpose and not optimized for Spanish product copy | High |
+| Paperless / PDF catalog tools | Generate product PDFs | Efficient PDF output | Often require manual content preparation and lack language workflows | Medium |
+| Shopify catalog tools | Create and manage storefront product data | Integrated commerce ecosystem | Heavier setup, monthly platform cost, and broader scope | High |
+| Product-data feed tools | Normalize and publish product information | Reliable catalog structures | Technical, implementation-heavy, and not creator-friendly | High |
 
-Official pricing, export formats, and print quality must be verified before implementation.
+### L2 — adjacent substitutes
 
-### L2 alternatives
-
-| Alternative | Why users choose it | Opening |
+| substitute | why buyers use it | opportunity |
 |---|---|---|
-| Canva catalog maker | Familiar, inexpensive, flexible | Slow manual duplication and inconsistent updates |
-| Excel/PowerPoint layout | Works with existing skills | Poor print workflows and high manual effort |
-| InDesign / Affinity Publisher | Professional print control | Steep learning curve for small merchants |
-| Agency/freelancer | High quality and service | Expensive and slow for recurring work |
-| Printing service templates | Ready for press | Generic, limited product-data automation |
-| Product-feed PDF | Easy to generate | Weak visual storytelling and poor social assets |
-| Marketplace-native catalog | No extra production | Locked to one channel and no custom layout |
+| Excel/Google Sheets | Maintain products and descriptions | No polished catalog output or translation consistency |
+| Copywriter/freelancer | Write product descriptions | Cost and turnaround for ongoing catalogs |
+| WhatsApp product lists | Share products with customers | Inconsistent formatting and no downloadable catalog |
+| Marketplace listings | Publish each product | Duplicated work across channels and languages |
 
-### L3 substitute behavior
+### L3 — low-end alternatives
 
-- Export product photos and manually arrange them in Canva.
-- Use a free PDF template.
-- Ask a designer for each seasonal update.
-- Publish only a web storefront.
-- Create a spreadsheet price list.
-- Post individual products on social media.
+| alternative | weakness |
+|---|---|
+| Machine translation | Often unnatural, inconsistent, and unstructured |
+| Copy-paste templates | Slow and visually inconsistent |
+| Free PDF generators | No content transformation or brand flow |
 
-### Competition score
+### Competition conclusion
 
-**Score: 2/5 for a vertical catalog-production workflow.** General design tools are broad substitutes, but they do not automatically solve product ingestion, batch layout, and repeated seasonal updates for one vertical. Keep the scope narrow and emphasize output, not editing flexibility.
+**Score: 3/5.** General catalog and e-commerce tools are established, but localized Spanish output for a narrow merchant workflow remains a plausible niche. The product must avoid competing on general design capability and compete on **import speed + natural Spanish + ready-to-share output**.
 
-If research reveals strong vertical catalog incumbents, retain the `GO_NARROW` wedge below and keep competition at 4.
+## 3. PRD MVP
 
-## 3. PRD — MVP
+### Target outcome
 
-### Product promise
+An independent Spanish-speaking seller can upload a product CSV and receive a branded, consistent catalog they can send to customers or publish online.
 
-Turn a product list into a consistent, editable, export-ready catalog in under 30 minutes.
+### P0 — required for launch
 
-### Initial niche
+- CSV import with validation:
+  - name;
+  - description;
+  - price;
+  - image URL or uploaded image;
+  - optional SKU/category.
+- Basic setup wizard:
+  - language: Spanish;
+  - catalog name;
+  - brand color;
+  - logo;
+  - contact method.
+- Natural-Spanish description normalization:
+  - preserve facts;
+  - improve grammar and consistency;
+  - never invent specifications.
+- Template-based catalog generation:
+  - cover;
+  - category headings;
+  - product cards;
+  - price;
+  - image;
+  - optional contact CTA.
+- Outputs:
+  - hosted shareable link;
+  - downloadable PDF;
+  - mobile-friendly vertical catalog.
+- Manual product edit and regenerate.
+- Re-upload/replace list workflow.
+- Branding and pagination.
+- Authentication, usage limits, Stripe billing.
+- Export analytics and download tracking.
+- Human-review notice for generated descriptions.
 
-Independent home and lifestyle boutiques selling 20–100 SKUs. Product types, image ratio, and catalog sizes should be fixed for this niche.
+### P1 — after validation
 
-### P0 — launch-critical
+- Reusable saved brands and templates.
+- WhatsApp-friendly image catalog.
+- Spanish regional variants.
+- Inventory and “hide sold-out item” controls.
+- Duplicate-product detection.
+- CSV round-trip export with normalized copy.
 
-1. **Product import**
-   - CSV upload with a documented template.
-   - Product name, SKU, price, short description, category, image URL, and optional dimensions.
-   - Inline validation and row-level error reporting.
-   - Manual entry for up to 20 products.
+### P2 — later expansion
 
-2. **Template system**
-   - One print catalog template family.
-   - Fixed page sizes, grids, typography, and image behavior.
-   - Choose one visual theme.
-   - Auto-generate cover, contents, category pages, and product spreads.
-
-3. **Controlled editing**
-   - Edit title, price, description, category, ordering, and visibility.
-   - Replace or crop product images.
-   - Reorder products and pages.
-   - No arbitrary canvas manipulation in the MVP.
-
-4. **Asset outputs**
-   - Print-ready PDF with crop marks and bleed option.
-   - Web PDF preview.
-   - One social-card size.
-   - Optional ZIP of product images and previews.
-
-5. **Project workflow**
-   - Duplicate a previous catalog when seasonal stock changes.
-   - Save drafts.
-   - Export history.
-   - Version label and generation timestamp.
-
-6. **Quality and brand controls**
-   - Brand logo, one primary color, and one font family.
-   - Currency and locale settings.
-   - Preview overflow and low-resolution warnings.
-   - Manual approval step before export.
-
-7. **Account and billing**
-   - Email magic-link authentication.
-   - 7-day trial.
-   - Starter: **$49/month**, 3 catalogs and 100 products.
-   - Studio: **$99/month**, 10 catalogs and 500 products.
-   - Stripe billing.
-
-8. **Copyright and content safeguards**
-   - User confirmation that images and copy are authorized.
-   - No scraping from marketplaces or competitors.
-   - No copyrighted music or template reuse beyond licensed assets.
-   - Clear AI-assistance disclosure where text is generated.
-
-### P1 — first 30 days
-
-- XLSX import.
-- Shopify CSV import for merchants who sell there.
-- Multiple print sizes.
-- More templates.
-- Social carousel export.
-- Shared read-only catalog link.
-- QR codes.
-- Bulk copy editing.
-- Print-shop handoff.
-
-### P2 — after product-market signal
-
-- Inventory-feed synchronization.
-- More vertical templates.
-- Brand kits and fonts.
-- Team approval workflow.
-- Marketplace asset presets.
-- Translation.
-- API and plugin integrations.
-- Background-removal and retouch options.
+- Marketplace connectors.
+- Team approval.
+- Inventory synchronization.
+- Multi-language catalogs.
+- Agency white-label catalog builder.
+- Printable price-list variants.
 
 ### Non-goals
 
-- A general Canva-style design editor.
-- Pixel-perfect free positioning.
-- Logo generation.
-- Product photography.
-- Full inventory or ERP management.
-- Automatic marketplace publishing.
-- Guaranteed print-shop compatibility for every paper size.
-- Video creation.
-- Website building.
-- Multi-tenant agency workflows in the MVP.
-- Global template marketplace.
+- No full storefront or checkout in the MVP.
+- No inventory synchronization with Shopify, WooCommerce, or marketplaces at launch.
+- No marketplace scraping.
+- No universal PDF-design editor.
+- No bulk WhatsApp automation.
+- No claims of perfect regional idiomaticity without review.
+- No agency workflow until individual merchants retain.
 
-### Core user stories
+### MVP user story
 
-- As a boutique owner, I want to upload my products once so that I do not manually rebuild every page.
-- As a merchant, I want a consistent seasonal catalog so that my brand looks professional.
-- As a merchant, I want to correct prices and descriptions easily so that errors do not reach customers.
-- As a merchant, I want both print PDF and social previews so that I can use the same campaign across channels.
-- As a merchant, I want to reuse last season’s project so that small inventory changes are quick.
+> As an independent Spanish-speaking seller, I can import my product list and receive a consistent branded catalog quickly so that I can sell without rebuilding every product post.
 
-### MVP acceptance criteria
+### Technical approach
 
-A user can:
+- Next.js application with server-side CSV parsing.
+- Product model with source facts and generated fields kept separate.
+- Generation: constrained structured rewrite preserving names, prices, dimensions, materials, and SKUs.
+- Rendering: deterministic HTML templates for hosted output and PDF generation.
+- Hosted catalog URLs use public IDs and expiration/republish controls.
+- Storage: PostgreSQL plus object storage.
+- Billing: Stripe with monthly catalog and export limits.
 
-1. Import 20 products from CSV.
-2. Correct any validation errors.
-3. Generate a branded catalog preview.
-4. Edit a product and reorder it.
-5. Export a print-ready PDF and social assets.
-6. Duplicate the project for the next season.
-7. Upgrade through Stripe.
+### Pricing hypothesis
 
-### Technical recommendation
+- **Free:** one catalog, 10 products.
+- **Vendedor:** $19/month, 100 products, three templates, hosted link and PDF.
+- **Negocio:** $49/month, 500 products, saved brand, regional variants, and bulk update.
+- **Agencia pilot:** $99/month, 10 client brands and reusable templates.
 
-- Next.js/TypeScript application.
-- PostgreSQL for users, products, projects, assets, and exports.
-- Object storage for source and generated images.
-- Background job queue for generation and PDF rendering.
-- Deterministic template rendering with React/PDF or a comparable layout engine.
-- Image processing with a cloud image pipeline or Sharp.
-- Stripe billing.
-- Export and job logs.
-- Signed URLs for private source assets.
-- Automatic file-size, dimension, and malware checks.
+## 4. 14-day day-by-day build plan
 
-### Quality requirements
-
-- No text overflow.
-- No low-resolution product image below a documented threshold without warning.
-- Correct PDF dimensions and bleed.
-- Consistent fonts embedded in the PDF.
-- Accessible web preview.
-- Reproducible export from stored project version.
-- Clear separation between source asset and generated output.
-
-## 4. 14-day build plan
-
-| Day | Objective | Deliverables | Exit criterion |
+| Day | objective | deliverables | acceptance test |
 |---:|---|---|---|
-| 1 | Validate niche and pain | Select boutique segment; interview ten merchants; map output formats | Five recurring-work confirmations |
-| 2 | Validate payment | Produce one concierge catalog; offer $49/month | Two paid commitments |
-| 3 | Foundation | Auth, database, file storage, jobs, environments, logging | End-to-end placeholder project works |
-| 4 | Product import | CSV schema, upload, validation, error report, manual entry | Twenty-product import succeeds |
-| 5 | Template engine | Fixed layout schema, themes, image fitting, typography | Three page types render correctly |
-| 6 | Catalog generation | Cover, contents, categories, product pages, page breaks | Full catalog generates from seed data |
-| 7 | Editing | Product fields, reorder, hide, image replace, brand controls | Changes persist and regenerate cleanly |
-| 8 | Export | Print PDF, web preview, social images, background jobs | Exports open in target applications |
-| 9 | Project reuse | Duplicate project, versioning, export history, draft/publish states | Seasonal update workflow works |
-| 10 | Quality safeguards | Overflow checks, image warnings, font embedding, export validation | Automated QA catches seeded defects |
-| 11 | Billing | Stripe, trial, plan quotas, customer portal | Billing and quota paths pass |
-| 12 | UX and onboarding | Sample project, guided import, error recovery, pricing | Five testers complete without help |
-| 13 | Pilot | Ten merchants import real products and export catalogs | Five usable catalogs and ten exports |
-| 14 | Release | Fix blockers, deploy, launch, instrument funnel | Five live catalogs, ten exports, three paying users, otherwise review |
+| 1 | Validate ICP | Select independent home/food/cosmetic sellers; prepare CSV samples | 10 prospects agree to test workflow |
+| 2 | Prototype | Build import-to-catalog clickable flow and sample PDF | A seller can complete the flow in 5 minutes |
+| 3 | Interviews | Interview 10 sellers and collect source CSVs | 5 report repetitive catalog work and 3 share files |
+| 4 | Import | CSV parser, field mapping, validation, image handling | 10/10 sample lists import with clear errors |
+| 5 | Description generation | Spanish normalization with fact preservation | 50 descriptions pass human quality/fact checks |
+| 6 | Templates | Build cover, grid, and list templates | 20 products render cleanly on mobile and PDF |
+| 7 | Hosting and export | Public catalog URL, PDF render, download tracking | Links work on mobile and regenerate deterministically |
+| 8 | Editor | Edit title, price, description, image, and reorder products | Common corrections require no support |
+| 9 | Branding | Logo, color, catalog metadata, contact CTA | Branding appears consistently on all templates |
+| 10 | Account and billing | Authentication, limits, Stripe checkout, webhooks | Paid plans unlock exports and catalog counts |
+| 11 | Reliability | Image fallback, parser errors, generation retries, sanitization | Large/broken CSVs fail gracefully |
+| 12 | Pilot | Onboard 10 sellers with real product lists | 7 generate and 5 share/download catalogs |
+| 13 | Pricing and UX | Add plan comparison, feedback form, onboarding | 2 users state intent to purchase and checkout works |
+| 14 | Release | Deploy, publish gallery, record demo, start outreach | 99% import success and first paid conversion available |
 
-### Daily operating rule
+### Solo-build controls
 
-Use real merchant product files in development. A template that only works with sanitized seed data is not complete.
+- Support CSV only in the MVP.
+- Use three fixed templates.
+- Keep hosted output read-only.
+- Do not build storefront checkout.
+- Limit the catalog size per account.
 
 ## 5. 30-day marketing calendar
 
 ### Budget
 
-Total maximum: **$300**
-
-| Activity | Budget |
+| channel | 30-day spend |
 |---|---:|
-| Merchant research and pilot incentives | $75 |
-| Niche community or newsletter sponsorship | $75 |
-| Sample catalogs and creative assets | $75 |
-| Print/export testing allowance | $25 |
-| Referral credits | $50 |
+| Spanish-language creator partnerships | $120 |
+| Search/social content and small boosts | $60 |
+| Translation/review tooling | $40 |
+| Customer referral/incentives | $80 |
 | **Total** | **$300** |
 
-### Organic-first plan
+### Calendar
 
-| Day | Activity | Channel | CTA | Success signal |
-|---:|---|---|---|---|
-| 1 | Publish “your seasonal catalog is costing 12 hours” post | LinkedIn, Instagram | Comment with catalog | 8 replies |
-| 2 | Interview 10 boutique owners | Direct outreach | Share last catalog | 10 interviews |
-| 3 | Publish a before/after manual catalog workflow | LinkedIn, blog | Upload product list | 5 imports |
-| 4 | Create one free niche template guide | Blog | Download template | 15 downloads |
-| 5 | Show a concierge catalog example | LinkedIn, portfolio | Request sample | 8 requests |
-| 6 | Post a 30-second generation demo | Instagram, TikTok, LinkedIn | Try beta | 15 waitlist leads |
-| 7 | Recruit 10 boutique pilots | Instagram, niche groups | Join pilot | 10 pilots |
-| 8 | Publish a seasonal-update checklist | Blog | Join checklist | 20 downloads |
-| 9 | Share a customer catalog before/after | LinkedIn, Instagram | Create catalog | 6 creations |
-| 10 | Teach CSV product-feed preparation | YouTube, blog | Import products | 12 imports |
-| 11 | Run catalog critique office hours | Instagram live, Zoom | Bring catalog | 12 attendees |
-| 12 | Ask pilots for structured feedback | Email | Book interview | 6 replies |
-| 13 | Publish print-export comparison guide | Blog | Export PDF | 10 exports |
-| 14 | Launch beta publicly | Founder account, niche groups | Subscribe | 15 trials |
-| 15 | Share a seasonal restock workflow | Instagram, email | Duplicate project | 8 duplicates |
-| 16 | Publish social-card reuse workflow | LinkedIn, blog | Generate social assets | 8 uses |
-| 17 | Interview activated merchants | Email | Continue | 5 responses |
-| 18 | Offer a free catalog audit to 20 merchants | Direct outreach | Book audit | 8 audits |
-| 19 | Publish “Canva vs automated catalog” comparison | Blog | Try import | 12 trials |
-| 20 | Add one popular niche template | Product | Use template | 10 uses |
-| 21 | Partner with one boutique owner for workflow story | Joint post | Try beta | 15 visits |
-| 22 | Publish image-resolution and bleed guide | Blog | Export safely | 15 visits |
-| 23 | Ask pilot users for referrals | Email | Refer merchant | 10 referral clicks |
-| 24 | Run a product-feed setup clinic | Live event | Bring CSV | 15 attendees |
-| 25 | Contact local maker associations | Partnership email | Run workshop | 3 partnerships |
-| 26 | Improve import errors from ten real files | Product | Import a file | 80% import completion |
-| 27 | Publish a brand-consistency template update | Email, social | Update brand | 15 updates |
-| 28 | Announce saved-version reuse | Product, email | Duplicate a catalog | 10 duplicates |
-| 29 | Rescue inactive trials with personal setup | Email | Complete one catalog | 8 rescues |
-| 30 | Publish cohort results and template roadmap | Blog, founder account | Join next cohort | Clear keep/kill decision |
+| day | activity | organic action | paid action | KPI |
+|---:|---|---|---:|---|
+| 1 | Launch | Publish homepage and three sample catalogs | None | 150 qualified visits |
+| 2 | Founder post | Publish a Spanish-language workflow demo | None | 10 comments |
+| 3 | Seller outreach | Contact 20 independent Spanish-speaking sellers | None | 6 interviews |
+| 4 | Free artifact | Publish free CSV catalog template | None | 30 downloads |
+| 5 | Demo video | Show 20 products to a branded catalog | None | 20% import-start rate |
+| 6 | Pilot offer | Generate five catalogs manually | None | 5 completed catalogs |
+| 7 | Review | Fix description and image issues | None | 80% first-render success |
+| 8 | Spanish SEO | Publish “catálogo de productos en PDF” page | None | 25 organic visits |
+| 9 | Creator outreach | Send tool to 10 Spanish-language creators | None | 3 creator posts |
+| 10 | Merchant groups | Share checklist and free generation slot | None | 10 inbound conversations |
+| 11 | Case study | Publish time-saved seller story | None | 4 trials |
+| 12 | User calls | Interview five users | None | 5 completed calls |
+| 13 | Product iteration | Add regional variants and manual editor | None | 70% satisfaction |
+| 14 | Pricing test | Add $19/$49 plan choices | None | 6% checkout start |
+| 15 | Template gallery | Publish food, beauty, and home templates | None | 20 template uses |
+| 16 | Paid creator | Promote catalog workflow | $60 | CAC below $30 |
+| 17 | Live session | Build a catalog live from a seller CSV | None | 10 registrants |
+| 18 | WhatsApp asset | Release vertical image sequence | None | 20 exports |
+| 19 | Review | Analyze activation and output type | None | Identify strongest niche |
+| 20 | WhatsApp business outreach | Contact 10 boutique owners | $20 | 2 calls |
+| 21 | Referral | Ask buyers to refer one seller | $25 | 5 referrals |
+| 22 | Tutorial | Publish complete import tutorial | None | 40 organic visits |
+| 23 | Founder post | Explain Spanish quality and fact preservation | None | 8 sales conversations |
+| 24 | Paid retarget | Retarget sample visitors | $15 | 3 trials |
+| 25 | Retention | Review catalog update frequency | None | 40% second export within 14 days |
+| 26 | Upgrade prompt | Prompt saved brand and bulk update | None | 3 upgrades |
+| 27 | Customer proof | Publish seller testimonial | None | 5 checkout starts |
+| 28 | Channel review | Pause weak sources | None | CAC below $30 |
+| 29 | Automation | Send update-reminder and re-export email | None | 30% open rate |
+| 30 | Monthly review | Reconcile MRR, churn, generation cost, and CAC | $0 | 15+ paid accounts or pivot |
 
-### Acquisition targets
+### Organic-first content pillars
 
-By day 30:
-
-- 200 targeted merchant visits.
-- 40 trials.
-- 20 activated projects.
-- 8 paying merchants.
-- $392 MRR if half use the $49 plan and half the $99 plan; otherwise report the actual mix.
-- Ten captured pain posts and five completed case studies.
+- Spanish-language catalog templates.
+- CSV-to-PDF workflows.
+- Seller interviews.
+- WhatsApp and Instagram selling tips.
+- Natural versus literal translation examples.
+- Founder build-in-public content in Spanish.
 
 ## 6. Unit economics to $10K MRR
 
-### Proposed pricing
+### Target mix
 
-- Starter: **$49/month**, 3 catalogs and 100 products.
-- Studio: **$99/month**, 10 catalogs and 500 products.
-- Optional paid one-off catalog: $39 for occasional merchants, but cap this to avoid cannibalizing subscription intent.
-
-At $49/month, 205 customers produce $10,045 MRR. At $79/month blended, 127 customers produce $10,033 MRR.
-
-### Model
-
-| Metric | Conservative | Target | Strong |
+| plan | price | customers | MRR |
 |---|---:|---:|---:|
-| Blended ARPA | $49 | $79 | $99 |
-| Customers for $10K | 205 | 127 | 102 |
-| Gross margin | 80% | 86% | 90% |
-| Gross profit/customer/month | $39.20 | $67.94 | $89.10 |
-| CAC allowance | $80 | $125 | $175 |
-| Months to $10K at constant CAC | 104.6 | 58.4 | 46.1 |
-| Monthly churn | 8% | 5% | 3% |
+| Vendedor | $19 | 180 | $3,420 |
+| Negocio | $49 | 100 | $4,900 |
+| Agencia | $99 | 17 | $1,683 |
+| **Total** |  | **297** | **$10,003** |
 
-At $79 ARPA, 86% gross margin, and 5% churn:
+### Cost model
 
-- LTV = **$1,358.80**.
-- A $125 CAC gives an LTV:CAC ratio of approximately 10.9:1.
-- Payback is about 1.8 months.
+Assumptions:
 
-This attractive model assumes the product saves several hours of merchant or contractor labor each month. Validate that time-saving claim with customers before treating the model as credible.
+- Product-description generation: **$0.03/product**.
+- Import, PDF rendering, and storage: **$0.12/catalog**.
+- Average 50 products and 3 catalog updates per account per month:
+  - generation cost: $1.50/account/month;
+  - rendering/storage cost: $0.36/account/month.
+- Payment and infrastructure: **4% of revenue**.
+- Support allowance: **$3/account/month**.
+- Fixed solo operating cost: **$1,200/month**.
 
-### Cost controls
+At 297 accounts:
 
-- Generate standard previews at lower resolution.
-- Use expensive rendering only for final PDF export.
-- Compress and resize uploaded product images.
-- Batch operations and cap quota use.
-- Track storage and generation cost per catalog.
-- Avoid per-seat complexity in the MVP.
-- Use templates to minimize prompt and rendering cost.
+- Revenue: approximately **$10,003/month**.
+- Generation/rendering: approximately **$553/month**.
+- Payment/infrastructure: approximately **$400/month**.
+- Support: approximately **$891/month**.
+- Contribution before fixed cost: approximately **$8,159/month**.
+- After fixed cost: approximately **$6,959/month** before taxes and founder compensation.
 
-### Distribution requirement
+### CAC and payback assumptions
 
-The budget cannot directly acquire 127 customers. Build distribution through:
+- Target blended CAC: **≤ $30**.
+- At $19/month, estimated contribution before fixed cost is approximately:
+  - $19 revenue;
+  - $1.86 generation/rendering;
+  - roughly $0.76 infrastructure;
+  - $3 support;
+  - approximately $13.38 contribution.
+- One-month payback is possible at the target CAC.
+- Spanish-language creator distribution can improve trust and keep paid acquisition low.
 
-1. Niche templates and seasonal keyword content.
-2. Local maker and boutique associations.
-3. Print-shop and ecommerce-service partnerships.
-4. Agencies serving a narrow merchant category.
-5. Referral from catalog and branding freelancers.
-6. Productized “seasonal catalog refresh” services that upsell subscriptions.
+### Sensitivity
 
-### Scenario checkpoints
-
-- Month 1: 8 paying merchants and approximately $390–$790 MRR depending on mix.
-- Month 3: 30 paying merchants and $1,470–$2,370 MRR.
-- Month 6: 70 paying merchants and $3,430–$5,530 MRR.
-- Month 9: 127 paying merchants and approximately $10K MRR at $79 blended ARPA.
+- 204 customers at $49 produce approximately $10K MRR.
+- If every customer is on the $19 plan, 527 customers are needed.
+- A partner or agency channel is therefore important for efficient scale.
+- If generation cost or support rises sharply, the low tier may need a lower quota or annual prepayment.
 
 ## 7. Kill criteria
 
-Stop or materially reframe if:
+Pause or kill if:
 
-1. Fewer than 5 of 20 merchants report recurring catalog production as a meaningful pain.
-2. No merchant agrees to pay $49 or more for the workflow.
-3. Users only want one-off templates and do not renew after the first export.
-4. First-time users cannot import products and export a catalog in 30 minutes.
-5. Fewer than 50% of trials produce a completed export.
-6. Manual correction takes more than 20% of the time saved.
-7. Export quality is judged materially below a Canva template by more than 30% of pilot users.
-8. Monthly churn exceeds 12% for two cohorts.
-9. No partnership or content channel produces customers below $150 CAC.
-10. Competitor research reveals a dominant vertical catalog product below $49 with better output.
-11. Copyright or image-rights risk cannot be controlled.
-12. The product expands into a general design editor and loses the narrow workflow.
-13. The founder cannot source ten relevant merchants or five pilot files per week.
+1. Fewer than 4 of 10 interviewed sellers report repetitive catalog production.
+2. No pilot seller will provide a real product list.
+3. Fewer than 5 catalogs are generated in the first 30 days.
+4. More than 25% of descriptions require material factual correction.
+5. Users primarily want storefront synchronization rather than a shareable catalog.
+6. Fewer than 5 paid accounts after 30 days.
+7. Blended CAC exceeds $30 for Vendedor or $75 for Negocio without adequate gross profit.
+8. Median import-to-export time exceeds 10 minutes.
+9. Monthly churn exceeds 12%.
+10. The product requires multi-platform marketplace connectors to be useful.
 
 ## Wedge (required for GO_NARROW)
 
-Not applicable under the scoped positioning. If current research raises the general catalog/design competition score to 4, retain this wedge:
+### Narrow wedge
 
-> One merchant vertical, one catalog template family, structured product-data import, fixed print/social outputs, and fast seasonal reuse. Refuse arbitrary canvas editing, general branding suites, video, website building, product-photography generation, ERP/inventory management, and marketplace publishing.
+The product serves **independent Spanish-speaking sellers with 10–100 products**, not broad e-commerce teams and not marketplace sellers requiring synchronization.
+
+### What the product refuses to build
+
+- No Shopify, WooCommerce, MercadoLibre, or Etsy synchronization.
+- No full storefront, payments, or inventory warehouse.
+- No general-purpose design editor.
+- No marketplace scraping.
+- No bulk WhatsApp outreach.
+- No multi-tenant agency approval suite at launch.
+- No generic global catalog platform before one seller niche validates retention.
+
+### Explicit expansion condition
+
+Add connectors or agency features only after at least 25 paid sellers have activated, repeat monthly, and identify synchronization as their leading blocker.

@@ -1,322 +1,339 @@
 ---
 layout: post
-title: "CanvasNinja — Direction Package"
-date: 2026-11-12T22:35:11+00:00
-week: "2026-11-12_223511"
-week_date: "2026-11-12T22:35:11+00:00"
+title: "CanvasNinja — Course Canvas Production Copilot"
+date: 2026-11-17T10:32:16+00:00
+week: "2026-11-17_103216"
+week_date: "2026-11-17T10:32:16+00:00"
 slug: "canvasninjaapp"
 permalink: /directions/canvasninjaapp.html
 tags:
   - "AI"
+  - "B2B"
+  - "B2C"
   - "education"
-  - "finance"
-excerpt: "Turn lesson content into polished classroom worksheets and visual learning packs."
+  - "creator"
+  - "mobile"
+excerpt: "Create and revise professional course canvases without a full design suite."
 ---
 
-## Why this direction
+**Tier:** GO  
+**Demand:** 4/5  
+**Competition:** 2/5  
+**Target:** $10,000 MRR  
+**MVP:** 14 days, solo  
+**Marketing budget:** ≤ $300 for 30 days  
+
+## 1. Why this direction
 
 ### TrustMRR evidence
 
-- CanvasNinja was classified `GO_CANDIDATE` with **$15.81 MRR**, **$21.42 in last-30-day revenue**, and **105 subscribers**.
-- Its demand heuristic was **4**, while its competition heuristic was **2**.
-- The strongest signal is revenue velocity: last-30-day revenue exceeded reported MRR, indicating recent subscriber growth rather than a static legacy base.
-- The product opportunity is not “another AI course generator.” It is a narrow transformation job: turn source material into a visually coherent, classroom-ready worksheet or learning pack.
+- CanvasNinja reports approximately **$18.80 MRR**, **$20.84 in last-30-day revenue**, and **123 subscribers**.
+- The subscriber count is large relative to paid MRR, suggesting a meaningful top-of-funnel audience but an unresolved conversion problem.
+- The apparent workflow addresses creation of course or training canvases, a recurring production task for small course creators and agencies.
+- The low MRR means the evidence supports exploration, not a confident forecast.
+- The opportunity is to make one deliverable exceptionally fast: transform a rough outline or source document into a polished, editable course canvas.
 
 ### X/web evidence
 
-- Stage A did not provide a public X handle for CanvasNinja.
-- The supplied TinyFish output contained CLI installation instructions rather than usable result excerpts, so no individual X post is claimed as verified.
-- Recurrent public pain signals in educator and tutor communities include:
-  1. time spent differentiating the same source material for different learners;
-  2. low-quality PDFs that require hours of formatting;
-  3. difficulty maintaining consistent answer keys and difficulty levels;
-  4. a shortage of ready-to-print materials for tutors and micro-schools;
-  5. privacy concerns when uploading student information to generic AI tools.
-- Competitive interpretation: general lesson-plan generators, presentation builders, and AI PDF tools are broad substitutes. A defensible initial wedge is **source-to-differentiated worksheet packs for tutors and small learning centers**, with answer keys and export to printable PDF.
-- **Final score: demand 4, competition 2 → GO.**
+- No X handle was supplied.
+- The TinyFish result bodies were unavailable, so there is no defensible quote or engagement count to report.
+- Public demand is inferred from the 123 subscribers, the recurring production workflow, and the availability of adjacent design tools.
+- The central validation assumption is that course creators and small education agencies repeatedly create promotional, lesson, or module canvases and value speed more than unlimited layout control.
 
-## Competitor table
+### Thesis
 
-> Pricing is directional and must be checked before launch.
+Build a **course-canvas production copilot** for one workflow:
 
-| Level | Competitor | Pricing found or typical positioning | Strength | Opening for CanvasNinja |
-|---|---|---:|---|---|
-| L1 direct | Canva Education / Canva | Free tier; paid Canva Pro/Teams offers | Brand assets, templates, broad familiarity | Faster structured source-to-worksheet generation and automatic answer keys. |
-| L1 direct | Education.com | Free/paid educational content | Large worksheet library and marketplace | Personalized materials from a teacher’s own source and differentiated student versions. |
-| L1 direct | Twinkl | Subscription and per-resource licensing | Large teacher marketplace and polished resources | Rapid personalization without per-resource marketplace complexity. |
-| L1 direct | Teacher Created Resources | Marketplace/free and paid resources | Deep teacher supply variety | Narrow source transformation workflow and tutor-ready bundles. |
-| L2 | LessonPlans.ai | Freemium/paid AI lesson tools | AI-native educational generation | Focus on worksheets, answer keys, and print quality rather than broad lesson planning. |
-| L2 | MagicSchool | Freemium/paid teacher AI suite | Popular teacher workflow and broad feature set | One focused transformation job with fewer steps and transparent pricing. |
-| L2 | Diffit | Free/paid differentiated resources | Strong differentiation concept | Competitor validates demand; CanvasNinja must own tutors and printable packs. |
-| L3 | Schoolhouse.net | Subscription | Marketplace for teachers | Efficient private personalization and export. |
-| L3 | Microsoft/PDF/Word generators | Free or low-cost | Ubiquitous and flexible | Automatic structure, answer keys, and quality checks. |
+> Give the tool an outline, lesson text, PDF, or brief; receive a polished visual canvas with editable text, images, structure, and export options.
 
-### Competition score rationale
+The first release should not compete with Canva, Figma, or a full course-platform authoring system. It should win on one repeatable output: **course-ready promotional or lesson canvases from source content**.
 
-**2/5.** Direct horizontal substitutes are plentiful, but the end-to-end source-to-printable-differentiated-pack workflow is fragmented across content generators, generic AI tools, and manual formatting. The MVP should deliberately exclude a general-purpose lesson marketplace and broad teacher suite.
+### Initial ICP
 
-## PRD MVP
+- Solo course creators producing weekly social or lesson assets.
+- Small course-production agencies that need fast first drafts for clients.
+- Start with **solo course creators in one niche**, such as software education or creator education.
+- Exclude enterprise instructional-design teams in the MVP.
 
-### Target customer
+### Validation questions
 
-- Independent tutors serving primary, middle, or high-school students.
-- Small learning centers with 2–20 instructors.
-- Homeschool teachers and curriculum co-ops.
-- Later expansion: exam-prep tutors and corporate trainers.
+1. Is the painful output a promotional canvas, lesson summary, lead magnet, or course thumbnail?
+2. Which source material do creators already have?
+3. How much editing is required before publication?
+4. Do creators buy templates, outsource, or accept AI design?
+5. Which deliverable can be produced in 14 days without becoming a general design suite?
 
-### Core job
+## 2. Competitor table
 
-> “Give me one source document and quickly produce a polished student worksheet set with different difficulty levels, an answer key, and a printable PDF.”
+### L1 — direct alternatives
+
+| competitor | likely offer/pricing | strength | weakness / opening | evidence confidence |
+|---|---|---|---|---|
+| CanvasNinja | Course/canvas-focused creation product; approximately $19 MRR and 123 subscribers | Existing audience and category focus | Opportunity to specialize by output and guarantee rapid editable drafts | High for metrics; medium for exact feature set |
+| Canva | General design platform with free and paid tiers | Massive template library, brand controls, broad familiarity | General-purpose workflow; users must design the course asset themselves | High |
+| Adobe Express | General content creation suite | Brand ecosystem and polished templates | General-purpose and heavier for rapid course asset production | High |
+| Figma | Collaborative design canvas | Flexible, powerful, reusable components | Requires design skill and manual layout; not optimized for source-to-course output | High |
+| Beautiful.ai | Presentation and design automation | Smart layout assistance | Presentation-centric rather than course-workflow-specific | High |
+| Gamma | Presentations and documents from prompts | Fast generation and attractive layouts | Presentation/document output rather than editable course-canvas production | High |
+
+### L2 — adjacent substitutes
+
+| substitute | why buyers use it | opportunity |
+|---|---|---|
+| Canva templates | Start from a familiar layout | Templates do not transform source content into a finished canvas |
+| AI presentation tools | Generate slides quickly | Often unsuitable for isolated course/social assets |
+| Freelance designer | Produce polished custom creative | Higher cost and turnaround time |
+| Figma plugin/template workflow | Reuse a creator’s design system | Setup and operational overhead |
+
+### L3 — low-end alternatives
+
+| alternative | weakness |
+|---|---|
+| PowerPoint / Google Slides | Familiar but slow for repeated branded course assets |
+| Prompting a general image model | Inconsistent typography, editability, and dimensions |
+| Copy-pasting into a blank Canva project | Manual assembly and no content transformation |
+
+### Competition conclusion
+
+**Score: 2/5.** General design platforms are major incumbents, but the direct niche of **source content → editable course canvas → creator export** can be specialized. The MVP must produce a finished artifact quickly and avoid pretending to replace a full design suite.
+
+## 3. PRD MVP
+
+### Target outcome
+
+A course creator uploads or pastes structured content and receives a polished, editable course canvas generated from a chosen template.
 
 ### P0 — required for launch
 
-1. **Source ingestion**
-   - PDF, DOCX, pasted text, and image upload.
-   - Extract headings, paragraphs, and key concepts.
-   - Clear error handling and source preview.
-2. **Learning-objective extraction**
-   - Generate a concise objective list from the source.
-   - Allow the tutor to edit objectives.
-3. **Worksheet generation**
-   - Multiple-choice, short-answer, matching, ordering, and fill-in-the-blank item types.
-   - Difficulty levels: support, core, stretch.
-   - Math notation rendering and grammar-safe generation.
-4. **Differentiation**
-   - One source can produce a support, core, and extension version.
-   - Tutor-controlled readability and prompt complexity.
-5. **Answer key**
-   - Separate instructor answer key.
-   - Answers mapped to worksheet items.
-   - Explanations optional for selected question types.
-6. **Editing and layout**
-   - Inline editing.
-   - Page breaks, headers, school name, student fields, and answer-space control.
-   - Print-safe typography.
-7. **Export**
-   - Printable PDF.
-   - Editable DOCX where feasible.
-   - Individual student files generated from a roster CSV.
-8. **Account, billing, and privacy**
-   - Workspace/project model.
-   - Usage-based plan with monthly generation limits.
-   - Explicit deletion of uploaded sources and generated student materials.
-   - No student names required; optional first-name fields only.
-   - Consent notice that the service is not a substitute for teacher review.
+### Inputs
+
+- Course title and audience.
+- Content type:
+  - lesson summary;
+  - promotional carousel;
+  - module overview;
+  - course thumbnail.
+- Source:
+  - pasted text;
+  - markdown;
+  - PDF text extraction.
+- Brand inputs:
+  - one logo;
+  - two brand colors;
+  - one optional font pairing.
+- Optional target channel:
+  - Instagram carousel;
+  - LinkedIn document;
+  - presentation;
+  - generic course module.
+
+### Outputs
+
+- Editable canvas with text blocks, image placeholders, and consistent spacing.
+- One-click text regeneration for selected blocks.
+- Three template families appropriate to course creators.
+- Brand-kit application.
+- Export:
+  - PNG for generic canvases;
+  - PDF for print;
+  - PNG slides/PDF for presentation mode.
+- Autosave versions with undo.
+- Source content linked to each generated text block.
+- Account, usage limits, and Stripe billing.
+- Downloadable source file where technically practical, but not a blocking requirement.
+- Analytics for project start, generation, edit, export, repeat project, and upgrade.
 
 ### P1 — after validation
 
-- Question-type generator and difficulty editor.
-- Standards or learning-objective tagging.
-- Version history.
-- Shared templates for a learning center.
-- Rubric generator.
-- Reusable question bank.
-- Parent progress summary from teacher-approved results.
-- Spanish and other heritage-language worksheet variants.
-- Human educator review checklist.
+- Brand-kit save and reuse.
+- Bulk generation for a lesson series.
+- Canva-compatible import/export workflow.
+- Team templates and approval status.
+- Image-generation integration for decorative visuals.
+- Reuse characters across a course series.
 
-### P2 — later
+### P2 — later expansion
 
-- Student login and adaptive practice.
-- Marketplace of vetted worksheets.
-- District administration.
-- LMS integrations.
-- Automatic curriculum ingestion.
-- Multimedia worksheets.
-- Full automated grading.
-- Parent messaging and payments.
+- Full course-builder integration.
+- Interactive course blocks and quizzes.
+- Marketplace of creator templates.
+- White-label output for agencies.
+- Automated brand compliance checks.
 
-### Explicit non-goals for the first 14 days
+### Non-goals
 
-- No student-facing adaptive-learning platform.
-- No lesson-plan marketplace.
-- No live tutoring marketplace.
-- No school administration.
-- No automated grading of free-form responses.
-- No claims that generated content is pedagogically validated.
-- No student uploads in the MVP.
-- No broad document editor.
-- No video generation.
-- No full LMS, attendance, or payment features.
+- No pixel-perfect clone of Canva or Figma.
+- No general graphic editor in the MVP.
+- No marketplace, comments, or collaborative infrastructure at launch.
+- No AI-generated video.
+- No full LMS/course hosting.
+- No promise of print-perfect exports.
+- No agency workflow features until individual creators validate retention.
+
+### MVP user story
+
+> As a solo course creator, I can turn a lesson outline into an editable, branded course canvas in minutes so that I can publish consistent assets without manually rebuilding every layout.
 
 ### Technical approach
 
-- Frontend: Next.js/TypeScript with an editor-based workflow.
-- Backend: serverless functions or a small Node/Python service.
-- Database: PostgreSQL with encrypted source and project metadata.
-- File storage: private object storage with signed URLs.
-- Extraction: PDF/DOCX parser plus OCR fallback.
-- Generation: structured JSON schema enforced by a validation library.
-- Mathematics: KaTeX or MathJax-compatible rendering.
-- PDF: server-side browser rendering with deterministic print CSS.
-- Quality checks: answer-reference validation, item count, duplicate detection, source-coverage check, and answer-key consistency.
+- Front end: React/Next.js canvas editor with a restricted, template-driven node model.
+- Rendering: HTML/SVG or canvas rendering with deterministic layout templates.
+- Generation: structured content transformation with a language model.
+- Source ingestion: plain text, Markdown, and PDF text extraction only.
+- Storage: PostgreSQL plus object storage for exports.
+- Editor: allow text editing, image replacement, reorder within predefined sections, color/font application, and undo.
+- Export service: server-side rendering to PNG/PDF.
+- Billing: Stripe with project quotas.
+- Safety: sanitize uploaded PDFs and images; do not execute embedded instructions from source files.
 
 ### Pricing hypothesis
 
-- **Free:** 3 worksheet generations/month, one student version.
-- **Tutor — $19/month:** 40 generations, three difficulty levels, answer keys, PDF/DOCX export.
-- **Center — $49/month:** five instructors, 150 generations, reusable templates, branding.
-- **Pro — $89/month:** 400 generations, individual student files, version history, priority processing.
-- Overage priced per generation pack only after usage is understood.
+- **Free:** 2 projects/month.
+- **Creator:** $19/month, 30 projects, brands, exports.
+- **Pro:** $49/month, 150 projects, bulk series generation, priority rendering.
+- **Agency pilot:** $99/month, five client brand kits and reusable templates.
 
-## 14-day day-by-day build plan
+## 4. 14-day day-by-day build plan
 
-| Day | Deliverable | Acceptance criterion |
-|---:|---|
-| 1 | Scope lock and curriculum sample | Select one tutor segment, grade band, and 20 representative source documents. |
-| 2 | Schema and data models | Source, objective, worksheet, item, answer, export, and usage schemas finalized. |
-| 3 | Ingestion | PDF, DOCX, text, and image uploads parse; failures are visible and recoverable. |
-| 4 | Objective generation | Structured objectives can be reviewed, edited, and accepted. |
-| 5 | Question generation | All five MVP item types render with validated references and correct answers. |
-| 6 | Differentiation | Support/core/stretch packs generated from the same source with distinct prompts. |
-| 7 | Editor | Tutor can edit prompts, choices, ordering, and answer-space instructions. |
-| 8 | Answer key | Instructor key maps exactly to items and can be regenerated after edits. |
-| 9 | Print layout | Student and key PDFs render cleanly at A4 and US Letter with page-break checks. |
-| 10 | Roster and exports | CSV roster creates labeled student files; PDF and DOCX exports work. |
-| 11 | Accounts, billing, and limits | Checkout, quotas, cancellation, and generation history work; sources remain private. |
-| 12 | Safety and quality checks | Duplicate detection, answer consistency, source coverage, upload limits, and deletion are tested. |
-| 13 | Dogfooding | Five tutors generate, print, and use real packs; usability issues are prioritized. |
-| 14 | Launch | Production deploy, onboarding, support flow, sample library, demo video, and launch posts. |
+| Day | objective | deliverables | acceptance test |
+|---:|---|---|---|
+| 1 | Choose output | Select course lesson-summary canvas; interview 10 creators | 5 confirm weekly use and 3 will supply source material |
+| 2 | Prototype | Build one static template and clickable editing flow | A creator can generate and edit a complete example in 10 minutes |
+| 3 | Competitor samples | Create Canva/Gamma comparison samples | Output is materially faster while remaining editable |
+| 4 | Template engine | Build one responsive template with tokenized text/image blocks | Template renders correctly at three aspect ratios |
+| 5 | Content model | Normalize title, audience, sections, bullets, CTA, and image needs | 20 varied source samples produce valid structures |
+| 6 | Generation | Structured source-to-canvas-content generation | 90% of blocks pass simple quality checks |
+| 7 | Brand kit | Upload logo, pick colors, set typography | Brand application survives regeneration |
+| 8 | Editor | Edit text, replace image, undo, autosave, versions | User can make common corrections without support |
+| 9 | Export | Render PNG and PDF; add download state | Export dimensions and typography are correct |
+| 10 | Account and billing | Authentication, quotas, Stripe checkout, webhooks | Payment unlocks limits and cancellation is handled |
+| 11 | Reliability | Queue rendering, retries, sanitization, error states | Failed jobs recover and source content cannot inject commands |
+| 12 | Pilot | Give 10 creators free projects and observe | 7 generate, 5 export, 3 request paid access |
+| 13 | Improve UX | Fix top three abandonment points and add templates | 70% complete without help |
+| 14 | Release | Deploy, publish gallery, record demo, onboard pilots | 99% export success and 3 paid conversions available |
 
-### Launch-readiness checklist
+### Solo-build controls
 
-- A tutor can move from upload to corrected printable PDF in under 15 minutes.
-- Every generated answer key matches its worksheet after manual edits.
-- The system visibly warns when source coverage may be incomplete.
-- Student files contain no unintended source data.
-- Uploaded files and generated materials can be deleted.
-- Five target tutors have printed or reviewed a real pack.
+- Build only two output types: lesson summary and promotional carousel.
+- Use fixed templates rather than a freeform editor.
+- Do not support PDF upload until day 6.
+- Do not build image generation; use image placeholders and uploads.
+- Use manual export rendering if a full editor becomes too costly.
 
-## 30-day marketing calendar
+## 5. 30-day marketing calendar
 
 ### Budget
 
-| Channel | 30-day budget |
+| channel | 30-day spend |
 |---|---:|
-| Educator creator collaborations and print samples | $100 |
-| Selective paid tests for proven pages | $120 |
-| Templates, file hosting, and production services | $80 |
-| **Total** | **$300 maximum** |
+| Creator micro-sponsorships | $120 |
+| Search-intent content and one boost | $60 |
+| Demo/production tools | $20 |
+| User incentives | $100 |
+| **Total** | **$300** |
 
-### Weekly calendar
+### Calendar
 
-#### Days 1–7: establish the workflow
+| day | activity | organic action | paid action | KPI |
+|---:|---|---|---:|---|
+| 1 | Launch | Publish homepage and 20-sample gallery | None | 200 qualified visits |
+| 2 | Founder post | “I made 10 course canvases in 20 minutes” | None | 15 comments |
+| 3 | User outreach | Contact 20 solo course creators | None | 6 interviews |
+| 4 | Template post | Publish one niche-specific lesson template | None | 30 template opens |
+| 5 | Demo video | Publish source-to-canvas workflow | None | 20% project-start rate |
+| 6 | Free project | Offer free lesson-summary canvas | None | 15 projects |
+| 7 | Review | Fix first-generation quality issues | None | 60% export rate |
+| 8 | SEO page | Publish “Canva alternative for course creators” | None | 30 visits |
+| 9 | Creator outreach | Seed tool with 10 micro-creators | None | 3 posts |
+| 10 | Agency outreach | Pitch 10 course-production agencies | None | 2 calls |
+| 11 | Before/after | Publish time-saved case study | None | 4 trials |
+| 12 | User calls | Interview five active creators | None | 5 completed interviews |
+| 13 | Iteration | Improve text blocks and image replacement | None | 70% satisfaction |
+| 14 | Pricing | Add $19/$49 plans and annual option | None | 8% checkout start |
+| 15 | Weekly asset | Publish 7-day course-content workflow | None | 20 saves |
+| 16 | Paid creator | Promote demo to course-creator audience | $60 | CAC below $30 |
+| 17 | Live build | Build a course canvas live | None | 15 registrants |
+| 18 | Series feature | Release consistent-series template | None | 20 repeat projects |
+| 19 | Review | Analyze conversion by output type | None | Identify best template |
+| 20 | Partnership | Reach newsletter authors and educators | $20 | 1 collaboration |
+| 21 | Referral | Ask creators to refer one peer | $25 | 5 referrals |
+| 22 | Brand content | Publish brand-kit consistency guide | None | 10 brand-kit setups |
+| 23 | Founder post | Explain why the tool is not another Canva | None | 8 sales conversations |
+| 24 | Paid retarget | Retarget sample-page visitors | $15 | 3 trials |
+| 25 | Retention | Review second-project rate | None | 40% repeat within 14 days |
+| 26 | Upgrade prompt | Offer series generation upgrade | None | 3 conversions |
+| 27 | Customer proof | Publish creator testimonial and result | None | 5 checkout starts |
+| 28 | Channel review | Stop weak paid sources | None | CAC below $30 |
+| 29 | Automation | Send project reminder and series prompt | None | 30% open rate |
+| 30 | Monthly review | Reconcile MRR, churn, export failures, and CAC | $0 | 15 paid accounts or pivot |
 
-| Day | Action |
-|---:|---|
-| 1 | Publish a before/after PDF showing manual worksheet work versus the proposed workflow. |
-| 2 | Recruit 10 tutors or learning-center owners for interviews and screen recordings. |
-| 3 | Post a founder build diary and collect the five most common worksheet types. |
-| 4 | Release a free sample pack generated from a public lesson source. |
-| 5 | Answer tutor questions in relevant educator communities without posting generic links. |
-| 6 | Run a small live “source to printable worksheet” session. |
-| 7 | Launch the v1 landing page and founder-led announcement. |
+### Organic-first content pillars
 
-#### Days 8–14: target one segment
+- Course-creator speed workflows.
+- Before/after canvas examples.
+- Brand-consistency education.
+- Template galleries by niche.
+- Founder build-in-public posts.
+- Comparisons with Canva, Gamma, and Figma for one specific output.
 
-| Day | Action |
-|---:|---|
-| 8 | Publish a tutor-specific landing page with the exact 15-minute workflow. |
-| 9 | Offer 20 assisted pilot conversions for learning centers. |
-| 10 | Share three student, parent, and instructor samples with review notes. |
-| 11 | Publish a quality checklist for AI-generated worksheets. |
-| 12 | Release a differentiation template for the selected grade band. |
-| 13 | Post a short screen-recording of edits, answer keys, and PDF export. |
-| 14 | Email all qualified leads with a personalized sample pack and onboarding slot. |
+## 6. Unit economics to $10K MRR
 
-#### Days 15–21: prove outcomes
+### Target mix
 
-| Day | Action |
-|---:|---|
-| 15 | Publish a tutor case study including preparation-time comparison. |
-| 16 | Reach out to 20 learning centers with a center-branded sample. |
-| 17 | Add version history only if users request it; otherwise improve reliability. |
-| 18 | Publish a rubric and answer-key checklist for teacher review. |
-| 19 | Host a live Q&A about differentiation and classroom use. |
-| 20 | Send a re-engagement email to users who generated but did not export. |
-| 21 | Ask 20 active tutors to refer another tutor. |
+| plan | price | customers | MRR |
+|---|---:|---:|---:|
+| Creator | $19 | 180 | $3,420 |
+| Pro | $49 | 100 | $4,900 |
+| Agency | $99 | 17 | $1,683 |
+| **Total** |  | **297** | **$10,003** |
 
-#### Days 22–30: monetize and selectively scale
+### Cost model
 
-| Day | Action |
-|---:|---|
-| 22 | Release a $49 center-plan onboarding guide. |
-| 23 | Interview paid, unpaid, and churned users. |
-| 24 | Publish reliability and content-quality fixes. |
-| 25 | Test a $50 paid landing-page campaign only against a page with organic signups. |
-| 26 | Create a reusable center template and invite collaboration. |
-| 27 | Publish an agency or tutoring-center case study. |
-| 28 | Launch an annual Tutor plan only if monthly cancellation data is acceptable. |
-| 29 | Remove friction from export and invite a referral after successful export. |
-| 30 | Review activation, paid conversion, generation quality, support load, retention, and MRR. |
+Assumptions:
 
-### KPIs
+- Generation and rendering cost: **$0.55/project**.
+- Average projects per account per month: **12**.
+- Storage, export, payment, and infrastructure: **4% of revenue**.
+- Support allowance: **$3/account/month**.
+- Fixed solo operating cost: **$1,300/month**.
 
-- Upload-to-export: target 25% within seven days.
-- Median generation-to-export time: under 15 minutes.
-- Paid conversion after three exports: target 12%.
-- Paid retention after first billing month: target 90%.
-- Support or correction requests per 100 packs: under 10.
-- Paid CAC target: under $80.
-- Day-30 MRR validation target: **$1,500–$3,000** from early paid accounts.
+At 297 accounts:
 
-## Unit economics to $10K MRR
+- Revenue: approximately **$10,003/month**.
+- Generation/rendering: approximately **$1,960/month**.
+- Storage/payment/infrastructure: approximately **$400/month**.
+- Support: approximately **$891/month**.
+- Contribution before fixed cost: approximately **$6,752/month**.
+- After fixed cost: approximately **$5,452/month** before taxes and founder compensation.
 
-### Base case
+### CAC and payback assumptions
 
-Assume blended ARPU of **$42/month** and gross margin of **80%**.
+- Blended CAC target: **≤ $30**.
+- At $19/month and 12 projects, estimated direct variable cost is:
+  - $6.60 generation/rendering;
+  - roughly $0.76 infrastructure;
+  - $3 support;
+  - approximately $8.64 contribution before fixed cost.
+- The $19 tier therefore has limited room for paid acquisition; creators may need to be acquired through templates, search, referrals, or annual plans.
+- Higher-value Pro and Agency users should support the blended target.
 
-- Customers required: `$10,000 / $42 ≈ 239`.
-- Monthly gross profit: `$10,000 × 80% = $8,000`.
-- Inference, OCR, document parsing, and file storage should remain under **$1,000 per month** at this scale, or be constrained through per-generation quotas.
+### Sensitivity
 
-### Customer mix
+- 204 customers at $49 produce approximately $10K MRR.
+- 180 Creator accounts alone produce only $3,420 MRR, so the mix must not over-rely on the lowest tier.
+- If average projects rise to 25 per account, rendering costs can exceed $4,000/month; caching, model routing, and quotas are mandatory.
 
-| Customers | Blended ARPU | MRR | Use |
-|---:|---:|---:|---|
-| 100 | $19 | $1,900 | Tutor |
-| 105 | $49 | $5,145 | Center |
-| 34 | $89 | $3,026 | Pro |
-| **239** | **$41.84** | **$10,000** | Target threshold |
+## 7. Kill criteria
 
-### CAC and LTV
+Pause or kill if:
 
-- Target CAC ceiling: **$100**.
-- Gross profit per customer per month at $42 ARPU and 80% margin: **$33.60**.
-- Target gross-margin LTV/CAC: **3x**, requiring at least **$300 LTV**.
-- At 12 months of revenue and an average retained life of approximately nine months, contribution LTV is about `$33.60 × 9 = $302`.
-- This meets but barely clears the target. The business becomes attractive if average retained life exceeds 11 months, ARPU exceeds $50, or referral CAC falls below $60.
-- Initial paid acquisition: 239 × $100 = **$23,900** over the scaling period, funded from revenue rather than the initial $300 validation budget.
-
-### Cost controls
-
-- Use OCR only when text extraction is weak.
-- Cache source extraction and reuse it for multiple difficulty levels.
-- Cap document size and generation count.
-- Charge for generation packs, not individual renders.
-- Use asynchronous processing and rate limits.
-- Require teacher review; never let the product imply that automated output is fully reliable.
-
-## Kill criteria
-
-Kill or pause if any of the following occurs:
-
-1. **Demand failure:** fewer than 10 of 15 interviewed tutors report repeatedly preparing differentiated worksheets from source material.
-2. **Time-to-value failure:** fewer than 30% of activated users export a worksheet within seven days.
-3. **Quality failure:** more than 20% of sampled packs require major factual, mathematical, or answer-key correction.
-4. **Paid conversion failure:** fewer than 5 paid accounts from 50 activated users after two onboarding improvements.
-5. **Retention failure:** more than 10% of paying accounts churn in their first billing month.
-6. **Economics failure:** blended CAC exceeds $100 without referral traction, or gross margin remains below 75%.
-7. **Safety failure:** private student/source data is exposed, or the workflow requires ingesting identifiable student records.
-8. **Scope trap:** success depends on becoming a full LMS, lesson marketplace, or human tutoring service.
-9. **Distribution failure:** after 30 days and 100 qualified outreach messages, fewer than 10 target tutors agree to a paid pilot.
-10. **Liability trigger:** customers expect certified curricula, automatic grading, or guaranteed learning outcomes without teacher review.
-
-Decision rule: if factual or answer-key errors remain above 10% after two focused quality iterations, constrain the MVP to one subject/grade band or kill it. Do not solve quality by hiding the review requirement.
-
-## Research caveats
-
-- No verified public X handle was supplied for CanvasNinja.
-- The supplied TinyFish output did not include usable search result excerpts.
-- Competitor pricing and product scope should be reconfirmed before launch.
-- The GO applies to tutor/small-center worksheet packs, not broad AI lesson generation.
+1. Fewer than 4 of 10 interviewed creators perform this workflow at least weekly.
+2. No one completes a paid pilot after receiving a customized canvas.
+3. More than 40% of users consider the output too close to a generic template.
+4. Median generation-plus-edit time exceeds 15 minutes without human help.
+5. Export failure exceeds 2%.
+6. After 30 days, fewer than 5 paid accounts or fewer than 15 completed exports from activated users.
+7. Blended CAC exceeds $30 for Creator or $80 for Pro without sufficient gross profit.
+8. Users demand full Canva/Figma parity before paying.
+9. Monthly churn exceeds 12%.
+10. The product requires broad template or editing scope that exceeds a two-week solo build.

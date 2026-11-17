@@ -1,317 +1,339 @@
 ---
 layout: post
-title: "Chart Scanner AI — Direction Package"
-date: 2026-11-12T22:35:11+00:00
-week: "2026-11-12_223511"
-week_date: "2026-11-12T22:35:11+00:00"
+title: "Chart Scanner AI — Explainable Technical-Chart Extraction"
+date: 2026-11-17T10:32:16+00:00
+week: "2026-11-17_103216"
+week_date: "2026-11-17T10:32:16+00:00"
 slug: "chart-scanner-ai"
 permalink: /directions/chart-scanner-ai.html
 tags:
   - "AI"
-  - "SaaS"
-  - "education"
+  - "photo"
   - "language"
   - "mobile"
-excerpt: "Scan chart screenshots into structured, explainable technical-analysis reports."
+excerpt: "Upload a chart image and extract structured, explainable technical-analysis data with evidence."
 ---
 
-## Why this direction
+**Tier:** GO  
+**Demand:** 4/5  
+**Competition:** 3/5  
+**Target:** $10,000 MRR  
+**MVP:** 14 days, solo  
+**Marketing budget:** ≤ $300 for 30 days  
+
+## 1. Why this direction
 
 ### TrustMRR evidence
 
-- Chart Scanner AI was classified `GO_CANDIDATE` with **$25.69 MRR**, **$31.10 in last-30-day revenue**, and **99 subscribers**.
-- Its demand heuristic was **3**, while its competition heuristic was **3**.
-- The last-30-day revenue exceeded current MRR, which is consistent with recent growth or subscriber mix changes.
-- The product appears to address a frequent analysis workflow: a trader uploads or captures a chart and receives a structured assessment rather than manually combining visual inspection, indicators, and note-taking.
+- Chart Scanner AI reports approximately **$31.50 MRR**, **$37.64 in last-30-day revenue**, and **120 subscribers**.
+- Last-30 revenue exceeding MRR is a positive short-term signal, but may reflect annual-plan timing, refunds, or reporting artifacts; it should not be treated as proof of net retention.
+- The product’s apparent workflow—scanning a chart and producing a structured analysis—addresses a frequent, understandable task.
+- The 120-subscriber base indicates more top-of-funnel interest than the low MRR alone suggests.
+- The opportunity is strongest for traders and analysts who currently save screenshots and manually record chart data.
 
 ### X/web evidence
 
-- Stage A did not provide a public X handle for Chart Scanner AI.
-- The supplied TinyFish output returned CLI installation instructions rather than usable result excerpts, so no individual X post is claimed as independently verified.
-- Recurrent demand signals in trading communities include:
-  1. fast second-opinion analysis during market hours;
-  2. difficulty keeping a consistent process when reviewing many instruments;
-  3. requests for plain-language explanations of chart structure and risk;
-  4. desire to capture and annotate charts for later review;
-  5. concerns about AI-generated financial advice and false precision.
-- Competitive interpretation: general chart platforms, indicator dashboards, AI trading bots, and technical-analysis education are broad substitutes. A focused product can own **post-capture chart review for discretionary swing traders**, not automated trade execution or portfolio management.
-- **Final score: demand 3, competition 3 → GO.**
+- No identified X handle was supplied for this listing.
+- The supplied search run returned 12-result counts, but its stdout contained TinyFish CLI help rather than the actual result bodies. No social quote or engagement metric is therefore claimed.
+- Demand is supported primarily by TrustMRR subscriber/revenue evidence and by the ubiquity of chart screenshots in trading communities.
+- This direction should be marketed to end users, not treated as a trading signal service.
 
-## Competitor table
+### Thesis
 
-> Pricing is directional and must be verified before launch.
+Create a **chart-image-to-structured-data and plain-language explanation** tool. A user uploads a static chart image, selects the chart type and intended question, and receives:
 
-| Level | Competitor | Pricing found or typical positioning | Strength | Opening for Chart Scanner AI |
-|---|---|---:|---|---|
-| L1 direct | TradingView | Free tier; paid advanced plans | Largest charting and social ecosystem | Faster screenshot-to-structured report and cross-platform portability. |
-| L1 direct | TradingView AI Chart Analysis | Included in some TradingView plans/features | Native chart access and recognized interface | Image-based analysis without requiring live chart login or paid indicator stack. |
-| L1 direct | CoinGlass / AI chart tools | Varies; often freemium or paid | Crypto-specific data and analysis | Explainable setup review independent of exchange and token selection. |
-| L1 direct | Komo / AI chart analysis tools | Freemium/paid | Rapid technical summaries | Less generic language, explicit uncertainty, and trader-controlled risk checks. |
-| L2 | TrendSpider / Trading Central / StockCharts | Subscription | Professional charting and signals | Low-friction capture, structured report, and lower setup burden. |
-| L2 | Digrin | Freemium/paid | AI chart recognition and pattern explanations | Trade-journal context and disciplined post-capture review. |
-| L2 | ChatGPT / general multimodal AI | Paid subscription | Flexible explanations and cheap availability | Structured technical-analysis schema, chart-specific checks, and consistent reports. |
-| L3 | Broker and exchange chart tools | Often free | Native price data and execution | Analysis layer for users who keep charts elsewhere. |
-| L3 | Trading journals | $20–$100+/month | Habit tracking, performance review | Turn a captured setup into a testable, evidence-backed review. |
+- extracted price levels, dates, labels, and trend structure where legible;
+- a plain-English explanation;
+- visible uncertainty and image-quality warnings;
+- a CSV/JSON export;
+- optional follow-up questions.
 
-### Competition score rationale
+The differentiator should be **explainability and structured export**, not proprietary trade recommendations.
 
-**3/5.** TradingView and general AI tools are strong substitutes, and native AI chart features improve. However, a narrowly designed screenshot-analysis workflow can differentiate through portability, structured outputs, explicit uncertainty, and journal integration. The MVP must avoid competing on real-time data, signals, or execution.
+### Initial ICP
 
-## PRD MVP
+- Technical-analysis learners who screenshot charts and manually maintain levels.
+- Independent chart analysts and trading educators who need a repeatable extraction workflow.
+- Start with one market type—daily stock candlesticks—because the chart grammar is well defined and testable.
+- Exclude leveraged CFDs, signals, portfolio execution, and personalized financial advice from the MVP.
 
-### Target customer
+### Validation questions
 
-- Discretionary swing traders who use screenshots from another charting platform.
-- Crypto traders reviewing exchange or TradingView charts.
-- Trading educators and community managers producing repeatable chart breakdowns.
-- Later: active traders journaling setups.
+1. Does the user need extraction, explanation, or a trade signal? The product must optimize for the first two.
+2. How often does the user work from screenshots rather than exchange data?
+3. Which fields cause the most manual work?
+4. Are users willing to pay for OCR plus structured export?
+5. What accuracy threshold makes the output useful without pretending to be infallible?
 
-### Core job
+## 2. Competitor table
 
-> “Give me a consistent second-opinion review of this chart in under a minute, with observations, possible scenarios, invalidation levels, and clear uncertainty.”
+### L1 — direct alternatives
+
+| competitor | likely offer/pricing | strength | weakness / opening | evidence confidence |
+|---|---|---|---|---|
+| Chart Scanner AI | Chart scan/analysis product with approximately $31 MRR | Existing paid validation and task focus | Opportunity for stronger evidence display, vertical templates, and export | High for revenue; medium for exact workflow |
+| TradingView Chart Image Recognition | Extracts structured data from chart screenshots when available in supported ecosystems | Deep integration with a major charting platform | Not a standalone cross-chart archive or explanation-first workflow | Medium |
+| ChartReader / chart-to-table utilities | Converts chart images into spreadsheet or structured values | Direct task alignment | Often narrow, technical, or inconsistent across visual styles | Medium |
+| Vision/OCR SaaS tools | General image transcription and extraction | Flexible and inexpensive | Requires prompt construction and produces inconsistent financial fields | Medium |
+| Broker chart tools | Readable charts and drawing tools | Trusted market-data integration | Do not reliably extract a previously captured image into structured records | Medium |
+
+### L2 — adjacent substitutes
+
+| substitute | why buyers use it | opportunity |
+|---|---|---|
+| Spreadsheet/manual notes | Record levels and observations | Slow, repetitive, and prone to formatting errors |
+| General AI vision chat | Ask questions about a chart image | Variable prompts, hallucination risk, poor exports |
+| Screenshot album folders | Archive chart evidence | No extraction or explanation |
+| Human analyst | Validate ambiguous charts | Expensive and slow |
+
+### L3 — low-end alternatives
+
+| alternative | weakness |
+|---|---|
+| Free OCR | Text extraction without chart-aware structure |
+| Phone gallery + notes | Manual and hard to search |
+| Hand-drawn support/resistance maps | No scalable processing |
+
+### Competition conclusion
+
+**Score: 3/5.** Several products can either extract charts or explain images, but the combined workflow is not trivial. The product must avoid generic “ask an AI about this image” positioning and demonstrate measurable extraction accuracy on a small chart corpus.
+
+## 3. PRD MVP
+
+### Target outcome
+
+A user can upload a supported chart screenshot and receive a structured chart record plus a cautious explanation in under a minute.
 
 ### P0 — required for launch
 
-1. **Chart ingestion**
-   - Upload PNG, JPG, WEBP, and PDF.
-   - Optional symbol, timeframe, and context fields.
-   - Clear quality warnings for unreadable or cropped charts.
-2. **Chart structure extraction**
-   - Approximate price range and displayed timeframe.
-   - Trend, support/resistance zones, visible patterns, and volume behavior.
-   - Never imply exact values that cannot be read reliably.
-3. **Setup classification**
-   - User-selected strategy labels such as breakout, pullback, reversal, or range.
-   - Rule-based checklist based on the user's selected methodology.
-   - Neutral output when evidence is insufficient.
-4. **Structured report**
-   - Observation, supporting evidence, possible scenarios, invalidation risks, and missing information.
-   - “No signal” is an acceptable result.
-   - Confidence expressed as evidence strength, not a probability of profit.
-5. **Annotations**
-   - Overlay trend lines, zones, and labels.
-   - Export annotated chart plus report.
-6. **History**
-   - Saved analyses and lightweight trade-journal fields.
-   - Tag setup, outcome, and lesson after the user records it.
-7. **Account, billing, and quota**
-   - Email authentication.
-   - Usage limits by plan.
-   - Private chart storage and deletion controls.
+- Supported chart types:
+  - daily stock candlestick;
+  - line chart;
+  - basic bar chart.
+- Upload via drag-and-drop and mobile camera.
+- Image preprocessing:
+  - resize;
+  - deskew;
+  - contrast normalization;
+  - axis and plot-region detection.
+- Chart-type auto-detection with user override.
+- OCR for:
+  - ticker or title;
+  - date labels;
+  - price labels;
+  - axis values;
+  - visible annotations.
+- Structured extraction:
+  - open/high/low/close or plotted values;
+  - visible support/resistance annotations;
+  - detected trend and chart pattern names;
+  - source image dimensions and confidence.
+- Evidence overlay showing where each field came from.
+- Plain-language summary with uncertainty warnings.
+- CSV and JSON export.
+- Usage limits and Stripe billing.
+- Disclaimer: educational extraction only, not financial advice.
+- Privacy controls: auto-delete uploads after a configurable period.
+- Analytics for upload, processing, report viewed, export, and upgrade.
 
 ### P1 — after validation
 
-- Multi-chart comparison.
-- Custom strategy checklists.
-- TradingView/Trading Central style guide packs.
-- Custom alert rules based on a saved analysis.
-- Journal performance views.
-- CSV/PDF journal export.
-- API access for paid research users.
-- Education-community branded reports.
+- Broker/platform adapters for live chart URLs.
+- Template recognition for common chart styles.
+- Watchlist with saved extracted levels.
+- User correction and re-run loop.
+- Side-by-side before/after extraction.
+- Daily/weekly chart journal.
 
-### P2 — later
+### P2 — later expansion
 
-- Broker integrations.
-- Live data overlays.
-- Replay and backtesting.
-- Automated trade execution.
-- Predictive price targets.
-- Social portfolio sharing.
-- Mobile native app.
+- More asset classes and chart styles.
+- Team folders and shared research.
+- Annotation export back into supported platforms.
+- Plugin for education platforms.
 
-### Explicit non-goals for the first 14 days
+### Non-goals
 
-- No brokerage or exchange integration.
-- No automated order placement.
-- No buy, sell, hold, or target-price recommendation.
-- No claim that analysis predicts future returns.
-- No live market-data feed.
-- No model portfolio or copy-trading marketplace.
-- No casino, sports-betting, or binary-options product.
-- No auto-generated social posts as the core feature.
-- No black-box “AI oracle.”
+- No buy/sell/sell signals.
+- No guaranteed forecasts or price targets.
+- No brokerage connection, order routing, or portfolio management in the MVP.
+- No claims that extracted values are exchange-authoritative.
+- No support for every chart annotation style on day one.
+- No autonomous trading automation.
+
+### MVP user story
+
+> As a technical trader or learner, I can upload a chart screenshot and get a structured, inspectable record with uncertainty so that I can save research time without mistaking OCR for authoritative market data.
 
 ### Technical approach
 
-- Frontend: Next.js/TypeScript.
-- Backend: serverless functions or Python workers for image analysis.
-- Database: PostgreSQL.
-- Storage: private object storage with signed URLs.
-- Vision model: multimodal API with a strict structured-output schema.
-- Deterministic layer: chart OCR, image preprocessing, indicator/rule checks, and validation.
-- PDF export: server-side browser rendering.
-- Safety layer: prohibited financial-advice language checks, uncertainty requirements, and refusal to output guaranteed outcomes.
-- Security: per-user storage isolation, rate limits, expiring links, and prompt/data retention controls.
+- Web app with server-side image processing.
+- OCR: a general vision model for initial chart parsing, plus deterministic post-processing.
+- Geometry: OpenCV-style preprocessing and line/candle detection.
+- Data model:
+  - chart;
+  - image asset;
+  - extraction result;
+  - field-level evidence;
+  - user correction;
+  - export.
+- Privacy: encrypted object storage, signed URLs, 24-hour default retention.
+- Reliability: every extracted number carries a confidence score and evidence crop.
+- Billing: Stripe metered plans with daily usage caps.
 
 ### Pricing hypothesis
 
-- **Free:** three analyses/month and watermarked report.
-- **Trader — $15/month:** 60 analyses, history, annotations, journal.
-- **Pro — $39/month:** 250 analyses, custom checklists, PDF export.
-- **Creator — $79/month:** branded reports, higher limits, team use.
-- No outcome-based pricing and no upsell based on predicted performance.
+- **Free:** 3 charts/month, basic extraction.
+- **Trader:** $19/month, 60 charts/month, CSV/JSON export and saved records.
+- **Analyst:** $49/month, 250 charts/month, templates, corrections, and journal.
+- **Education/team:** $99/month, 1,000 charts/month, shared folders and branded exports.
 
-## 14-day day-by-day build plan
+The pricing test should distinguish willingness to pay for extraction from willingness to pay for signals.
 
-| Day | Deliverable | Acceptance criterion |
-|---:|---|
-| 1 | Scope lock and compliance copy | One trader segment, supported chart types, prohibited claims, and output schema defined. |
-| 2 | Data model and ingestion | Upload, symbol/timeframe metadata, analysis, report, annotation, and usage models work. |
-| 3 | Image preprocessing | Crop, resize, enhance, and detect unreadable charts with actionable warnings. |
-| 4 | Structured extraction | Chart structure is returned in validated JSON with confidence and evidence fields. |
-| 5 | Scenario and invalidation engine | Reports include observations, scenarios, risks, and missing information without trading directives. |
-| 6 | Report UI | Users can review, edit, rerun, and export structured reports. |
-| 7 | Annotations | Trend lines and zones can be drawn and included in the export. |
-| 8 | History and journal | Saved analyses can be tagged, reviewed, and linked to a later outcome. |
-| 9 | Auth, billing, and quotas | Subscription state, limits, cancellation, and generation history work. |
-| 10 | Safety and quality suite | Financial-advice language, unsupported precision, hallucination, and adversarial charts are tested. |
-| 11 | UX polish | Upload-to-report works on mobile and desktop; errors are clear. |
-| 12 | Privacy and deletion | Users can delete charts, reports, and account data; retention settings are visible. |
-| 13 | Dogfooding | Ten experienced discretionary traders test known charts and review output quality. |
-| 14 | Launch | Production deploy, sample reports, support flow, disclaimers, demo video, and launch posts. |
+## 4. 14-day day-by-day build plan
 
-### Launch-readiness checklist
+| Day | objective | deliverables | acceptance test |
+|---:|---|---|---|
+| 1 | Define scope | Select daily stock charts; create 50-image labeled test corpus; define supported fields and error policy | Corpus covers labels, axes, candles, overlays, and poor quality |
+| 2 | Validate task | Interview 10 traders/analysts; show static mock output | At least 5 use screenshots repeatedly and 3 identify a painful manual step |
+| 3 | Extraction spike | Test OCR and vision models on the corpus | Establish per-field accuracy and cost; reject poor approaches |
+| 4 | Preprocessing | Implement resize, crop, deskew, contrast, plot detection | 90% of corpus images produce a usable plot region |
+| 5 | OCR pipeline | Extract titles, dates, prices, and labels | 95% readable-axis transcription on labeled test cases |
+| 6 | Geometry | Detect candles, lines, bars, and visible levels | At least 80% of supported chart types parse without manual intervention |
+| 7 | Evidence model | Store field values, confidence, and evidence crops | Every value can be inspected against the source image |
+| 8 | Report UX | Upload flow, result cards, overlay, warnings, copy/export | User can understand a field and its uncertainty in 60 seconds |
+| 9 | Account and persistence | Authentication, chart history, saved records, usage limits | User can retrieve and delete prior uploads |
+| 10 | Billing | Stripe plans, webhooks, metering, quota errors | Payment state and quotas are reliable |
+| 11 | Safety and privacy | Disclaimers, auto-deletion, retention controls, prompt-injection resistance | Untrusted image text cannot alter system behavior |
+| 12 | Pilot | Invite 10 target users; manually review outputs | At least 5 exports and 2 paid conversions |
+| 13 | Accuracy iteration | Fix top field failures and improve warning copy | Top three fields exceed agreed test thresholds |
+| 14 | Release | Deploy, publish sample gallery, record demo, start outreach | 99% job completion, no P0 defects, paid flow tested |
 
-- A supported chart produces a useful structured report in under 90 seconds.
-- Unsupported or illegible charts receive a clear refusal rather than fabricated analysis.
-- No output promises certainty, profit, or a trade recommendation.
-- Every stated observation points to visible chart evidence.
-- Users can delete all uploaded chart data.
-- Ten target traders have reviewed outputs during dogfooding.
+### Solo-build controls
 
-## 30-day marketing calendar
+- Support one primary chart type first.
+- Use a fixed evaluation corpus to prevent regression.
+- Keep explanations deterministic from structured fields.
+- Do not build brokerage integrations in the MVP.
+- Limit concurrency and cap image dimensions.
+
+## 5. 30-day marketing calendar
 
 ### Budget
 
-| Channel | 30-day budget |
+| channel | 30-day spend |
 |---|---:|
-| Analyst/creator collaborations and sample reports | $120 |
-| Selective paid tests for proven report pages | $100 |
-| Demo data, production, and storage | $80 |
-| **Total** | **$300 maximum** |
+| Small creator/newsletter sponsorships | $120 |
+| Search-intent content and one boosted post | $60 |
+| Paid chart corpus/test tooling | $40 |
+| Interview/demo incentives | $80 |
+| **Total** | **$300** |
 
-### Weekly calendar
+### Calendar
 
-#### Days 1–7: establish category and trust
+| day | activity | organic action | paid action | KPI |
+|---:|---|---|---:|---|
+| 1 | Launch | Publish homepage and interactive sample | None | 150 qualified visits |
+| 2 | Founder post | “I tested 50 chart screenshots” on LinkedIn/X | None | 10 qualified comments |
+| 3 | Accuracy page | Publish field-by-field benchmark methodology | None | 30 sample uploads |
+| 4 | Outreach | Contact 15 technical analysts | None | 5 interviews |
+| 5 | Demo video | Publish 60-second extraction demo | None | 20% upload rate |
+| 6 | Free tool | Offer 10 free chart extractions | None | 10 uploads |
+| 7 | Review | Fix largest OCR/geometry failure | None | 70% successful first parse |
+| 8 | Content | Publish “chart screenshot to CSV” guide | None | 50 organic visits |
+| 9 | Creator outreach | Send free credits to 10 trading educators | None | 3 creator trials |
+| 10 | Newsletter pitch | Pitch chart-productivity newsletters | None | 1 featured mention |
+| 11 | Founder analysis | Post a transparent extraction-error review | None | 3 paid conversions |
+| 12 | User calls | Interview trial users | None | 5 completed calls |
+| 13 | Product iteration | Add user correction and re-run flow | None | 25% correction completion |
+| 14 | Pricing test | Show $19/$39/$59 plans | None | 8% checkout start |
+| 15 | SEO page | Publish chart OCR/export comparison | None | 20 search visits |
+| 16 | Paid creator test | Promote demo to chart-analysis audience | $60 | CAC below $25 |
+| 17 | Live session | Run public chart-extraction clinic | None | 10 registrants |
+| 18 | Template launch | Add support/resistance annotation template | None | 20 template uses |
+| 19 | Review | Segment conversion by source and chart type | None | Identify best ICP |
+| 20 | Partnership | Reach out to trading educators | $20 | 2 pilot discussions |
+| 21 | Referral | Ask users to refer a chart-analysis peer | $20 | 4 referrals |
+| 22 | Content | Publish “5 chart OCR mistakes” | None | 15 shares |
+| 23 | Founder post | Explain trust and uncertainty design | None | 8 sales conversations |
+| 24 | Paid retarget | Retarget sample visitors | $20 | 3 paid trials |
+| 25 | Retention | Review repeat usage among first users | None | 40% second chart within 14 days |
+| 26 | Upgrade test | Trigger context upgrade after fifth free use | None | 3 plan conversions |
+| 27 | Customer proof | Publish anonymized time-saved result | None | 5 checkout starts |
+| 28 | Channel review | Pause low-quality sources | None | CAC below $30 |
+| 29 | Automation | Add upload-summary email and weekly usage digest | None | 35% open rate |
+| 30 | Monthly review | Reconcile paid users, MRR, churn, and inference cost | $0 | 15+ paid accounts or explicit pivot |
 
-| Day | Action |
-|---:|---|
-| 1 | Publish an explainer: what a chart-analysis report can and cannot tell a trader. |
-| 2 | Recruit 10 discretionary swing traders for interviews and sample-chart reviews. |
-| 3 | Publish a transparent side-by-side chart, evidence, report, and human correction. |
-| 4 | Share a no-signal example showing the system declining to force a conclusion. |
-| 5 | Post a founder diary about building a financial-analysis tool without financial advice. |
-| 6 | Reach out to 15 trading educators or community managers with a branded sample report. |
-| 7 | Launch the landing page and founder-led product announcement. |
+### Organic-first content pillars
 
-#### Days 8–14: use cases and proof
+- Public benchmark results.
+- Chart OCR error analysis.
+- Time-saving workflows for analysts.
+- Screenshots transformed into CSV.
+- Uncertainty and trust design.
+- Comparisons with general AI vision and manual notes.
 
-| Day | Action |
-|---:|---|
-| 8 | Publish a TradingView-to-report workflow tutorial. |
-| 9 | Publish a crypto-chart workflow tutorial. |
-| 10 | Add a saved-analysis journal walkthrough. |
-| 11 | Offer 20 assisted pilots to active traders and educators. |
-| 12 | Release an “invalidation checklist” lead magnet. |
-| 13 | Host a live chart-review clinic without presenting outcomes as guaranteed. |
-| 14 | Email qualified leads with a personalized sample report. |
+## 6. Unit economics to $10K MRR
 
-#### Days 15–21: improve and convert
+### Target mix
 
-| Day | Action |
-|---:|---|
-| 15 | Publish a case study on report review time and user corrections. |
-| 16 | Reach out to 20 trading educators with a branded-report offer. |
-| 17 | Improve the most common extraction and terminology failure modes. |
-| 18 | Add a “second opinion, not signals” landing-page section. |
-| 19 | Publish a journal-retention workflow for discretionary traders. |
-| 20 | Re-engage users who uploaded but did not save an analysis. |
-| 21 | Ask satisfied users for a review and referral. |
+| plan | price | customers | MRR |
+|---|---:|---:|---:|
+| Trader | $19 | 150 | $2,850 |
+| Analyst | $49 | 100 | $4,900 |
+| Education/team | $99 | 23 | $2,277 |
+| **Total** |  | **273** | **$10,027** |
 
-#### Days 22–30: retention and selective scale
+### Cost model
 
-| Day | Action |
-|---:|---|
-| 22 | Add custom strategy checklists if manually requested by five users. |
-| 23 | Interview retained and churned users. |
-| 24 | Publish a model/accuracy limitations update. |
-| 25 | Test a $50 paid report-page campaign only after organic signup validation. |
-| 26 | Add a data-deletion walkthrough and privacy FAQ. |
-| 27 | Publish an educator/community case study. |
-| 28 | Test annual pricing only if monthly churn is under 10%. |
-| 29 | Introduce a referral benefit after a saved report. |
-| 30 | Review MRR, activation, report acceptance, corrections, churn, CAC, and safety incidents. |
+Assumptions:
 
-### KPIs
+- Average processed chart cost: **$0.45**.
+- Average charts per account per month: **15**.
+- Payment/infrastructure cost: **3% of revenue**.
+- Support allowance: **$4/account/month**.
+- Fixed solo operating cost: **$1,200/month**.
 
-- Upload-to-report: target 90% within one day.
-- Successful analysis without a hard error: target 90%.
-- Users who save, annotate, or export: target 35%.
-- Free-to-paid conversion after five analyses: target 6%.
-- Month-one paid retention: target 90%.
-- Serious safety incidents: zero.
-- Paid CAC target: under $70.
-- Day-30 MRR validation target: **$1,000–$2,500**.
+At 273 accounts:
 
-## Unit economics to $10K MRR
+- Revenue: approximately **$10,027/month**.
+- Inference/storage cost: approximately **$1,843/month**.
+- Payment/infrastructure: approximately **$301/month**.
+- Support allowance: approximately **$1,092/month**.
+- Contribution before fixed cost: approximately **$6,791/month**.
+- After fixed cost: approximately **$5,591/month** before taxes and founder compensation.
 
-### Base case
+### CAC and payback assumptions
 
-Assume blended ARPU of **$25/month** and gross margin of **78%** after multimodal inference and storage.
+- Target blended CAC: **≤ $30**.
+- At a $19 plan, one-month gross profit must remain positive:
+  - approximately $19 revenue;
+  - roughly $6.75 inference cost;
+  - roughly $0.57 payment/infrastructure;
+  - roughly $4 support allowance;
+  - approximately $7.68 contribution before fixed cost.
+- The $19 plan may require annual payment or a lower support promise to improve payback.
+- At $49 and $99, one-month payback is easier.
+- Partnerships with educators are likely necessary to reach 273 accounts without exceeding the $300 budget.
 
-- Customers required: `$10,000 / $25 = 400`.
-- Monthly gross profit: `$10,000 × 78% = $7,800`.
-- Variable model, storage, and processing costs should remain below **$2,200/month** at 400 users.
+### Sensitivity
 
-### Customer mix
+- 150 customers at $49 produces $7,350 MRR.
+- 204 customers at $49 produces approximately $10K MRR.
+- If average charts per account rise to 30, inference costs rise materially; usage limits and efficient model routing are required.
+- If churn is above 10% monthly, acquisition must be replaced continuously and the economics weaken.
 
-| Customers | Blended ARPU | MRR | Use |
-|---:|---:|---:|---|
-| 250 | $15 | $3,750 | Trader |
-| 115 | $39 | $4,485 | Pro |
-| 35 | $79 | $2,765 | Creator |
-| **400** | **$27.50** | **$11,000** | Target threshold exceeded |
+## 7. Kill criteria
 
-### CAC and LTV
+Pause or kill if:
 
-- Target CAC ceiling: **$65**.
-- Gross profit per customer per month at $25 ARPU and 78% margin: **$19.50**.
-- Target gross-margin LTV/CAC: **3x**, requiring **$195 LTV**.
-- At a 12-month revenue horizon and an average retained life of about 10 months, contribution LTV is approximately **$195**.
-- The model clears the threshold only narrowly. ARPU, retention, or referral CAC must improve for attractive economics.
-- Initial scaling acquisition: 400 × $65 = **$26,000** over the growth period, funded through revenue.
-
-### Cost controls
-
-- Use cheaper OCR/vision tiers for low-value free requests.
-- Reject unsupported images before model invocation.
-- Compress client images before upload.
-- Store thumbnails instead of full-resolution originals after processing.
-- Cache repeated structured analyses where privacy policy permits.
-- Cap free usage and paid generation quotas.
-- Use deterministic checks to reduce retries and hallucinations.
-
-## Kill criteria
-
-Kill or pause if any of the following occurs:
-
-1. **Use-case failure:** fewer than 8 of 15 interviewed traders regularly review charts outside their native platform.
-2. **Activation failure:** fewer than 30% of signups upload a supported chart within seven days.
-3. **Quality failure:** more than 25% of reviewed outputs contain a material unsupported observation.
-4. **Value failure:** fewer than 25% of users save or export a report after analysis.
-5. **Paid conversion failure:** fewer than 5 paid users from 100 activated accounts after two iterations.
-6. **Retention failure:** paid churn exceeds 10% in the first billing month.
-7. **Safety failure:** any output gives an explicit buy/sell instruction, predicts returns with false precision, or conceals material uncertainty.
-8. **Economics failure:** CAC exceeds $65 without creator/referral distribution, or gross margin falls below 70%.
-9. **Platform risk:** chart providers block automated capture in a way that makes the intended workflow unreliable.
-10. **Scope trap:** the business depends on live data, signals, brokerage, or execution rather than second-opinion review.
-
-Decision rule: if material unsupported observations remain above 15% after two focused iterations, restrict supported charts and categories. If the safety layer cannot reliably prevent prescriptive financial advice, kill the product.
-
-## Research caveats
-
-- The supplied TinyFish output did not contain usable social or web excerpts.
-- Chart-analysis feature availability and pricing change rapidly and must be checked before launch.
-- This direction is deliberately not a trading bot, signal service, or gambling-adjacent product.
-- The GO relies on screenshot review for discretionary traders; live-data and brokerage expansion is excluded.
+1. Fewer than 4 of 10 interviewed users perform a recurring chart-screenshot workflow.
+2. Users primarily want trade signals rather than extraction, and those users reject the non-advisory positioning.
+3. The evaluation corpus fails to achieve 90% readable-label accuracy and 80% structured extraction on supported charts.
+4. More than 30% of charts require manual correction to be useful.
+5. Fewer than 5 users pay after 30 days.
+6. Blended CAC exceeds $30 for the $19 plan or $75 for the $49 plan without sufficient monthly gross profit.
+7. Inference plus support cost exceeds 60% of revenue on the average customer.
+8. Users treat low-confidence values as authoritative, creating unacceptable support or trust risk.
+9. The business requires regulated financial-advice claims to convert.
+10. Monthly churn exceeds 10%.
