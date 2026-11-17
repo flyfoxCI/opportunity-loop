@@ -28,6 +28,8 @@ validation kit per niche), **Check an idea** (runs in the browser, live Reddit s
 | App Store | Apple RSS top-grossing / top-free per genre + iTunes Lookup | verified rank / estimated ratings |
 | GitHub | Trending page, stars today | verified |
 | Reddit | [Arctic Shift](https://arctic-shift.photon-reddit.com) `posts/search` per direction subreddit | verified counts |
+| Web traffic | [Tranco](https://tranco-list.eu) daily top 1M: rank of every tracked product's website (now vs 7 days ago) + climbing domains that pass a homepage check for tools | verified |
+| Xiaohongshu 小工具 | official Top100 / released-today boards, imported from `data/xhs_tools/<date>.csv` (app-only, not scraped; see the README there) + public posts via TinyFish | verified / inferred |
 | Causal trace | TinyFish CLI on the day's top spikes (CI only) | inferred |
 
 ```bash

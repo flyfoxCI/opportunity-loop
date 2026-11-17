@@ -5,6 +5,8 @@ a failed source is logged to source_runs and the rest of the run carries on.
   appstore   chart rank + rating count + release    (Apple RSS charts + iTunes Lookup)
   github     stars today on GitHub Trending          (HTML)
   reddit     buyer-intent threads per direction     (Arctic Shift search API)
+  tranco     traffic rank of tracked sites + climbing tool domains (Tranco daily top 1M)
+  xhs        Xiaohongshu 小工具 rankings imported from data/xhs_tools/*.csv, plus public posts (TinyFish)
   trace      why-it-moved evidence for top spikes   (TinyFish CLI; CI only)
 """
 
@@ -373,4 +375,254 @@ def trace_products(con, targets: list[dict], max_items: int = 12) -> int:
                                 (t["source"], t["pid"], day, q, title[:200], url[:500], snippet[:300]))
                     rows += 1
     _log(f"trace: {rows} evidence links")
+    return rows
+
+
+# ---------------------------------------------------------------- Tranco top 1M (web traffic)
+# Tranco publishes a daily top-1M list (30-day average of 5 providers), so a 7-day rank change
+# is a real traffic trend, not a one-day blip. Two uses:
+#   1. traffic rank for products we already track (TrustMRR websites) -> verified MRR + traffic trend
+#   2. discovery: climbing domains whose homepage reads like a tool/product in one of our directions
+# Only the derived rows are stored; the 1M-row lists are fetched fresh each run (two ~22 MB CSVs).
+
+TRANCO_API = "https://tranco-list.eu/api/lists/date/{}"
+HOSTING = ("vercel.app", "netlify.app", "github.io", "notion.site", "carrd.co", "framer.website", "webflow.io",
+           "bubbleapps.io", "pages.dev", "replit.app", "lovable.app", "apple.com", "google.com", "github.com",
+           "chromewebstore.google.com", "producthunt.com", "gumroad.com", "wordpress.com", "wixsite.com", "shopify.com")
+_TR_BAD = re.compile(r"(movie|film|satta|matka|toto|slot|bet|casino|sex|porn|xxx|xnhau|toon|manga|manhwa|anime|"
+                     r"torrent|apk|iptv|stream|tvwiki|hentai|jav|dpboss|lottery|togel|gacor|judi|kasino|escort|"
+                     r"onlyfans|leak|crack|warez|loan|pharma|viagra|dating|bokep|yadong|nude|cuevana|flix|novel)", re.I)
+_TR_TOOL = re.compile(r"\b(tools?|generator|converter|maker|editor|calculator|checker|app|ai|online|free|software|"
+                      r"platform|templates?|builder|tracker|planner|assistant|api|saas|extension|quiz|test|game|"
+                      r"simulator)\b", re.I)
+_TR_NOPE = re.compile(r"(casino|\bbet\b|slot|porn|sex|movie|watch .* online|streaming|loan|login|sign in|404|"
+                      r"not found|forbidden|just a moment|attention required|parked|for sale|coming soon|index of|"
+                      # local service businesses (local-SEO churn, not products)
+                      r"contractor|roofing|roofer|plumb|electric(al|ian)|pest control|hvac|movers|cleaning service|"
+                      r"law firm|lawyer|attorney|dentist|clinic|salon|restaurant|hotel|real estate agent|dealer|"
+                      # gambling and number games common in IN/ID traffic churn
+                      r"4d\b|situs|gacor|togel|fatafat|yono|rummy|teen patti|aviator|daman|tiranga|satta|matka|"
+                      r"bayaran|result today|"
+                      # shops and downloads
+                      r"buy .* online|wholesale|products online|free download|download pc games|apk)", re.I)
+_TITLE = re.compile(r"<title[^>]*>(.*?)</title>", re.I | re.S)
+_DESC = re.compile(r'<meta[^>]+name=["\']description["\'][^>]+content=["\']([^"\']*)', re.I)
+
+
+def _registered_domain(url: str) -> str:
+    host = re.sub(r"^[a-z]+://", "", (url or "").strip().lower()).split("/")[0].split(":")[0]
+    host = host[4:] if host.startswith("www.") else host
+    parts = host.split(".")
+    if len(parts) >= 3 and parts[-2] in ("co", "com", "org", "net", "ac", "gov", "edu") and len(parts[-1]) == 2:
+        return ".".join(parts[-3:])
+    return ".".join(parts[-2:]) if len(parts) >= 2 else host
+
+
+def _tranco_list(day: datetime) -> tuple[str, dict[str, int]]:
+    """(list date, {domain: rank}) for the newest list on or before `day`."""
+    for back in range(0, 4):
+        d = (day - timedelta(days=back)).strftime("%Y-%m-%d")
+        meta = net.get(TRANCO_API.format(d), retries=1)
+        if meta.get("available") and meta.get("download"):
+            body = net.get(meta["download"], as_json=False, timeout=180, retries=2)
+            ranks = {}
+            for line in body.splitlines():
+                r, _, dom = line.partition(",")
+                if dom:
+                    ranks[dom.strip()] = int(r)
+            return d, ranks
+    raise RuntimeError(f"no Tranco list near {day:%Y-%m-%d}")
+
+
+def _homepage(domain: str) -> tuple[str, str, str] | None:
+    """(title, description, final host) or None. Reads at most 200 KB."""
+    import urllib.request
+    try:
+        req = urllib.request.Request(f"https://{domain}/", headers={
+            "User-Agent": "Mozilla/5.0 (compatible; opportunity-radar/2.0)", "Accept-Language": "en,zh;q=0.8"})
+        with urllib.request.urlopen(req, timeout=8) as r:
+            body = r.read(200_000).decode("utf-8", "replace")
+            final = _registered_domain(r.geturl())
+    except Exception:  # noqa: BLE001
+        return None
+    title = html.unescape((_TITLE.search(body) or [None, ""])[1]).strip()[:160]
+    desc = html.unescape((_DESC.search(body) or [None, ""])[1]).strip()[:400]
+    return title, desc, final
+
+
+def fetch_tranco(con, max_rank: int = 500_000, min_factor: float = 2.0, max_checks: int = 600) -> int:
+    from collections import Counter  # noqa: F811
+    from concurrent.futures import ThreadPoolExecutor
+    from .taxonomy import _scores
+    day = _today()
+    try:
+        now_day, now = _tranco_list(datetime.now(timezone.utc) - timedelta(days=1))
+        old_day, old = _tranco_list(datetime.strptime(now_day, "%Y-%m-%d").replace(tzinfo=timezone.utc) - timedelta(days=7))
+    except Exception as e:  # noqa: BLE001
+        log_source(con, "tranco", day, False, 0, str(e))
+        _log(f"tranco failed: {e}")
+        return 0
+    rows = 0
+    # 1. Traffic rank for products we already track. A domain shared by 2+ products is a host,
+    #    and a top-2,000 domain is a platform, not the product's own traffic.
+    sites = {}
+    for r in con.execute("SELECT pid, meta FROM products WHERE source='trustmrr'").fetchall():
+        dom = _registered_domain((json.loads(r["meta"] or "{}") or {}).get("website") or "")
+        if dom and not any(dom.endswith(h) for h in HOSTING):
+            sites[r["pid"]] = dom
+    shared = {d for d, n in Counter(sites.values()).items() if n > 1}
+    for pid, dom in sites.items():
+        if dom in shared or now.get(dom, 0) < 2000:
+            continue
+        r = {"pid": pid}
+        if dom in now:
+            put_metric(con, "trustmrr", r["pid"], "tranco_rank", day, now[dom])
+            put_metric(con, "trustmrr", r["pid"], "tranco_rank_7d", day, old.get(dom, 1_000_001))
+            rows += 1
+    # 2. Discovery: climbers that pass the homepage test.
+    family = Counter(re.sub(r"\d+$", "", d.split(".")[0]) for d in now)
+    cands = []
+    for dom, rank in now.items():
+        if rank > max_rank:
+            continue
+        before = old.get(dom, 1_000_001)
+        if before / rank < min_factor:
+            continue
+        name = dom.split(".")[0]
+        if (_TR_BAD.search(dom) or family[re.sub(r"\d+$", "", name)] >= 3 or re.search(r"\d{2,}", name)
+                or dom.count(".") > 2 or len(name) < 3):
+            continue  # domain-hopping clusters and the usual piracy/gambling churn
+        cands.append((before / rank, dom, rank, before))
+    cands.sort(reverse=True)
+    cands = cands[:max_checks]
+    known = {r[0] for r in con.execute(
+        "SELECT pid FROM products WHERE source IN ('tranco','tranco_rejected') AND last_seen>=?",
+        ((datetime.now(timezone.utc) - timedelta(days=21)).strftime("%Y-%m-%d"),))}
+    to_check = [c for c in cands if c[1] not in known]
+    with ThreadPoolExecutor(24) as ex:
+        pages = dict(zip([c[1] for c in to_check], ex.map(_homepage, [c[1] for c in to_check])))
+    kept = 0
+    for factor, dom, rank, before in cands:
+        if dom in pages:
+            page = pages[dom]
+            ok = False
+            if page:
+                title, desc, final = page
+                text = f"{title} {desc}"
+                sc = _scores(title, desc)
+                best = max(sc.values()) if sc else 0
+                ok = (bool(title) and final == dom and not _TR_NOPE.search(text)
+                      and bool(_TR_TOOL.search(title)) and best >= 1)
+            if not ok:
+                upsert_product(con, "tranco_rejected", dom, day)
+                continue
+            direction, conf = classify(title, desc)
+            upsert_product(con, "tranco", dom, day, name=title or dom, url=f"https://{dom}/", description=desc,
+                           category="web", direction=direction, direction_conf=conf,
+                           meta={"list_day": now_day, "base_day": old_day})
+        elif con.execute("SELECT 1 FROM products WHERE source='tranco' AND pid=?", (dom,)).fetchone():
+            con.execute("UPDATE products SET last_seen=? WHERE source='tranco' AND pid=?", (day, dom))
+        else:
+            continue  # rejected within the last 21 days
+        put_metric(con, "tranco", dom, "rank", day, rank)
+        put_metric(con, "tranco", dom, "rank_7d", day, before)
+        kept += 1
+        rows += 1
+    log_source(con, "tranco", day, True, rows, f"lists {old_day} -> {now_day}; {len(cands)} climbers, {kept} kept")
+    _log(f"tranco {old_day}->{now_day}: {rows - kept} tracked sites ranked, {len(cands)} climbers, {kept} kept")
+    return rows
+
+
+# ---------------------------------------------------------------- Xiaohongshu 小工具 (imported) + public posts
+# The official 小工具 rankings (Top100 by users / 7-day activity, and the daily new-release list)
+# live only inside the Xiaohongshu app. There is no public API, and the app API is not scraped.
+# Instead a person drops the day's ranking into data/xhs_tools/<YYYY-MM-DD>[_new].csv (see the
+# README there), and every run imports all files idempotently. A TinyFish search for public posts
+# about 小工具 runs alongside as an inferred supplement (CI only).
+
+XHS_DIR = ROOT / "data" / "xhs_tools"
+_XHS_COLS = {
+    "rank": ("rank", "排名", "名次"), "name": ("name", "名称", "工具名", "工具"), "users": ("users", "使用人数", "人数"),
+    "active_7d": ("active_7d", "7天活跃", "七天活跃", "活跃度", "7日活跃"), "category": ("category", "分类", "类别"),
+    "note_url": ("note_url", "链接", "笔记链接", "url"), "author": ("author", "作者"),
+}
+
+
+def _num(v) -> float | None:
+    if v is None:
+        return None
+    s = str(v).strip().replace(",", "").replace("+", "")
+    mult = 1.0
+    if s.endswith(("w", "W", "万")):
+        mult, s = 10_000.0, s[:-1]
+    elif s.endswith(("k", "K", "千")):
+        mult, s = 1000.0, s[:-1]
+    try:
+        return float(s) * mult
+    except ValueError:
+        return None
+
+
+def import_xhs(con) -> set[str]:
+    """Import every ranking CSV; returns the dates touched (so their snapshot files get re-exported)."""
+    import csv
+    touched: set[str] = set()
+    if not XHS_DIR.exists():
+        return touched
+    for path in sorted(XHS_DIR.glob("*.csv")):
+        m = re.match(r"(\d{4}-\d{2}-\d{2})(?:_(new|top100))?$", path.stem)
+        if not m:
+            continue  # TEMPLATE.csv and anything else
+        day, board = m.group(1), m.group(2) or "top100"
+        with open(path, encoding="utf-8-sig", newline="") as f:
+            reader = csv.DictReader(f)
+            colmap = {}
+            for key, names in _XHS_COLS.items():
+                for h in reader.fieldnames or []:
+                    if h and h.strip().lower() in [n.lower() for n in names]:
+                        colmap[key] = h
+            for i, row in enumerate(reader, start=1):
+                name = (row.get(colmap.get("name", ""), "") or "").strip()
+                if not name:
+                    continue
+                cat = (row.get(colmap.get("category", ""), "") or "").strip()
+                direction, conf = classify(name, cat)
+                upsert_product(con, "xhs", name, day, name=name, url=(row.get(colmap.get("note_url", ""), "") or "").strip(),
+                               description=cat, category=cat, direction=direction, direction_conf=conf,
+                               meta={"author": (row.get(colmap.get("author", ""), "") or "").strip(), "board": board})
+                rank = _num(row.get(colmap.get("rank", ""))) or i
+                put_metric(con, "xhs", name, f"rank_{board}", day, rank, "verified")
+                put_metric(con, "xhs", name, "users", day, _num(row.get(colmap.get("users", ""))), "verified")
+                put_metric(con, "xhs", name, "active_7d", day, _num(row.get(colmap.get("active_7d", ""))), "verified")
+        touched.add(day)
+        log_source(con, "xhs", day, True, sum(1 for _ in open(path, encoding="utf-8-sig")) - 1, f"imported {path.name}")
+    if touched:
+        _log(f"xhs: imported rankings for {', '.join(sorted(touched))}")
+    return touched
+
+
+def fetch_xhs_web(con) -> int:
+    """Public posts about 小工具 via TinyFish search. Inferred; CI only."""
+    if not shutil.which("tinyfish") or not os.environ.get("TINYFISH_API_KEY"):
+        _log("xhs web: tinyfish CLI or TINYFISH_API_KEY missing — skipped")
+        return 0
+    day = _today()
+    rows = 0
+    for q in ("site:xiaohongshu.com 小工具 vibe coding", "site:xiaohongshu.com 小红书小工具 上线",
+              "site:xiaohongshu.com 小工具 榜单", "小红书 小工具 独立开发 爆了"):
+        try:
+            proc = subprocess.run(["tinyfish", "search", "query", "--pretty", q], capture_output=True, text=True, timeout=60)
+        except Exception as e:  # noqa: BLE001
+            _log(f"xhs web {q}: {e}")
+            continue
+        lines = [ln.strip() for ln in (proc.stdout or "").splitlines() if ln.strip()]
+        for i, ln in enumerate(lines):
+            for url in _URL.findall(ln):
+                title = lines[i - 1] if i > 0 and not _URL.search(lines[i - 1]) else ln
+                snippet = lines[i + 1] if i + 1 < len(lines) and not _URL.search(lines[i + 1]) else ""
+                con.execute("INSERT OR IGNORE INTO traces(source,pid,day,query,title,url,snippet) VALUES(?,?,?,?,?,?,?)",
+                            ("xhs_web", "mentions", day, q, title[:200], url[:500], snippet[:300]))
+                rows += 1
+    log_source(con, "xhs_web", day, rows > 0, rows)
+    _log(f"xhs web: {rows} public post links")
     return rows

@@ -1,6 +1,6 @@
 """Opportunity Radar v2 CLI.
 
-  python -m radar collect [--backfill] [--only trustmrr,appstore,github,reddit]
+  python -m radar collect [--backfill] [--only trustmrr,tranco,appstore,github,reddit,xhs,xhs_web]
   python -m radar build            # analyze + (trace if tinyfish) + write docs/radar/
   python -m radar all [--backfill] # collect then build
 """
@@ -21,15 +21,20 @@ def collect(backfill: bool, only: set[str] | None) -> None:
     if backfill:
         sources.backfill_trustmrr(con)
         con.commit()
-    for name, fn in (("trustmrr", sources.fetch_trustmrr), ("github", sources.fetch_github),
-                     ("appstore", sources.fetch_appstore), ("reddit", sources.fetch_reddit)):
+    # tranco runs after trustmrr: it ranks the websites of the products trustmrr just refreshed
+    for name, fn in (("trustmrr", sources.fetch_trustmrr), ("tranco", sources.fetch_tranco),
+                     ("github", sources.fetch_github), ("appstore", sources.fetch_appstore),
+                     ("reddit", sources.fetch_reddit), ("xhs_web", sources.fetch_xhs_web)):
         if want(name):
             fn(con)
             con.commit()
+    xhs_days = sources.import_xhs(con) if want("xhs") else set()
+    con.commit()
     if backfill:
         print(f"[radar] exported {export_all(con)} snapshot days")
     else:
-        export_day(con, datetime.now(timezone.utc).strftime("%Y-%m-%d"))
+        for d in sorted(xhs_days | {datetime.now(timezone.utc).strftime("%Y-%m-%d")}):
+            export_day(con, d)
     con.close()
 
 

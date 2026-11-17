@@ -172,7 +172,39 @@ DIRECTIONS: list[dict] = [
      "keywords": ["ai assistant", "ai agent", "gpt", "chatgpt", "claude", "automation", "workflow", "zapier", "n8n", "copilot", "agentic"],
      "subreddits": ["ChatGPT", "automation", "n8n"], "queries": ["ai agent for", "automate", "workflow automation"],
      "fit": 0.55, "genres": [6007]},
+    {"slug": "web-games-quizzes", "name": "Web games, quizzes & tests", "group": "Consumer",
+     "keywords": ["quiz", "personality test", "friendship test", "which character", "simulator", "simulation game",
+                  "browser game", "web game", "idle game", "puzzle", "wordle", "tarot", "horoscope", "zodiac", "mbti",
+                  "love test", "iq test", "game", "games"],
+     "subreddits": ["WebGames", "incremental_games", "mbti"], "queries": ["browser game", "quiz", "personality test"],
+     "fit": 0.7, "genres": []},
 ]
+
+# Chinese keywords, so Xiaohongshu 小工具 names and categories land in the same directions.
+# CJK keywords match as plain substrings (see _hits).
+CN_KEYWORDS = {
+    "web-games-quizzes": ["小游戏", "游戏", "测试", "人格", "心理测", "测一测", "塔罗", "星座", "占卜", "合成", "消除", "模拟器", "恋爱", "答题"],
+    "productivity": ["待办", "清单", "番茄钟", "计时", "倒计时", "日程", "规划器", "笔记", "专注", "打卡"],
+    "personal-finance": ["记账", "理财", "存钱", "预算", "账单", "工资", "房贷", "计算器"],
+    "habit-fitness": ["健身", "运动", "跑步", "减脂", "习惯"],
+    "nutrition": ["热量", "卡路里", "菜谱", "食谱", "饮食", "减肥"],
+    "mental-health": ["冥想", "情绪", "睡眠", "解压", "呼吸"],
+    "language": ["背单词", "单词", "英语", "日语", "口语", "翻译"],
+    "study-edtech": ["学习", "考试", "考研", "刷题", "错题", "作文", "数学", "公式"],
+    "design-tools": ["配色", "头像", "壁纸", "海报", "字体", "设计", "拼图", "排版", "画板"],
+    "ai-photo": ["修图", "证件照", "照片", "抠图", "滤镜"],
+    "jobs-career": ["简历", "面试", "求职", "工作"],
+    "travel": ["旅行", "旅游", "攻略", "行程", "地图"],
+    "pets": ["宠物", "猫", "狗"],
+    "family-kids": ["宝宝", "育儿", "儿童", "亲子"],
+    "mobile-utility": ["换算", "转换", "生成器", "二维码", "工具箱"],
+    "audio-voice": ["音乐", "节拍", "白噪音", "钢琴"],
+    "faith": ["佛", "抄经", "祈福"],
+    "ecommerce": ["电商", "店铺", "选品"],
+    "content-repurpose": ["文案", "标题", "小红书文案"],
+}
+for _d in DIRECTIONS:
+    _d["keywords"] = _d["keywords"] + CN_KEYWORDS.get(_d["slug"], [])
 
 BY_SLUG = {d["slug"]: d for d in DIRECTIONS}
 OTHER = {"slug": "other", "name": "Unclassified", "group": "Other", "keywords": [], "subreddits": [], "queries": [], "fit": 0.5, "genres": []}
@@ -192,12 +224,15 @@ CATEGORY_HINTS = {
 }
 
 _WORD = re.compile(r"[a-z0-9]+")
+_CJK = re.compile(r"[\u3400-\u9fff]")
 
 
 def _hits(text: str, kw: str) -> bool:
     # Keywords match at a word start ("form" hits "forms", not "platform");
     # short ones (<=3 chars) must be a whole word.
     k = kw.strip()
+    if _CJK.search(k):  # \b has no meaning inside Chinese text
+        return k in text
     tail = r"\b" if len(k) <= 3 else ""
     return re.search(rf"\b{re.escape(k)}{tail}", text) is not None
 
@@ -210,8 +245,8 @@ def classify(name: str = "", description: str = "", category: str = "") -> tuple
     for d in DIRECTIONS:
         score = 0.0
         for kw in d["keywords"]:
-            if _hits(body, kw):
-                score += 1.0 + (1.0 if _hits(name_l, kw) else 0.0)
+            if _hits(body, kw):  # a specific multi-word phrase beats a single word
+                score += (1.0 + (1.0 if _hits(name_l, kw) else 0.0)) * len(kw.split())
         if score > best_score:
             best, best_score = d["slug"], score
     if best_score == 0 and category:
@@ -226,7 +261,7 @@ def _scores(name: str, description: str) -> dict[str, float]:
     body = f"{name_l} {(description or '').lower()}"
     out = {}
     for d in DIRECTIONS:
-        sc = sum(1.0 + (1.0 if _hits(name_l, kw) else 0.0) for kw in d["keywords"] if _hits(body, kw))
+        sc = sum((1.0 + (1.0 if _hits(name_l, kw) else 0.0)) * len(kw.split()) for kw in d["keywords"] if _hits(body, kw))
         if sc:
             out[d["slug"]] = sc
     return out

@@ -14,8 +14,9 @@ from .store import ROOT
 OUT = ROOT / "docs" / "radar"
 SITE_URL = os.environ.get("RADAR_SITE_URL", "https://flyfoxci.github.io/opportunity-loop/radar/")
 STATIC = Path(__file__).parent / "static"
-SRC_NAMES = {"trustmrr": "TrustMRR", "appstore": "App Store", "github": "GitHub", "reddit": "Reddit"}
-SRC_GLYPH = {"trustmrr": "MRR", "appstore": "iOS", "github": "GH"}
+SRC_NAMES = {"trustmrr": "TrustMRR", "appstore": "App Store", "github": "GitHub", "reddit": "Reddit",
+             "tranco": "Web traffic", "xhs": "Xiaohongshu", "xhs_web": "XHS posts"}
+SRC_GLYPH = {"trustmrr": "MRR", "appstore": "iOS", "github": "GH", "tranco": "WEB", "xhs": "XHS"}
 COMP_LABEL = {"money": "Money", "momentum": "Mom.", "demand": "Dem.", "gap": "Gap", "fit": "Fit"}
 VERDICT_TXT = {"ENTER": "Evidence clears the bar. Worth a 72-hour test.",
                "NARROW": "Real but crowded or thin. Pick one buyer and one angle.",
@@ -68,7 +69,7 @@ def page(title: str, body: str, base: str, active: str, description: str = "") -
 <nav class="nav"><div class="wrap">
 <a class="brand" href="{base}index.html">{LOGO}Opportunity Radar</a>
 {link("index.html", "Today", "today")}{link("directions/index.html", "Directions", "directions")}
-{link("check.html", "Check an idea", "check")}{link("method.html", "Method", "method")}
+{link("xhs.html", "小红书小工具", "xhs")}{link("check.html", "Check an idea", "check")}{link("method.html", "Method", "method")}
 <a class="link" href="{base}../archive/">Build packages</a>
 <span class="spacer"></span><button class="theme-btn" data-theme-toggle aria-label="Switch light or dark theme">◐</button>
 </div></nav>
@@ -98,6 +99,14 @@ def meter(d: dict, compact: bool = False) -> str:
 
 def signal_vals(s: dict) -> tuple[str, str]:
     """(headline readout, sub readout)."""
+    if s.get("web"):
+        if s.get("mult"):
+            return f'×{s["mult"]:.1f}', f'#{int(s["before"]):,} → #{int(s["after"]):,}'
+        return f'#{int(s["after"]):,}', "new in top 1M"
+    if s["source"] == "xhs":
+        if s.get("before") is None:
+            return f'#{int(s["after"])}', "new on board"
+        return f'#{int(s["after"])}', f'from #{int(s["before"])}'
     if s.get("rank"):
         if s.get("before") is None:
             return f'#{int(s["after"])}', "grossing rank"
@@ -144,10 +153,11 @@ def thread_row(t: dict, show_dir: bool, base: str) -> str:
 def health_line(m: dict) -> str:
     seen = {h["source"]: h for h in m["health"]}
     out = []
-    for key in ("trustmrr", "appstore", "github", "reddit"):
+    for key in ("trustmrr", "tranco", "appstore", "github", "reddit", "xhs"):
         h = seen.get(key)
         cls = "off" if not h else ("" if h["ok"] else "bad")
-        note = f'{h["rows"]:,} rows' if h else "not collected"
+        note = (f'{h["rows"]:,} rows' if h else "not collected") if key != "xhs" else (
+            f'board {h["day"]}' if h else "not imported yet")
         out.append(f'<span title="{E(h["note"] if h else "")}"><span class="dot {cls}"></span>{SRC_NAMES[key]} {E(note)}</span>')
     out.append('<span><span class="dot off"></span>TinyFish trace runs in CI</span>')
     return '<div class="health">' + "".join(out) + "</div>"
@@ -167,6 +177,85 @@ def lead_block(d: dict, m: dict | None = None) -> str:
 <a class="btn ghost" href="directions/{E(d['slug'])}.html">Open the landscape</a></div></div>
 <div><div class="scorebig"><b>{d['score']:.2f}</b><span class="tiny muted">score · confidence {d['confidence']:.1f}</span></div>
 {meter(d)}<ul class="facts">{''.join(f'<li><span>{k}</span><b>{v}</b></li>' for k, v in facts)}</ul></div></div>"""
+
+
+def traffic_cell(x: dict) -> str:
+    now, before = x.get("traffic"), x.get("traffic_7d")
+    if not now:
+        return "–"
+    if before and before <= 1_000_000 and before != now:
+        arrow = "▲" if before > now else "▼"
+        return f'#{int(now):,} <span class="delta {"up" if before > now else "down"}">{arrow}</span>'
+    return f"#{int(now):,}"
+
+
+def web_and_xhs(d: dict) -> str:
+    out = ""
+    if d.get("web"):
+        rows = "".join(
+            f"""<tr><td><a href="{E(w['url'])}" target="_blank" rel="noopener">{E(w['name'])}</a><span class="sub">{E(w['domain'])}</span></td>
+<td class="num">{('#' + format(int(w['rank_7d']), ',')) if w['rank_7d'] <= 1_000_000 else 'new'}</td><td class="num">#{int(w['rank']):,}</td>
+<td class="num">{('×' + format(w['rank_7d'] / w['rank'], '.1f')) if w['rank_7d'] <= 1_000_000 else '–'}</td></tr>""" for w in d["web"][:12])
+        out += (f'<section><div class="sec-head"><div><h2>Climbing the web top 1M</h2><p>{label_badge("verified")} '
+                f'Tranco rank, a 30-day traffic average, now vs 7 days ago. Sites passed a homepage check for tools in this niche</p></div></div>'
+                f'<div class="tbl-wrap"><table><thead><tr><th>Site</th><th class="num">7 days ago</th><th class="num">Now</th>'
+                f'<th class="num">Climb</th></tr></thead><tbody>{rows}</tbody></table></div></section>')
+    if d.get("xhs"):
+        rows = "".join(
+            f"""<tr><td>{('<a href="' + E(x['url']) + '" target="_blank" rel="noopener">' + E(x['name']) + '</a>') if x['url'] else E(x['name'])}<span class="sub">{E(x['category'])}</span></td>
+<td class="num">#{int(x['rank'])}</td><td class="num">{num(x['users']) if x['users'] else '–'}</td></tr>""" for x in d["xhs"][:10])
+        out += (f'<section><div class="sec-head"><div><h2>On the Xiaohongshu 小工具 board</h2><p>{label_badge("verified")} '
+                f'official Top100, imported. <a href="../xhs.html">Full board</a></p></div></div>'
+                f'<div class="tbl-wrap"><table><thead><tr><th>Tool</th><th class="num">Rank</th><th class="num">Users</th></tr></thead>'
+                f'<tbody>{rows}</tbody></table></div></section>')
+    return out
+
+
+def xhs_page(m: dict) -> str:
+    x = m.get("xhs") or {"boards": {}, "mentions": []}
+    sections = []
+    for board, title in (("top100", "Top100 by users and 7-day activity"), ("new", "Released today")):
+        b = x["boards"].get(board)
+        if not b:
+            continue
+        rows = []
+        for r in b["rows"]:
+            if r["new"]:
+                ch = '<span class="delta up">new</span>'
+            elif r["prev_rank"] and r["prev_rank"] != r["rank"]:
+                up = r["prev_rank"] > r["rank"]
+                ch = f'<span class="delta {"up" if up else "down"}">{"▲" if up else "▼"}{abs(int(r["prev_rank"] - r["rank"]))}</span>'
+            else:
+                ch = ""
+            growth = (f'×{r["users"] / r["users_prev"]:.1f}' if r["users"] and r["users_prev"] and r["users_prev"] > 0 else "–")
+            name = (f'<a href="{E(r["url"])}" target="_blank" rel="noopener">{E(r["name"])}</a>' if r["url"] else E(r["name"]))
+            rows.append(f"""<tr><td class="num">{int(r['rank'])}</td><td>{name} {ch}<span class="sub">{E(r['category'])}</span></td>
+<td><a href="directions/{E(r['direction'])}.html">{E(r['direction_name'])}</a></td>
+<td class="num" data-s="{r['users'] or 0}">{num(r['users']) if r['users'] else '–'}</td>
+<td class="num" data-s="{r['active_7d'] or 0}">{num(r['active_7d']) if r['active_7d'] else '–'}</td><td class="num">{growth}</td></tr>""")
+        since = f' · change vs {E(b["prev_day"])}' if b["prev_day"] else " · first import, changes appear from the next one"
+        sections.append(f"""<section><div class="sec-head"><div><h2>{title}</h2><p>{label_badge('verified')} imported {E(b['day'])}{since}</p></div></div>
+<div class="tbl-wrap"><table data-sortable><thead><tr><th class="num">#</th><th>Tool</th><th>Direction</th>
+<th class="sortable num">Users</th><th class="sortable num">7-day active</th><th class="num">Users vs last</th></tr></thead>
+<tbody>{''.join(rows)}</tbody></table></div></section>""")
+    if not sections:
+        sections.append("""<section><div class="panel pad"><h2>No board imported yet</h2>
+<p class="muted" style="margin-top:8px">The official rankings only exist inside the Xiaohongshu app, so the radar reads a file you add.
+Open the 小工具 board in the app, then either type the rows into a CSV or send the screenshots to Claude Code and ask it to transcribe them.</p>
+<ol class="small" style="margin:12px 0 0;padding-left:20px;display:grid;gap:4px">
+<li>Save as <span class="mono">data/xhs_tools/2026-11-17.csv</span> (Top100) or <span class="mono">2026-11-17_new.csv</span> (released today)</li>
+<li>Columns: <span class="mono">rank,name,users,active_7d,category,note_url,author</span>. Chinese headers such as 排名, 名称, 使用人数 also work; 1.2万 and 3k are read as numbers</li>
+<li>Run <span class="mono">python -m radar collect --only xhs</span> and <span class="mono">python -m radar build</span>, or push and let the daily job pick it up</li></ol></div></section>""")
+    ment = "".join(f'<div class="thread"><div class="c">{E(t["day"][5:])}</div><div class="t"><a href="{E(t["url"])}" target="_blank" rel="noopener">{E(t["title"] or t["url"])}</a><div>{E(t["snippet"])}</div></div></div>'
+                   for t in x.get("mentions", [])[:20])
+    sections.append(f"""<section><div class="sec-head"><div><h2>Public posts about 小工具</h2><p>{label_badge('inferred')} found by a daily web search; useful for spotting tools before they chart</p></div></div>
+<div class="panel threads">{ment or '<p class="empty">The search runs in the daily CI job once TinyFish is configured.</p>'}</div></section>""")
+    body = f"""<header class="mast"><div class="eyebrow"><span>小红书小工具</span><span>Xiaohongshu mini tools</span></div>
+<h1>Which small tools Xiaohongshu users pick up</h1>
+<p class="lede">Static, single-page tools that creators attach to their notes. The official boards rank them by users and 7-day activity.
+Casual games and tests lead, which makes this an early read on consumer tool demand in China.</p></header>
+{''.join(sections)}"""
+    return page("小红书小工具 · Opportunity Radar", body, "", "xhs")
 
 
 # ------------------------------------------------------------------ daily briefing + history
@@ -249,7 +338,7 @@ def index_page(m: dict) -> str:
     dirs = m["directions"]
     lead = dirs[0]
     rest = dirs[1:9]
-    caps = {"trustmrr": 8, "appstore": 8, "github": 4}
+    caps = {"trustmrr": 8, "tranco": 6, "xhs": 6, "appstore": 6, "github": 4}
     taken = {k: 0 for k in caps}
     sigs = []
     for s_ in m["signals"]:
@@ -346,7 +435,8 @@ def direction_page(d: dict, m: dict) -> str:
         f"""<tr><td><a href="{E(x['url'])}" target="_blank" rel="noopener">{E(x['name'])}</a><span class="sub">{E(x['desc'][:90] + ('…' if len(x['desc']) > 90 else ''))}</span></td>
 <td class="num" data-s="{x['mrr'] or 0}">{money(x['mrr'])}</td>
 <td class="num" data-s="{x['growth'] or 0}">{(f"{x['growth']:+.0f}%" if x['growth'] is not None else "–")}</td>
-<td class="num">{E(x['founded'][:7] or '–')}</td><td class="num">{money(x['asking']) if x['on_sale'] else '–'}</td></tr>"""
+<td class="num" data-s="{x['traffic'] or 9999999}">{traffic_cell(x)}</td>
+<td class="num">{E(x['founded'][:7] or '–')}</td></tr>"""
         for x in d["trustmrr"][:25])
     ap_rows = "".join(
         f"""<tr><td><a href="{E(x['url'])}" target="_blank" rel="noopener">{E(x['name'])}</a><span class="sub">{E(x['seller'] or '')}</span></td>
@@ -380,7 +470,7 @@ def direction_page(d: dict, m: dict) -> str:
 
 <section class="grid g2">
 <div style="min-width:0"><div class="sec-head"><div><h2>Who's earning</h2><p>{label_badge('verified')} MRR from TrustMRR, read from the payment provider</p></div></div>
-{('<div class="tbl-wrap"><table data-sortable><thead><tr><th>Product</th><th class="sortable num">MRR</th><th class="sortable num">30d</th><th class="num">Founded</th><th class="num">Asking</th></tr></thead><tbody>' + tm_rows + '</tbody></table></div>') if tm_rows else '<p class="empty">No verified products here yet.</p>'}</div>
+{('<div class="tbl-wrap"><table data-sortable><thead><tr><th>Product</th><th class="sortable num">MRR</th><th class="sortable num">30d</th><th class="sortable num" title="Tranco top-1M rank of the product website, change vs 7 days ago">Web rank</th><th class="num">Founded</th></tr></thead><tbody>' + tm_rows + '</tbody></table></div>') if tm_rows else '<p class="empty">No verified products here yet.</p>'}</div>
 <div style="min-width:0"><div class="sec-head"><div><h2>In the App Store charts</h2><p>{label_badge('verified')} US rank in its genre today</p></div></div>
 {('<div class="tbl-wrap"><table data-sortable><thead><tr><th>App</th><th class="sortable num">Grossing</th><th class="sortable num">Free</th><th class="num">Released</th></tr></thead><tbody>' + ap_rows + '</tbody></table></div>') if ap_rows else '<p class="empty">No charting apps matched this direction.</p>'}</div>
 </section>
@@ -391,6 +481,7 @@ def direction_page(d: dict, m: dict) -> str:
 <div class="sigs" style="grid-template-columns:1fr">{''.join(signal_row(s, base) for s in sigs[:5]) or '<p class="empty">Nothing moved here in the latest snapshots.</p>'}</div></div>
 </section>
 
+{web_and_xhs(d)}
 <section><div class="sec-head"><div><h2>Buyers asking on Reddit</h2>
 <p>From {", ".join("r/" + E(s) for s in d['subreddits'])}: posts asking for a tool, an alternative or a fix. Use them as wedge evidence and as your first interviews.</p></div></div>
 <div class="panel threads">{''.join(thread_row(t, False, base) for t in d['threads'][:12]) or '<p class="empty">No buyer-intent posts in the last two weeks.</p>'}</div></section>
@@ -436,7 +527,9 @@ def method_page(m: dict) -> str:
 <tr><td>Apple RSS charts + iTunes Lookup</td><td>US top-grossing and top-free rank per genre, rating counts, release dates</td><td>{label_badge('verified')} rank<br>{label_badge('estimated')} rating momentum</td></tr>
 <tr><td>GitHub Trending</td><td>Stars today and total stars</td><td>{label_badge('verified')}</td></tr>
 <tr><td>Reddit via Arctic Shift</td><td>Newest posts of each direction's subreddits (up to 14 days). A post counts as a buyer ask when it asks for something (“looking for”, “alternative to”, “would pay”) and names a product (app, tool, software, service). Reported as posts per week.</td><td>{label_badge('verified')} counts</td></tr>
-<tr><td>TinyFish search</td><td>Possible triggers for the day's top movers</td><td>{label_badge('inferred')}</td></tr>
+<tr><td>Tranco top 1M</td><td>Daily list (30-day average of five traffic providers). Rank of every tracked product's website, now vs 7 days ago, and climbing domains that pass a homepage check for tools in our niches. Piracy, gambling, local-service and shop domains are filtered out</td><td>{label_badge('verified')}</td></tr>
+<tr><td>Xiaohongshu 小工具 boards</td><td>Official Top100 and released-today boards, imported from the app into data/xhs_tools/ (no public API, and the app is not scraped)</td><td>{label_badge('verified')}</td></tr>
+<tr><td>TinyFish search</td><td>Possible triggers for the day's top movers, and public posts about Xiaohongshu 小工具</td><td>{label_badge('inferred')}</td></tr>
 </tbody></table></div>
 <p class="small muted">Tier 2 (keyword volume, X API, app revenue estimates, web traffic) needs paid APIs and is deferred.</p>
 <h2>Score v2</h2>
@@ -490,6 +583,7 @@ def write(m: dict) -> None:
         shutil.copy(STATIC / f, OUT / f)
     (OUT / "index.html").write_text(index_page(m), encoding="utf-8")
     (OUT / "check.html").write_text(check_page(), encoding="utf-8")
+    (OUT / "xhs.html").write_text(xhs_page(m), encoding="utf-8")
     (OUT / "method.html").write_text(method_page(m), encoding="utf-8")
     (OUT / "directions" / "index.html").write_text(directions_index(m), encoding="utf-8")
     for d in m["directions"]:

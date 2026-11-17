@@ -249,7 +249,94 @@ def _packages() -> list[dict]:
     return pk
 
 
-def directions(con, signals: list[dict]) -> list[dict]:
+def _latest_pair(con, source: str, metric: str, base_metric: str) -> dict[str, tuple[float, float]]:
+    """{pid: (current, 7-days-ago)} from the newest day each pid has `metric` on."""
+    out = {}
+    for r in con.execute(
+            f"SELECT a.pid, a.value, b.value FROM metrics a JOIN metrics b ON b.source=a.source AND b.pid=a.pid "
+            f"AND b.day=a.day AND b.metric=? WHERE a.source=? AND a.metric=? AND a.day=(SELECT MAX(day) FROM metrics "
+            f"m WHERE m.source=a.source AND m.pid=a.pid AND m.metric=a.metric)", (base_metric, source, metric)):
+        out[r[0]] = (r[1], r[2])
+    return out
+
+
+def tranco_signals(con, web: dict, tm: dict) -> list[dict]:
+    """Climbing domains (discovered) and traffic climbs of tracked TrustMRR products."""
+    out = []
+    for pid, (now, before) in _latest_pair(con, "tranco", "rank", "rank_7d").items():
+        p = web.get(pid)
+        if not p or not now:
+            continue
+        new = before > 1_000_000
+        out.append({"metric": "Tranco rank", "before": None if new else before, "after": now,
+                    "mult": None if new else before / now, "rank": True, "web": True,
+                    "window": "new in top 1M this week" if new else "7 days", "basis": "Tranco top 1M",
+                    "source": "tranco", "pid": pid, "name": p["name"] or pid, "url": p["url"], "direction": p["direction"],
+                    "label": "verified", "icon": None, "desc": f"{pid} · {(p.get('description') or '')[:200]}",
+                    "day": p["last_seen"], "strength": 1.0 + min(before / now, 10) * 0.35})
+    for pid, (now, before) in _latest_pair(con, "trustmrr", "tranco_rank", "tranco_rank_7d").items():
+        p = tm.get(pid)
+        if not p or not now or before > 1_000_000 or before / now < 1.3:
+            continue
+        out.append({"metric": "Tranco rank", "before": before, "after": now, "mult": before / now, "rank": True,
+                    "web": True, "window": "7 days", "basis": "Tranco top 1M · product has verified MRR",
+                    "source": "tranco", "pid": f"tm:{pid}", "name": p["name"], "url": p["url"], "direction": p["direction"],
+                    "label": "verified", "icon": (p["meta"] or {}).get("icon"), "desc": (p.get("description") or "")[:220],
+                    "day": p["last_seen"], "strength": 2.0 + min(before / now, 6) * 0.5})
+    return out
+
+
+def xhs_model(con) -> dict:
+    """Latest imported Xiaohongshu 小工具 boards, with change vs the previous import of each board."""
+    boards = {}
+    for board in ("top100", "new"):
+        days = [r[0] for r in con.execute(
+            "SELECT DISTINCT day FROM metrics WHERE source='xhs' AND metric=? ORDER BY day", (f"rank_{board}",))]
+        if not days:
+            continue
+        day, prev = days[-1], (days[-2] if len(days) > 1 else None)
+        def board_rows(d):
+            return {r["pid"]: r["value"] for r in con.execute(
+                "SELECT pid, value FROM metrics WHERE source='xhs' AND metric=? AND day=?", (f"rank_{board}", d))}
+        cur, old = board_rows(day), (board_rows(prev) if prev else {})
+        def val(pid, metric, d):
+            r = con.execute("SELECT value FROM metrics WHERE source='xhs' AND pid=? AND metric=? AND day=?", (pid, metric, d)).fetchone()
+            return r[0] if r else None
+        rows = []
+        for pid, rank in sorted(cur.items(), key=lambda kv: kv[1]):
+            p = con.execute("SELECT * FROM products WHERE source='xhs' AND pid=?", (pid,)).fetchone()
+            users, users_prev = val(pid, "users", day), (val(pid, "users", prev) if prev else None)
+            rows.append({"name": pid, "rank": rank, "prev_rank": old.get(pid), "new": bool(prev) and pid not in old,
+                         "users": users, "users_prev": users_prev, "active_7d": val(pid, "active_7d", day),
+                         "category": p["category"] if p else "", "url": p["url"] if p else "",
+                         "direction": p["direction"] if p else "other",
+                         "direction_name": BY_SLUG.get(p["direction"] if p else "", {}).get("name", "Unclassified")})
+        boards[board] = {"day": day, "prev_day": prev, "rows": rows}
+    mentions = [dict(r) for r in con.execute(
+        "SELECT title, url, snippet, day FROM traces WHERE source='xhs_web' ORDER BY day DESC LIMIT 30")]
+    return {"boards": boards, "mentions": mentions}
+
+
+def xhs_signals(xhs: dict) -> list[dict]:
+    out = []
+    b = xhs["boards"].get("top100")
+    if not b or not b["prev_day"]:
+        return out
+    for r in b["rows"]:
+        jump = (r["prev_rank"] - r["rank"]) if r["prev_rank"] else None
+        grew = (r["users"] / r["users_prev"]) if r["users"] and r["users_prev"] else None
+        if not ((jump and jump >= 10) or (r["new"] and r["rank"] <= 30) or (grew and grew >= 1.5)):
+            continue
+        out.append({"metric": "小工具 Top100 rank", "before": r["prev_rank"], "after": r["rank"],
+                    "mult": grew, "rank": True, "window": f"vs {b['prev_day']}" if not r["new"] else "new on the board",
+                    "basis": "Xiaohongshu official board (imported)", "source": "xhs", "pid": r["name"], "name": r["name"],
+                    "url": r["url"] or "xhs.html", "direction": r["direction"], "label": "verified", "icon": None,
+                    "desc": f"{r['category']} · {int(r['users']):,} users" if r["users"] else r["category"],
+                    "day": b["day"], "strength": 1.5 + (jump or 0) / 20 + (grew or 1) - 1})
+    return out
+
+
+def directions(con, signals: list[dict], xhs: dict | None = None) -> list[dict]:
     tm = _products(con, "trustmrr")
     ap = _products(con, "appstore")
     gh = _products(con, "github")
@@ -262,6 +349,10 @@ def directions(con, signals: list[dict]) -> list[dict]:
     gh_day = (con.execute("SELECT MAX(day) FROM metrics WHERE source='github'").fetchone()[0]) or ""
     gh_today = {pid: pts[-1][1] for pid, pts in _series(con, "github", "stars_today").items() if pts[-1][0] == gh_day}
     reddit_posts, reddit_comments = _reddit_rates(con)
+    traffic = _latest_pair(con, "trustmrr", "tranco_rank", "tranco_rank_7d")
+    web = _products(con, "tranco")
+    web_rank = _latest_pair(con, "tranco", "rank", "rank_7d")
+    xhs_rows = ((xhs or {}).get("boards", {}).get("top100") or {}).get("rows", [])
     since = int((_now() - timedelta(days=30)).timestamp())
     packages = _packages()
     year_ago = (_now() - timedelta(days=365)).strftime("%Y-%m-%d")
@@ -274,7 +365,8 @@ def directions(con, signals: list[dict]) -> list[dict]:
               "mrr": mrr.get(pid), "growth": g30.get(pid), "last_seen": p["last_seen"],
               "founded": ((p["meta"] or {}).get("foundedDate") or "")[:10], "on_sale": (p["meta"] or {}).get("onSale"),
               "asking": (p["meta"] or {}).get("askingPrice"), "icon": (p["meta"] or {}).get("icon"),
-              "website": (p["meta"] or {}).get("website")}
+              "website": (p["meta"] or {}).get("website"),
+              "traffic": (traffic.get(pid) or (None, None))[0], "traffic_7d": (traffic.get(pid) or (None, None))[1]}
              for pid, p in tm.items() if p["direction"] == slug and p["last_seen"] >= cutoff60 and (mrr.get(pid) or 0) > 0],
             key=lambda x: -(x["mrr"] or 0))
         a_items = sorted(
@@ -286,6 +378,10 @@ def directions(con, signals: list[dict]) -> list[dict]:
             key=lambda x: (x["grossing"] or 999, x["free"] or 999))
         g_items = [{"pid": pid, "url": p["url"], "desc": p.get("description") or "", "today": gh_today.get(pid)}
                    for pid, p in gh.items() if p["direction"] == slug and pid in gh_today]
+        w_items = sorted([{"domain": pid, "name": p["name"], "url": p["url"], "rank": web_rank[pid][0],
+                           "rank_7d": web_rank[pid][1]} for pid, p in web.items()
+                          if p["direction"] == slug and pid in web_rank], key=lambda x: x["rank"])
+        x_items = [x for x in xhs_rows if x["direction"] == slug]
         threads = [dict(r) for r in con.execute(
             "SELECT * FROM threads WHERE direction=? AND created_utc>=? AND title NOT LIKE '[%Removed%' "
             "AND title NOT LIKE '[deleted%' ORDER BY num_comments DESC, score DESC LIMIT 80", (slug, since))]
@@ -305,6 +401,8 @@ def directions(con, signals: list[dict]) -> list[dict]:
             "app_best_grossing": min([x["grossing"] for x in a_items if x["grossing"]] or [0]),
             "app_new": sum(1 for x in a_items if x["release"] and x["release"] >= year_ago),
             "gh_trending": len(g_items),
+            "web_climbers": len(w_items),
+            "xhs_tools": len(x_items),
             "reddit_posts": round(reddit_posts.get(slug, 0), 1),
             "reddit_comments": round(reddit_comments.get(slug, 0)),
             "signals": sum(1 for s in signals if s["direction"] == slug),
@@ -318,7 +416,7 @@ def directions(con, signals: list[dict]) -> list[dict]:
                 cadence[x["release"][:7]] += 1
         rows.append({"slug": slug, "name": d["name"], "group": d["group"], "fit": d["fit"],
                      "subreddits": d["subreddits"], "queries": d["queries"], "keywords": d["keywords"],
-                     "stats": stats, "trustmrr": t_items, "apps": a_items, "github": g_items,
+                     "stats": stats, "trustmrr": t_items, "apps": a_items, "github": g_items, "web": w_items, "xhs": x_items,
                      "threads": threads, "cadence": sorted(cadence.items()),
                      "packages": [p for p in packages if p["direction"] == slug]})
 
@@ -327,7 +425,8 @@ def directions(con, signals: list[dict]) -> list[dict]:
     money_v = {r["slug"]: 0.7 * _logscale(r["stats"]["tm_median_top5"], 300, 30_000) + 0.3 * gross_p[r["slug"]]
                for r in rows}
     mom_raw = {r["slug"]: r["stats"]["tm_growers"] * 2 + r["stats"]["signals"] * 1.5 + r["stats"]["gh_trending"] * 0.5
-               + r["stats"]["app_new"] * 0.5 for r in rows}
+               + r["stats"]["app_new"] * 0.5 + r["stats"]["web_climbers"] * 1.0 + r["stats"]["xhs_tools"] * 0.5
+               for r in rows}
     dem_raw = {r["slug"]: r["stats"]["reddit_posts"] + r["stats"]["reddit_comments"] / 20 for r in rows}
     crowd_raw = {r["slug"]: r["stats"]["tm_players"] + r["stats"]["app_chart"] for r in rows}
     per_player = {k: dem_raw[k] / (crowd_raw[k] + 1) for k in dem_raw}
@@ -342,7 +441,8 @@ def directions(con, signals: list[dict]) -> list[dict]:
             "gap": round(0.5 * (1 - crowd_p[s]) + 0.5 * pp_p[s], 2),
             "fit": r["fit"],
         }
-        n_src = sum([st["tm_players"] > 0, st["app_chart"] > 0, st["reddit_posts"] > 0, st["gh_trending"] > 0])
+        n_src = sum([st["tm_players"] > 0, st["app_chart"] > 0, st["reddit_posts"] > 0, st["gh_trending"] > 0,
+                     st["web_climbers"] > 0, st["xhs_tools"] > 0])
         conf = {0: 0.3, 1: 0.5, 2: 0.8}.get(n_src, 1.0)
         score = round(sum(W[k] * comp[k] for k in W) * conf, 3)
         floor = (st["tm_top_mrr"] or 0) >= 500 or n_src >= 2
@@ -370,6 +470,10 @@ def _why(r: dict) -> str:
         bits.append(f"{st['reddit_posts']:g} buyer-intent Reddit posts a week")
     if st["tm_growers"]:
         bits.append(f"{st['tm_growers']} growing 30%+ a month")
+    if st.get("web_climbers"):
+        bits.append(f"{st['web_climbers']} site{'s' if st['web_climbers'] > 1 else ''} climbing the web top 1M")
+    if st.get("xhs_tools"):
+        bits.append(f"{st['xhs_tools']} on the Xiaohongshu 小工具 board")
     if c["gap"] >= 0.6:
         bits.append("demand is high for the number of players")
     elif c["gap"] <= 0.25:
@@ -405,7 +509,8 @@ def validation_kit(r: dict) -> dict:
 
 def reclassify(con) -> None:
     """Re-file every product with the current taxonomy, so keyword edits apply to history too."""
-    rows = con.execute("SELECT source, pid, name, description, category, meta FROM products").fetchall()
+    rows = con.execute("SELECT source, pid, name, description, category, meta FROM products "
+                       "WHERE source != 'tranco_rejected'").fetchall()
     for r in rows:
         meta = json.loads(r["meta"] or "{}")
         if r["source"] == "appstore":
@@ -421,13 +526,15 @@ def reclassify(con) -> None:
 def run(con) -> dict:
     reclassify(con)
     tm, ap, gh = _products(con, "trustmrr"), _products(con, "appstore"), _products(con, "github")
-    signals = trustmrr_signals(con, tm) + appstore_signals(con, ap) + github_signals(con, gh)
+    xhs = xhs_model(con)
+    signals = (trustmrr_signals(con, tm) + appstore_signals(con, ap) + github_signals(con, gh)
+               + tranco_signals(con, _products(con, "tranco"), tm) + xhs_signals(xhs))
     traces = _traces(con)
     for s in signals:
         s["trace"] = traces.get((s["source"], s["pid"]), [])
         s["direction_name"] = BY_SLUG.get(s["direction"], {}).get("name", "Unclassified")
     signals.sort(key=lambda s: -s["strength"])
-    dirs = directions(con, signals)
+    dirs = directions(con, signals, xhs)
     health = [dict(r) for r in con.execute(
         "SELECT source, day, ok, rows, note FROM source_runs WHERE (source, day) IN "
         "(SELECT source, MAX(day) FROM source_runs GROUP BY source)")]
@@ -438,8 +545,9 @@ def run(con) -> dict:
     hot_threads = _asks_first(hot_threads)[:12]
     for t in hot_threads:
         t["direction_name"] = BY_SLUG.get(t["direction"], {}).get("name", "")
-    counts = {r[0]: r[1] for r in con.execute("SELECT source, COUNT(*) FROM products GROUP BY source")}
+    counts = {r[0]: r[1] for r in con.execute(
+        "SELECT source, COUNT(*) FROM products WHERE source != 'tranco_rejected' GROUP BY source")}
     snapshot_days = con.execute("SELECT COUNT(DISTINCT day) FROM metrics WHERE source='trustmrr'").fetchone()[0]
     return {"generated": _now().strftime("%Y-%m-%d %H:%M UTC"), "signals": signals, "directions": dirs,
             "health": health, "hot_threads": hot_threads, "counts": counts, "snapshot_days": snapshot_days,
-            "packages": _packages()}
+            "packages": _packages(), "xhs": xhs}
