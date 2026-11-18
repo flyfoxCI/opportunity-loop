@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method · Opportunity Loop</title>
+<meta name="description" content="Which small products took off yesterday, why, and how a solo builder could follow.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="alternate" type="application/rss+xml" title="Opportunity Loop" href="feed.xml">
+<script>try{var t=localStorage.getItem('ol-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<header class="top"><div class="wrap top-in">
+  <a class="brand" href="index.html"><span class="mark">◎</span> Opportunity Loop<span class="ver">v3</span></a>
+  <nav class="nav"><a href="index.html" class="">Today</a><a href="d/index.html" class="">Directions</a><a href="plays.html" class="">Playbooks</a><a href="charts.html" class="">Charts</a><a href="record.html" class="">Track record</a><a href="method.html" class="on">Method</a></nav>
+  <button class="theme" type="button" aria-label="Toggle dark mode" onclick="olTheme()">◐</button>
+</div></header>
+<main class="wrap"><section class="hero slim"><h1>Method</h1><p class="sub">Where every number comes from, how a product “crosses a line”,
+how briefs are written and graded, and what we refuse to do.</p></section>
+<h2 class="sec">Sources</h2><div class="tblwrap"><table class="tbl"><thead><tr><th>Source</th><th>Role</th><th>Label</th><th>History</th><th>Last run</th></tr></thead><tbody><tr><td><b>Appark charts</b><div class="muted small">appark.ai/api/charts/top-charts</div></td><td>discovery</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified rank</span></td><td class="small">today only for guests: snapshot daily<br><span class=muted>since Nov 18</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 52,474 rows</td></tr><tr><td><b>Google Play detail</b><div class="muted small">play.google.com/store/apps/details</div></td><td>measurement: exact installs</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified</span></td><td class="small">our daily snapshots<br><span class=muted>since Nov 18</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 595 rows</td></tr><tr><td><b>iTunes Lookup</b><div class="muted small">itunes.apple.com/lookup</div></td><td>measurement: rating count</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified count / estimated proxy</span></td><td class="small">our daily snapshots<br><span class=muted>since Nov 18</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 14,931 rows</td></tr><tr><td><b>Gravity Engine mini-games</b><div class="muted small">rank.gravity-engine.com/rank-data/{wechat,douyin}/{day,week}/</div></td><td>discovery + measurement</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified rank</span></td><td class="small">today only: snapshot daily (public = top 20 per board)<br><span class=muted>since Nov 18</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 140 rows</td></tr><tr><td><b>Appark drama</b><div class="muted small">appark.ai/api/advertiser/{tiktok-series-list, playlet-list}</div></td><td>discovery</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified rank / estimated impressions</span></td><td class="small">drama-ad chart has daily history (we backfill 30 days); series chart today only<br><span class=muted>since Nov 18</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 700 rows</td></tr><tr><td><b>TrustMRR</b><div class="muted small">trustmrr.com/api/ai</div></td><td>measurement: payment-verified revenue</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified</span></td><td class="small">API + our snapshots<br><span class=muted>since Nov 17</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 45 rows</td></tr><tr><td><b>GitHub Trending</b><div class="muted small">github.com/trending</div></td><td>discovery: stars today, 8 languages</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified</span></td><td class="small">our daily snapshots<br><span class=muted>since Nov 17</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 116 rows</td></tr><tr><td><b>Tranco</b><div class="muted small">tranco-list.eu</div></td><td>measurement: web traffic rank</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified</span></td><td class="small">daily lists by date<br><span class=muted>since Nov 17</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 28 rows</td></tr><tr><td><b>Reddit (Arctic Shift)</b><div class="muted small">arctic-shift.photon-reddit.com</div></td><td>Demand Echo: buyer-intent threads</td><td><span class="lbl lbl-verified">verified</span> <span class="muted small">verified counts</span></td><td class="small">API<br><span class=muted>since Nov 17</span></td><td class="small"><span class='ok'>●</span> Nov 18 · 645 rows</td></tr><tr><td><b>Xiaohongshu via TinyFish</b><div class="muted small">TinyFish search</div></td><td>Demand Echo (CN): public 小工具 posts</td><td><span class="lbl lbl-inferred">inferred</span> <span class="muted small">inferred</span></td><td class="small">CI only, when TinyFish is configured</td><td class="small"><span class='muted'>○ not run here</span></td></tr></tbody></table></div>
+<p class="muted small">Appark and Gravity Engine endpoints are public but undocumented. We pace requests, publish derived ranks and links,
+and never re-host raw chart dumps. Appark gives guests today's charts only, so history starts the day we start collecting.</p>
+<h2 class="sec">The line a product must cross</h2>
+<p>A product qualifies when today is at least <b>3×</b> its own average over the previous 7 days, above an absolute floor.
+New sources have no history yet: until a product has 3 days in our data, we use the change figure the source itself reports and label the card
+<span class="basis basis-source-delta">source delta</span> or <span class="basis basis-cold-start">cold start</span> instead of <span class="basis basis-own-baseline">own baseline</span>.</p>
+<div class="tblwrap"><table class="tbl"><thead><tr><th>Rule</th><th>Metric</th><th>Threshold</th></tr></thead><tbody><tr><td><b>Install spike</b></td><td class="small">Daily installs</td><td class="small">≥ 3.0× own baseline and ≥ 300/day</td></tr><tr><td><b>Ratings spike</b></td><td class="small">Daily new ratings</td><td class="small">≥ 3.0× own baseline and ≥ 20/day</td></tr><tr><td><b>Star spike</b></td><td class="small">Daily new stars</td><td class="small">≥ 3.0× own baseline and ≥ 100/day; cold start ≥ 400</td></tr><tr><td><b>Chart jump</b></td><td class="small">Chart rank</td><td class="small">up ≥ 30 places into the top 50</td></tr><tr><td><b>New on chart</b></td><td class="small">Newly on chart</td><td class="small">new or improved inside the top 100</td></tr><tr><td><b>Mini-game climb</b></td><td class="small">Mini-game chart rank</td><td class="small">up ≥ 5 places into the top 20</td></tr><tr><td><b>Ad surge</b></td><td class="small">Daily ad creatives</td><td class="small">≥ 2.0× own baseline and ≥ 300/day; or ≥ 50% of creatives new today</td></tr><tr><td><b>Drama chart</b></td><td class="small">TikTok drama chart</td><td class="small">new or improved inside the top 10</td></tr><tr><td><b>Revenue climb</b></td><td class="small">MRR</td><td class="small">v2 logic: MRR ×1.3 in 30 days (≥ $100 gain) / Tranco rank ×1.3 in 7 days</td></tr><tr><td><b>Traffic climb</b></td><td class="small">Web traffic rank</td><td class="small">v2 logic: MRR ×1.3 in 30 days (≥ $100 gain) / Tranco rank ×1.3 in 7 days</td></tr></tbody></table></div>
+<h2 class="sec">Picking what to brief</h2>
+<p>score = strength × publisher penalty × freshness × (0.5 + direction fit) × (1 + demand echo) × novelty.
+Grossing-chart moves weigh 1.4×, paid-chart moves 0.45× (a few sales move a thin paid chart); products launched in the last year weigh 1.3×,
+older than three years 0.55×. Big platforms are penalised, products briefed in the last 14 days are skipped,
+each surface gets at least 2 briefs and at most 40% of the 24 daily slots.</p>
+<h2 class="sec" id="modes">Two modes of brief</h2>
+<div class="grid2"><div class="panel"><h3>Data-only (always)</h3><p>Every field is computed from collected data: badge, curve, charts, measurements,
+dated events, peers, Demand Echo, discounts, grade, market-gap wedge. The headline describes the move; the trigger reads “not checked” unless evidence exists.</p></div>
+<div class="panel"><h3>Agent-checked (CI with keys)</h3><p>TinyFish searches the web for the trigger; an LLM writes the lesson headline, positioning,
+differentiators, moat, wedge and Build Kit <b>from the gathered evidence only</b>. A verify step downgrades any “fact” whose link we didn't gather to “inferred”.
+Badges and grades stay computed by code.</p></div></div>
+<h2 class="sec">Labels</h2><p><span class="lbl lbl-fact">fact</span> linked to a source · <span class="lbl lbl-verified">verified</span> measured by us or payment-verified · <span class="lbl lbl-estimated">estimated</span> a third party's estimate or a proxy ·
+<span class="lbl lbl-inferred">inferred</span> our reading of the evidence · <span class="lbl lbl-not_found">not found</span> we looked and didn't find it.</p></main>
+<footer class="foot wrap">
+  <div>Opportunity Loop · daily breakout intelligence · data 2026-11-18 · <a href="method.html">how this is made</a> ·
+  <a href="llms.txt">llms.txt</a> · <a href="api/today.json">JSON</a> · <a href="feed.xml">RSS</a></div>
+  <div class="muted">Every number links to its source and carries a label: verified, estimated, inferred or not found.
+  Charts are never padded. Not investment advice.</div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 # Run output (gitignored — Pages is the archive, not the repo)
 loop/runs/
 loop/state/
+loop/cache/
 
 # Python
 __pycache__/
@@ -25,3 +26,5 @@ venv/
 
 # Radar v2: SQLite is a rebuildable cache; data/snapshots/*.jsonl.gz is what gets committed
 data/radar.sqlite*
+# v3: App Store / Google Play chart snapshots are MBs/day: CI cache + `data-charts` release, not git
+data/charts/

@@ -1,0 +1,44 @@
+{
+  "_doc": "Opportunity Loop v3 config. collect: what to pull each day. rules: the line a product must cross. pick: how many get a full brief. See research/v3-design.md sections 2 and 4.",
+
+  "collect": {
+    "appark": {
+      "platforms": [1, 2],
+      "countries": ["us", "gb", "ca", "au", "de", "fr", "jp", "kr", "br", "in", "id", "mx", "tw", "sa", "tr"],
+      "pages_all": 5,
+      "genre_countries": ["us", "jp", "br", "de", "id"],
+      "genres": [6000, 6002, 6005, 6007, 6008, 6011, 6012, 6013, 6015, 6016, 6017, 6018, 6020, 6023, 6024, 6026, 6027, 7003, 7012, 7015],
+      "pages_genre": 2,
+      "genres_ios_only": [6026, 6027],
+      "pace": 0.5
+    },
+    "drama": {"pace": 0.6, "drama_backfill_days": 30},
+    "gravity": {"pace": 1.0},
+    "itunes": {"pace": 1.0},
+    "gplay": {"gp_max": 600, "pace": 0.3},
+    "github_languages": ["", "python", "typescript", "javascript", "go", "rust", "swift", "kotlin"]
+  },
+
+  "rules": {
+    "baseline_days": 7,
+    "min_baseline_points": 3,
+    "gp_installs":   {"mult": 3.0, "floor": 300,  "label": "Daily installs",        "unit": ""},
+    "ios_ratings":   {"mult": 3.0, "floor": 20,   "label": "Daily new ratings",     "unit": ""},
+    "gh_stars":      {"mult": 3.0, "floor": 100,  "cold_floor": 400, "label": "Daily new stars", "unit": ""},
+    "chart_jump":    {"min_jump": 30, "max_rank": 50, "label": "Chart rank"},
+    "chart_new":     {"max_rank": 100, "label": "Newly on chart"},
+    "minigame_rank": {"min_jump": 5, "max_rank": 20, "label": "Mini-game chart rank"},
+    "drama_ads":     {"mult": 2.0, "floor": 300, "fresh_share": 0.5, "label": "Daily ad creatives"},
+    "drama_chart":   {"max_rank": 10, "label": "TikTok drama chart"},
+    "revenue":       {"label": "MRR"},
+    "web_traffic":   {"label": "Web traffic rank"}
+  },
+
+  "pick": {
+    "budget": 24,
+    "max_share_per_surface": 0.4,
+    "min_per_surface": 2,
+    "big_publisher_apps": 40,
+    "deny_publishers": ["Google", "Apple", "Meta", "Microsoft", "Amazon", "TikTok", "ByteDance", "Tencent", "OpenAI", "Netflix", "Spotify", "Disney", "Temu", "Shein", "Alibaba", "Uber", "X Corp", "Snap"]
+  }
+}

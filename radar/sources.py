@@ -2,11 +2,11 @@
 a failed source is logged to source_runs and the rest of the run carries on.
 
   trustmrr   verified MRR / subs / growth           (TrustMRR public API + historical run files)
-  appstore   chart rank + rating count + release    (Apple RSS charts + iTunes Lookup)
+  appstore   v2 only: Apple RSS charts (v3 uses radar/feeds/appark.py + stores.py)
   github     stars today on GitHub Trending          (HTML)
   reddit     buyer-intent threads per direction     (Arctic Shift search API)
   tranco     traffic rank of tracked sites + climbing tool domains (Tranco daily top 1M)
-  xhs        Xiaohongshu 小工具 rankings imported from data/xhs_tools/*.csv, plus public posts (TinyFish)
+  xhs_web    Xiaohongshu 小工具 public posts via TinyFish search (inferred; CI only)
   trace      why-it-moved evidence for top spikes   (TinyFish CLI; CI only)
 """
 
@@ -533,72 +533,12 @@ def fetch_tranco(con, max_rank: int = 500_000, min_factor: float = 2.0, max_chec
     return rows
 
 
-# ---------------------------------------------------------------- Xiaohongshu 小工具 (imported) + public posts
-# The official 小工具 rankings (Top100 by users / 7-day activity, and the daily new-release list)
-# live only inside the Xiaohongshu app. There is no public API, and the app API is not scraped.
-# Instead a person drops the day's ranking into data/xhs_tools/<YYYY-MM-DD>[_new].csv (see the
-# README there), and every run imports all files idempotently. A TinyFish search for public posts
-# about 小工具 runs alongside as an inferred supplement (CI only).
-
-XHS_DIR = ROOT / "data" / "xhs_tools"
-_XHS_COLS = {
-    "rank": ("rank", "排名", "名次"), "name": ("name", "名称", "工具名", "工具"), "users": ("users", "使用人数", "人数"),
-    "active_7d": ("active_7d", "7天活跃", "七天活跃", "活跃度", "7日活跃"), "category": ("category", "分类", "类别"),
-    "note_url": ("note_url", "链接", "笔记链接", "url"), "author": ("author", "作者"),
-}
+# ---------------------------------------------------------------- Xiaohongshu 小工具 (TinyFish only)
+# v3 keeps Xiaohongshu only where TinyFish can fetch it: public posts about 小工具 (inferred, CI only).
+# The manual CSV import of the in-app boards was removed.
 
 
-def _num(v) -> float | None:
-    if v is None:
-        return None
-    s = str(v).strip().replace(",", "").replace("+", "")
-    mult = 1.0
-    if s.endswith(("w", "W", "万")):
-        mult, s = 10_000.0, s[:-1]
-    elif s.endswith(("k", "K", "千")):
-        mult, s = 1000.0, s[:-1]
-    try:
-        return float(s) * mult
-    except ValueError:
-        return None
-
-
-def import_xhs(con) -> set[str]:
-    """Import every ranking CSV; returns the dates touched (so their snapshot files get re-exported)."""
-    import csv
-    touched: set[str] = set()
-    if not XHS_DIR.exists():
-        return touched
-    for path in sorted(XHS_DIR.glob("*.csv")):
-        m = re.match(r"(\d{4}-\d{2}-\d{2})(?:_(new|top100))?$", path.stem)
-        if not m:
-            continue  # TEMPLATE.csv and anything else
-        day, board = m.group(1), m.group(2) or "top100"
-        with open(path, encoding="utf-8-sig", newline="") as f:
-            reader = csv.DictReader(f)
-            colmap = {}
-            for key, names in _XHS_COLS.items():
-                for h in reader.fieldnames or []:
-                    if h and h.strip().lower() in [n.lower() for n in names]:
-                        colmap[key] = h
-            for i, row in enumerate(reader, start=1):
-                name = (row.get(colmap.get("name", ""), "") or "").strip()
-                if not name:
-                    continue
-                cat = (row.get(colmap.get("category", ""), "") or "").strip()
-                direction, conf = classify(name, cat)
-                upsert_product(con, "xhs", name, day, name=name, url=(row.get(colmap.get("note_url", ""), "") or "").strip(),
-                               description=cat, category=cat, direction=direction, direction_conf=conf,
-                               meta={"author": (row.get(colmap.get("author", ""), "") or "").strip(), "board": board})
-                rank = _num(row.get(colmap.get("rank", ""))) or i
-                put_metric(con, "xhs", name, f"rank_{board}", day, rank, "verified")
-                put_metric(con, "xhs", name, "users", day, _num(row.get(colmap.get("users", ""))), "verified")
-                put_metric(con, "xhs", name, "active_7d", day, _num(row.get(colmap.get("active_7d", ""))), "verified")
-        touched.add(day)
-        log_source(con, "xhs", day, True, sum(1 for _ in open(path, encoding="utf-8-sig")) - 1, f"imported {path.name}")
-    if touched:
-        _log(f"xhs: imported rankings for {', '.join(sorted(touched))}")
-    return touched
+# Xiaohongshu: v3 reads it only through TinyFish (fetch_xhs_web). The manual CSV import was removed.
 
 
 def fetch_xhs_web(con) -> int:
