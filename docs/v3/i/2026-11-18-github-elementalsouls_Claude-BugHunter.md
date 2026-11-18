@@ -1,15 +1,19 @@
-# elementalsouls/Claude-BugHunter gained 1.0K GitHub stars in a day
+# Bundle niche AI skills into an immediately usable attack library
 
 > elementalsouls/Claude-BugHunter · GitHub · https://github.com/elementalsouls/Claude-BugHunter
-> Daily new stars: – → 1.0K (2 trending day(s) in our data: too few for a baseline, cold-start)
-> Grade B (54/100, Can try, clear weak spots) · direction: AI assistants & agents · mode: data
+> Daily new stars: – → 2.3K (2 trending day(s) in our data: too few for a baseline, cold-start)
+> Grade B (54/100, Can try, clear weak spots) · direction: AI assistants & agents · mode: agent
 
 ## Why it moved
-- [not_found] Trigger not checked yet: the agent investigation (LLM + TinyFish) runs where its keys are configured.
+- [fact] The repository presents a large, concrete bundle spanning bug hunting, external red-team work, vulnerability classes, and enterprise attack matrices. (https://github.com/elementalsouls/Claude-BugHunter)
+- [not_found] The only supplied growth explanation points to documentation, but its connection to this repository is unclear. (https://docs.tinyfish.ai/cli)
 
 ## Discount the numbers
 - We have 2 day(s) of our own history for this product; the move is measured against the source's own change figure, not our baseline yet.
 - Stars can be bought, and Trending brings its own stars: check forks, issues and real usage.
+- Only two days of tracked history are available, so there is no reliable baseline.
+- Stars can be bought, and Trending can itself attract stars; forks, issues, and real usage should be checked.
+- No direct evidence links the supplied documentation page to the repository's star growth.
 
 ## Demand Echo
 - 21 buyer-intent threads in 14 days
@@ -19,4 +23,6 @@
 - What's the hardest part of managing multiple clients that no tool has really solved for you? (https://www.reddit.com/r/automation/comments/1xt0b9m/)
 
 ## How to follow
-- wedge: Open-source momentum: the usual wedges are a hosted version, a GUI shell, or a vertical template built on it in the first two weeks.
+- play: Launch a narrowly scoped, ready-to-run workflow collection around one painful specialist job.
+- wedge: Pair reusable AI commands with a curated corpus of real-world failure patterns and attack matrices.
+- avoid: Do not assume documentation caused the breakout, and do not treat star velocity alone as proof of sustained usage.
