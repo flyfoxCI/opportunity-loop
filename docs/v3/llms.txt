@@ -1,0 +1,14 @@
+# Opportunity Loop v3
+
+> Daily breakout intelligence for solo builders: which small products (apps, SaaS, open source, mini-games, short drama)
+> crossed a measurable line today, why, whether buyers are asking for it, and how one or two people could follow.
+
+Every page has a Markdown twin. Data date: 2026-11-18.
+
+## Pages
+- [Today](index.md): today's briefs, ranked by grade
+- [Today as JSON](api/today.json): briefs + every candidate that crossed a line
+- [Directions](d/index.html), [Playbooks](plays.html), [Charts](charts.html), [Track record](record.html), [Method](method.html)
+
+## Labels
+fact (linked) · verified (measured / payment-verified) · estimated (third-party or proxy) · inferred · not_found

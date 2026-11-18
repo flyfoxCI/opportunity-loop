@@ -1,11 +1,12 @@
-name: radar daily (v2 signals + site)
+name: radar daily (v3 briefing)
 
-# Daily: collect tier-1 sources into data/radar.sqlite, rebuild docs/radar/, commit.
-# No LLM calls — cheap enough to run every day. The Mon/Thu loop (weekly.yml) still
-# writes the full build packages; this job only adds momentum, landscape and demand.
+# Daily v3 pipeline: collect → detect → investigate → build docs/v3/ → commit.
+# Appark gives guests today's charts only, so this must run every day: a missed day is lost history.
+# Agent mode (LLM-written briefs) turns on when ANTHROPIC_AUTH_TOKEN is set; TinyFish trace and
+# Xiaohongshu (via TinyFish search) turn on when TINYFISH_API_KEY is set. Without keys the briefs are data-only.
 on:
   schedule:
-    - cron: '30 6 * * *'   # 06:30 UTC = 14:30 Beijing
+    - cron: '30 6 * * *'   # 06:30 UTC = 14:30 Beijing; Appark's same-day charts were updated ~04:56 UTC on 2026-11-18
   workflow_dispatch:
 
 concurrency:
@@ -18,9 +19,12 @@ permissions:
 jobs:
   radar:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 120
     env:
       TINYFISH_API_KEY: ${{ secrets.TINYFISH_API_KEY }}
+      ANTHROPIC_AUTH_TOKEN: ${{ secrets.ANTHROPIC_AUTH_TOKEN }}
+      ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
+      ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
       PYTHONUNBUFFERED: 1
     steps:
       - uses: actions/checkout@v4
@@ -31,29 +35,85 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+
+      # Working DB + App Store / Google Play chart snapshots (MBs/day) live outside git:
+      # restored from the Actions cache here, saved under a new key at the end of every run.
+      - name: Restore working DB + chart snapshots
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/radar.sqlite
+            data/charts
+          key: radar-db-${{ github.run_id }}
+          restore-keys: radar-db-
+
+      - name: Cache miss → rebuild chart history from the data-charts release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ ! -f data/radar.sqlite ]; then
+            mkdir -p data/charts
+            gh release download data-charts -p '*.jsonl.gz' -D data/charts --skip-existing || echo "no chart release yet"
+          fi
+
       - uses: actions/setup-node@v4
         if: env.TINYFISH_API_KEY != ''
         with:
           node-version: '20'
 
-      - name: Install + auth TinyFish (causal trace)
+      - name: Install + auth TinyFish (trace + Xiaohongshu)
         if: env.TINYFISH_API_KEY != ''
         run: |
           npm install -g tinyfish
           tinyfish auth "$TINYFISH_API_KEY"
 
-      - name: Collect tier-1 sources
-        run: python -m radar collect
+      # Charts first: they are the only sources whose history can't be recovered later.
+      - name: Collect charts (Appark, drama, Gravity)
+        run: python -m radar collect --only appark,drama,gravity
 
-      - name: Build site (with trace when TinyFish is available)
-        run: python -m radar build
+      - name: Collect measurement (iTunes, Google Play, TrustMRR, Tranco, GitHub)
+        run: python -m radar collect --only itunes,gplay,trustmrr,tranco,github
+
+      - name: Collect demand (Reddit, Xiaohongshu via TinyFish)
+        timeout-minutes: 40
+        continue-on-error: true
+        run: python -m radar collect --only reddit,xhs_web
+
+      - name: Detect + investigate + build
+        run: |
+          python -m radar detect
+          python -m radar investigate
+          python -m radar build
+
+      - name: Save working DB + chart snapshots
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/radar.sqlite
+            data/charts
+          key: radar-db-${{ github.run_id }}
+
+      # Durable chart history: one asset per day on a long-lived release (the cache can be evicted).
+      - name: Upload today's chart snapshot to the data-charts release
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f="data/charts/$(date -u +%F).jsonl.gz"
+          [ -f "$f" ] || { echo "no chart snapshot today"; exit 0; }
+          gh release view data-charts >/dev/null 2>&1 || \
+            gh release create data-charts --title "Chart snapshots" --notes "Daily App Store / Google Play chart snapshots (radar v3). Not a code release."
+          gh release upload data-charts "$f" --clobber
 
       - name: Commit data + site
         run: |
           git config user.name  "opportunity-radar[bot]"
           git config user.email "opportunity-radar[bot]@users.noreply.github.com"
-          git add data/snapshots docs/radar
+          git add data/snapshots docs/v3 docs/start.html
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
-          git commit -m "radar: $(date -u +%F) daily signals"
+          git commit -m "radar v3: $(date -u +%F) daily briefing"
           git pull --rebase origin main
           git push origin HEAD:main

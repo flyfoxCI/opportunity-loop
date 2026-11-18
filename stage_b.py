@@ -41,6 +41,9 @@ STATE_FILE = LOOP / "state" / "last_run.json"
 TEMPLATE_DIR = LOOP / "templates"
 SEED_DIR = LOOP / "seed_directions"
 AGENT_PROMPT = LOOP / "AGENT_PROMPT.md"
+CONFIG_FILE = LOOP / "config.json"
+
+run_id = ""
 
 ANTHROPIC_BASE_URL = os.environ.get(
     "ANTHROPIC_BASE_URL", "https://api.minimaxi.com/anthropic"
@@ -173,7 +176,7 @@ def load_report_and_candidates(run_dir: Path) -> tuple[str, str, list[dict]]:
     return report, csv_text, candidates
 
 
-def b2_llm_call(system_prompt: str, user_prompt: str, max_tokens: int = 32000) -> str:
+def b2_llm_call(system_prompt: str, user_prompt: str, max_tokens: int = 16000) -> str:
     """Call MiniMax via the Anthropic SDK."""
     if not ANTHROPIC_AUTH_TOKEN:
         log("FATAL: ANTHROPIC_AUTH_TOKEN not set")
@@ -187,6 +190,8 @@ def b2_llm_call(system_prompt: str, user_prompt: str, max_tokens: int = 32000) -
     client = anthropic.Anthropic(
         api_key=ANTHROPIC_AUTH_TOKEN,
         base_url=ANTHROPIC_BASE_URL,
+        timeout=float(os.environ.get("STAGE_B_TIMEOUT_SEC", "1800")),
+        max_retries=1,
     )
 
     # Some Anthropic-compatible providers don't support all stop/beta headers — keep it minimal.
@@ -201,15 +206,28 @@ def b2_llm_call(system_prompt: str, user_prompt: str, max_tokens: int = 32000) -
         messages=[{"role": "user", "content": user_prompt}],
     )
 
+    if getattr(msg, "stop_reason", None) == "max_tokens":
+        log("WARN: response hit max_tokens — output may be truncated")
+
     parts = []
     for block in msg.content:
-        if hasattr(block, "text"):
-            parts.append(block.text)
+        # The provider returns a separate block for the model's reasoning
+        # (its `.text` is None and the content sits in `.thinking`). We only
+        # want the answer, not the chain of thought.
+        text = getattr(block, "text", None)
+        if text:
+            parts.append(text)
+    if not parts:
+        # No answer block at all — fall back to whatever reasoning we got.
+        for block in msg.content:
+            thinking = getattr(block, "thinking", None)
+            if thinking:
+                parts.append(thinking)
     return "\n".join(parts).strip()
 
 
 def parse_llm_output(
-    text: str, run_dir: Path
+    text: str, run_dir: Path | None = None
 ) -> tuple[str | None, list[tuple[str, str, str]]]:
     """Parse the LLM's response into VERDICT.md + per-direction files.
 
@@ -238,41 +256,134 @@ def parse_llm_output(
     if verdict_md and directions:
         return verdict_md, directions
 
+    # A truncated response can leave the last fenced block unterminated. Recover
+    # it by splitting on the fence markers ourselves.
+    if not directions:
+        head_re = re.compile(
+            r"```(verdict|direction:([a-z0-9\-]+))\s*\n", re.IGNORECASE
+        )
+        marks = list(head_re.finditer(text))
+        for i, m in enumerate(marks):
+            kind = m.group(1).lower()
+            end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+            body = text[m.end() : end].rstrip()
+            if body.endswith("```"):
+                body = body[:-3].rstrip()
+            body = body.strip()
+            if not body:
+                continue
+            if kind == "verdict":
+                verdict_md = verdict_md or body
+            else:
+                slug = m.group(2)
+                tier = "go-narrow" if "GO_NARROW" in body[:300].upper() else "go"
+                directions.append((slug, tier, body))
+        if directions:
+            log(f"  recovered {len(directions)} block(s) from an unterminated fence")
+
     # Heuristic fallback: split on "# " and "## "
-    log("  no fenced blocks — using heuristic split")
     if not verdict_md:
+        if not directions:
+            log("  no fenced blocks — using heuristic split")
         verdict_md = text.split("# ")[0].strip() or (
             "# Verdict\n\n(LLM did not emit a `verdict` block)\n"
         )
     return verdict_md, directions
 
 
-def main() -> None:
-    state = load_state()
-    run_dir = run_dir_for(state)
-    if not run_dir.exists():
-        log(f"FATAL: run dir missing: {run_dir}")
-        sys.exit(1)
+# ---------------------------------------------------------------------------
+# Verdict table parsing
+# ---------------------------------------------------------------------------
 
-    log(f"run_id={state['last_run_id']}")
-    report_md, candidates_csv, candidates = load_report_and_candidates(run_dir)
-    log(f"loaded {len(candidates)} candidates from candidates.csv")
+SELECTABLE_HEADER_RE = re.compile(
+    r"selectable\s+directions", re.IGNORECASE
+)
 
-    # ----- B1: TinyFish sweep -----
-    evidence = b1_tinyfish_sweep(run_dir, candidates)
-    log(f"B1 done — evidence for {len(evidence)} slugs")
 
-    # ----- B2: LLM call -----
-    agent_prompt = AGENT_PROMPT.read_text(encoding="utf-8")
-    seed_index = (SEED_DIR / "INDEX.md").read_text(encoding="utf-8") if (SEED_DIR / "INDEX.md").exists() else ""
+def parse_selectables_table(verdict_md: str) -> list[dict]:
+    """Extract the selectable rows from a VERDICT.md selectables table.
 
-    # Concatenate evidence into a bounded JSON bundle
+    Expected shape (loop/templates/verdict.md):
+        | # | slug | tier | demand | competition | one-liner | why selectable |
+    """
+    rows: list[dict] = []
+    lines = verdict_md.splitlines()
+    in_table = False
+    for line in lines:
+        if SELECTABLE_HEADER_RE.search(line):
+            in_table = True
+            continue
+        if in_table:
+            stripped = line.strip()
+            if stripped.startswith("|---") or stripped.startswith("| ---"):
+                continue
+            if stripped.startswith("|"):
+                cells = [c.strip() for c in stripped.strip("|").split("|")]
+                if len(cells) < 4:
+                    continue
+                try:
+                    rank = int(cells[0].strip().strip("`"))
+                except ValueError:
+                    continue
+                slug = cells[1].strip().strip("`").strip()
+                if not slug:
+                    continue
+                tier = "GO_NARROW" if "NARROW" in cells[2].upper() else "GO"
+                demand = cells[3].split("/")[0].strip()
+                competition = cells[4].split("/")[0].strip() if len(cells) > 4 else ""
+                one_liner = cells[5].strip() if len(cells) > 5 else ""
+                why = cells[6].strip() if len(cells) > 6 else ""
+                rows.append(
+                    {
+                        "rank": rank,
+                        "slug": slug,
+                        "tier": tier,
+                        "demand": demand,
+                        "competition": competition,
+                        "one_liner": one_liner,
+                        "why": why,
+                    }
+                )
+            elif rows:
+                in_table = False
+    rows.sort(key=lambda r: r["rank"])
+    return rows
+
+
+# ---------------------------------------------------------------------------
+# B2 — split LLM calls
+#
+# One giant call (VERDICT + 5 full direction packages) blows two limits:
+# the provider's own generation deadline, and max_tokens. So B2 is split:
+#   call 1  → VERDICT.md (selectables table)
+#   call 2..N → one direction package each, in parallel
+# ---------------------------------------------------------------------------
+
+MAX_SELECTABLES = 5
+MIN_SELECTABLES = 3
+
+
+def load_scoring_config() -> tuple[int, int]:
+    """Read min/max selectable counts from loop/config.json."""
+    try:
+        cfg = json.loads(CONFIG_FILE.read_text(encoding="utf-8"))
+        sc = cfg.get("scoring", {})
+        return (
+            int(sc.get("min_selectable_directions", MIN_SELECTABLES)),
+            int(sc.get("max_selectable_directions", MAX_SELECTABLES)),
+        )
+    except Exception:
+        return MIN_SELECTABLES, MAX_SELECTABLES
+
+
+def build_context(
+    report_md: str, candidates_csv: str, evidence: dict, seed_index: str
+) -> str:
+    """The shared context block fed to every B2 call."""
     evidence_bundle = json.dumps(evidence, indent=2, ensure_ascii=False)
-    # Cap each piece so the prompt fits comfortably in 200K context
     if len(evidence_bundle) > 100_000:
         evidence_bundle = evidence_bundle[:100_000] + "\n…(truncated)\n"
-
-    user_prompt = f"""# Stage A report (auto-generated)
+    return f"""# Stage A report (auto-generated)
 
 {report_md}
 
@@ -291,45 +402,226 @@ def main() -> None:
 # Prior validated directions (seed — from `reports/directions/INDEX.md`)
 
 {seed_index}
-
-# Your task
-
-Execute the Stage B contract in your system prompt exactly. Emit your output as:
-
-1. A single fenced block tagged ```verdict containing the full VERDICT.md content.
-2. One fenced block per selectable direction tagged ```direction:<slug> containing the full direction markdown.
-
-If a direction is GO_NARROW, include a `## Wedge (required for GO_NARROW)` section at the end.
-Use the templates in `loop/templates/` as your structure — fill in the placeholders.
-
-Do not output anything outside the fenced blocks.
 """
 
-    raw = b2_llm_call(agent_prompt, user_prompt)
 
-    # ----- Parse + write artifacts -----
-    verdict_md, directions = parse_llm_output(raw, run_dir)
+def call_verdict(
+    agent_prompt: str, context: str, attempt: int = 1, raw_path: Path | None = None
+) -> tuple[str, list[dict]]:
+    """Call 1 — ask for VERDICT.md only. Returns (verdict_md, selectables)."""
+    extra = ""
+    if attempt > 1:
+        extra = (
+            "\n\n**Correction:** the previous attempt did not yield 3–5 selectables. "
+            "You MUST produce at least 3 rows in the selectables table. If pure GO "
+            "candidates are fewer than 3, add GO_NARROW directions with an explicit "
+            "wedge. Do not stop early.\n"
+        )
 
-    if verdict_md:
+    user_prompt = f"""{context}
+{extra}
+# Your task (this call covers the VERDICT only)
+
+Execute step 2 (scoring the candidate pool) and step 3A (VERDICT.md) of your
+system prompt. Score the candidates using the search evidence above, then emit
+**only** the VERDICT.md content in a single fenced block:
+
+```verdict
+# Verdict — {run_id}
+
+## Selectable directions (3–5) — pick one
+
+| # | slug | tier | demand | competition | one-liner | why selectable |
+|---|---|---|:-:|:-:|---|---|
+| 1 | `slug-one` | GO | 4/5 | 3/5 | … | … |
+
+## Ranked recommendation (still give choice)
+## WATCH
+## KILL
+## Handles
+```
+
+Rules:
+- The selectables table MUST have between 3 and 5 rows, and every row MUST be a
+  real candidate from the candidate pool above (Track B / Starter Story rows are
+  context only — never selectable).
+- The `slug` column must be a kebab-case identifier, e.g. `pen-plotter-optimizer`.
+- `tier` is `GO` or `GO_NARROW`. `demand` and `competition` are `N/5`.
+- Do NOT write any direction packages in this call — a separate call does that.
+- Output nothing outside the fenced block.
+"""
+    raw = b2_llm_call(agent_prompt, user_prompt, max_tokens=24000)
+    if raw_path:
+        raw_path.write_text(raw, encoding="utf-8")
+    verdict_md, _ = parse_llm_output(raw)
+    if not verdict_md or "selectable" not in verdict_md.lower():
+        # The model skipped the fence — fall back to the whole response.
+        verdict_md = raw.strip()
+    selectables = parse_selectables_table(verdict_md)
+    return verdict_md, selectables
+
+
+def call_direction(
+    agent_prompt: str,
+    context: str,
+    verdict_md: str,
+    sel: dict,
+    evidence: dict,
+    raw_path: Path | None = None,
+) -> tuple[str, str, str]:
+    """Call 2..N — one complete direction package."""
+    slug = sel["slug"]
+    slug_ev = json.dumps(evidence.get(slug, {}), indent=2, ensure_ascii=False)
+    tier = sel.get("tier", "GO")
+    wedge_note = (
+        "\nThis direction is **GO_NARROW** — you MUST end with a "
+        "`## Wedge (required for GO_NARROW)` section naming exactly what you "
+        "refuse to build (one vertical / one feature / one ICP).\n"
+        if "NARROW" in tier.upper()
+        else ""
+    )
+    user_prompt = f"""{context}
+# VERDICT.md for this run (the comparison table and your scoring)
+
+```verdict
+{verdict_md}
+```
+
+# Search evidence for THIS direction only ({slug})
+
+```json
+{slug_ev}
+```
+
+# Your task (this call covers ONE direction package)
+
+Write the complete direction package for **{slug}**.
+
+- tier: **{tier}**, demand {sel.get("demand", "?")}/5, competition {sel.get("competition", "?")}/5
+- one-liner from the verdict: {sel.get("one_liner", "")}
+- why it is selectable: {sel.get("why", "")}
+{wedge_note}
+Use `loop/templates/direction-{'go-narrow' if 'NARROW' in tier.upper() else 'go'}.md`
+as the structure. Include ALL of its sections:
+1. Why this direction (TrustMRR evidence + X/web evidence)
+2. Competitor table (L1/L2/L3)
+3. PRD MVP (P0/P1/P2 + non-goals)
+4. 14-day day-by-day build plan
+5. 30-day marketing calendar with budget ≤ $300
+6. Unit economics to $10K MRR
+7. Kill criteria
+{"8. Wedge section (GO_NARROW only)" if "NARROW" in tier.upper() else ""}
+
+Emit ONLY the direction markdown in a single fenced block tagged
+```direction:{slug}
+Do not write any other direction package. Do not output anything outside the fence.
+"""
+    raw = b2_llm_call(agent_prompt, user_prompt, max_tokens=32000)
+    if raw_path:
+        raw_path.write_text(raw, encoding="utf-8")
+    _v, directions = parse_llm_output(raw)
+    body = None
+    for s, _t, b in directions:
+        if s == slug:
+            body = b
+            break
+    if body is None and directions:
+        body = directions[0][2]
+    if body is None:
+        # No fence — use the raw response, minus any stray fence markers.
+        body = raw.strip()
+        for marker in ("```" + f"direction:{slug}", "```"):
+            if body.startswith(marker):
+                body = body[len(marker) :]
+        if body.endswith("```"):
+            body = body[:-3]
+        body = body.strip()
+    tier_norm = "go-narrow" if "NARROW" in tier.upper() else "go"
+    return slug, tier_norm, body
+
+
+def main() -> None:
+    state = load_state()
+    run_dir = run_dir_for(state)
+    if not run_dir.exists():
+        log(f"FATAL: run dir missing: {run_dir}")
+        sys.exit(1)
+
+    global run_id
+    run_id = state["last_run_id"]
+
+    log(f"run_id={run_id}")
+    report_md, candidates_csv, candidates = load_report_and_candidates(run_dir)
+    log(f"loaded {len(candidates)} candidates from candidates.csv")
+
+    # ----- B1: TinyFish sweep -----
+    evidence = b1_tinyfish_sweep(run_dir, candidates)
+    log(f"B1 done — evidence for {len(evidence)} slugs")
+
+    # ----- B2: LLM calls -----
+    agent_prompt = AGENT_PROMPT.read_text(encoding="utf-8")
+    seed_index = (SEED_DIR / "INDEX.md").read_text(encoding="utf-8") if (SEED_DIR / "INDEX.md").exists() else ""
+    context = build_context(report_md, candidates_csv, evidence, seed_index)
+
+    raw_dir = run_dir / "llm_raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+
+    min_sel, max_sel = load_scoring_config()
+    log(f"selectable target: {min_sel}–{max_sel}")
+
+    # --- call 1: the verdict ---
+    verdict_md, selectables = call_verdict(
+        agent_prompt, context, attempt=1, raw_path=raw_dir / "verdict.md"
+    )
+    if len(selectables) < min_sel:
+        log(f"  only {len(selectables)} selectable(s) — retrying the verdict call")
+        verdict_md, selectables = call_verdict(
+            agent_prompt, context, attempt=2, raw_path=raw_dir / "verdict_retry.md"
+        )
+
+    if not selectables:
+        log("FATAL: no selectables parsed from the verdict")
         (run_dir / "VERDICT.md").write_text(verdict_md, encoding="utf-8")
-        log(f"wrote VERDICT.md ({len(verdict_md)} bytes)")
-    else:
-        log("WARN: no verdict block parsed")
+        sys.exit(6)
 
+    selectables = selectables[:max_sel]
+    log(f"verdict selectables: {', '.join(s['slug'] for s in selectables)}")
+
+    (run_dir / "VERDICT.md").write_text(verdict_md, encoding="utf-8")
+    log(f"wrote VERDICT.md ({len(verdict_md)} bytes)")
+
+    # --- calls 2..N: one direction package each, in parallel ---
     dirs_dir = run_dir / "directions"
     dirs_dir.mkdir(parents=True, exist_ok=True)
-    # Clear any previous run's directions
     for old in dirs_dir.glob("*.md"):
         old.unlink()
 
-    for slug, tier, body in directions:
-        template_name = f"direction-{tier}.md"
-        template = (TEMPLATE_DIR / template_name).read_text(encoding="utf-8")
-        # We don't try to fill the template — the LLM is told to use it as structure.
-        # Just stamp a small header on top so each file is identifiable.
+    def one(sel: dict) -> tuple[str, str, str]:
+        try:
+            return call_direction(
+                agent_prompt,
+                context,
+                verdict_md,
+                sel,
+                evidence,
+                raw_path=raw_dir / f"direction_{sel['slug']}.md",
+            )
+        except Exception as e:  # a single failed direction must not kill the run
+            log(f"  direction {sel['slug']} FAILED: {e}")
+            return sel["slug"], "go", ""
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as ex:
+        results = list(ex.map(one, selectables))
+
+    directions: list[tuple[str, str, str]] = []
+    for slug, tier, body in results:
+        if not body:
+            log(f"  no content for {slug} — skipped")
+            continue
         final = f"{body.rstrip()}\n"
         (dirs_dir / f"{slug}.md").write_text(final, encoding="utf-8")
         log(f"wrote directions/{slug}.md ({tier}, {len(final)} bytes)")
+        directions.append((slug, tier, body))
 
     selectable_count = len(directions)
     log(f"selectables produced: {selectable_count}")
@@ -344,8 +636,8 @@ Do not output anything outside the fenced blocks.
     state["agent_stage_utc"] = datetime.now(timezone.utc).isoformat()
     STATE_FILE.write_text(json.dumps(state, indent=2), encoding="utf-8")
 
-    if selectable_count < 3:
-        log(f"FATAL: only {selectable_count} selectables (minimum 3)")
+    if selectable_count < min_sel:
+        log(f"FATAL: only {selectable_count} selectables (minimum {min_sel})")
         sys.exit(6)
 
 

@@ -203,6 +203,17 @@ CN_KEYWORDS = {
     "ecommerce": ["电商", "店铺", "选品"],
     "content-repurpose": ["文案", "标题", "小红书文案"],
 }
+# v3 surfaces that are filed by source, not keywords (no subreddits: demand is read elsewhere).
+DIRECTIONS += [
+    {"slug": "mobile-games", "name": "Mobile games", "group": "Games", "keywords": [], "subreddits": [],
+     "queries": [], "fit": 0.35, "genres": [6014] + list(range(7001, 7020))},
+    {"slug": "minigame", "name": "WeChat & Douyin mini-games", "group": "Games", "keywords": [], "subreddits": [],
+     "queries": [], "fit": 0.45, "genres": []},
+    {"slug": "drama", "name": "Short drama", "group": "Media", "keywords": [], "subreddits": [],
+     "queries": [], "fit": 0.3, "genres": []},
+]
+GAME_GENRES = {6014} | set(range(7001, 7020))
+
 for _d in DIRECTIONS:
     _d["keywords"] = _d["keywords"] + CN_KEYWORDS.get(_d["slug"], [])
 
@@ -268,7 +279,7 @@ def _scores(name: str, description: str) -> dict[str, float]:
 
 
 GENRE_HINTS = {6000: "lead-gen", 6002: "mobile-utility", 6005: "dating-social", 6007: "productivity",
-               6008: "ai-photo", 6011: "audio-voice", 6012: "mobile-utility", 6013: "habit-fitness",
+               6008: "ai-photo", 6011: "audio-voice", 6013: "habit-fitness",
                6015: "personal-finance", 6017: "study-edtech", 6018: "faith", 6020: "health-medical",
                6023: "nutrition", 6024: "ecommerce", 6026: "devtools", 6027: "design-tools", 6003: "travel"}
 
@@ -281,6 +292,8 @@ def classify_app(name: str, description: str, genre_id) -> tuple[str, float]:
         gid = int(genre_id) if genre_id is not None else None
     except (TypeError, ValueError):
         gid = None
+    if gid in GAME_GENRES:
+        return "mobile-games", 0.6
     in_genre = {k: v for k, v in sc.items() if gid is not None and gid in BY_SLUG[k]["genres"]}
     if in_genre:
         best = max(in_genre, key=in_genre.get)

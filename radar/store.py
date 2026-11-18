@@ -46,6 +46,15 @@ CREATE TABLE IF NOT EXISTS source_runs (
   source TEXT, day TEXT, ok INTEGER, rows INTEGER, note TEXT,
   PRIMARY KEY (source, day)
 );
+-- v3: the line each product crossed today, and what we found out about it
+CREATE TABLE IF NOT EXISTS candidates (
+  id TEXT PRIMARY KEY, day TEXT NOT NULL, surface TEXT, source TEXT, pid TEXT, rule TEXT,
+  score REAL, picked INTEGER DEFAULT 0, json TEXT
+);
+CREATE INDEX IF NOT EXISTS candidates_by_day ON candidates(day, picked);
+CREATE TABLE IF NOT EXISTS investigations (
+  id TEXT PRIMARY KEY, day TEXT NOT NULL, status TEXT, mode TEXT, json TEXT
+);
 """
 
 
@@ -113,16 +122,49 @@ _TABLES = {
                                "created_utc", "query", "first_seen", "author"]),
     "traces": ("day", ["source", "pid", "day", "query", "title", "url", "snippet"]),
     "source_runs": ("day", ["source", "day", "ok", "rows", "note"]),
+    "candidates": ("day", ["id", "day", "surface", "source", "pid", "rule", "score", "picked", "json"]),
+    "investigations": ("day", ["id", "day", "status", "mode", "json"]),
 }
 
 
-def export_day(con, day: str) -> Path:
-    SNAP_DIR.mkdir(parents=True, exist_ok=True)
-    path = SNAP_DIR / f"{day}.jsonl.gz"
+# Two snapshot streams per day:
+#   data/snapshots/<day>.jsonl.gz  committed to git: every small source + candidates + investigations
+#   data/charts/<day>.jsonl.gz     App Store / Google Play charts + store counts (MBs per day): gitignored;
+#                                  CI keeps them in the Actions cache and uploads each day to the
+#                                  `data-charts` GitHub Release, so history survives without bloating git.
+# In the charts stream, products are written only on the day they are first seen (last_seen is implied
+# by their metrics) and ranks below #100 / rank changes under 10 places are dropped.
+CHART_DIR = ROOT / "data" / "charts"
+_BIG = ("ios", "play")
+_CHART_FILTERS = {
+    "products": f"source IN {_BIG} AND first_seen=?",
+    "metrics": (f"source IN {_BIG} AND NOT (metric LIKE 'rank:%' AND value>100) "
+                f"AND NOT (metric LIKE 'chg:%' AND ABS(value)<10)"),
+}
+
+
+def _write(path: Path, con, day: str, charts: bool) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(path, "wt", encoding="utf-8") as f:
         for table, (daycol, cols) in _TABLES.items():
-            for r in con.execute(f"SELECT {','.join(cols)} FROM {table} WHERE {daycol}=?", (day,)):
+            if charts and table not in _CHART_FILTERS:
+                continue
+            if charts:
+                extra, args = _CHART_FILTERS[table], ((day, day) if table == "products" else (day,))
+            elif table in _CHART_FILTERS:
+                extra, args = f"source NOT IN {_BIG}", (day,)
+            else:
+                extra, args = "", (day,)
+            q = f"SELECT {','.join(cols)} FROM {table} WHERE {daycol}=?" + (f" AND {extra}" if extra else "")
+            for r in con.execute(q, args):
                 f.write(json.dumps({"t": table, "r": list(r)}, ensure_ascii=False, separators=(",", ":")) + "\n")
+
+
+def export_day(con, day: str) -> Path:
+    path = SNAP_DIR / f"{day}.jsonl.gz"
+    _write(path, con, day, charts=False)
+    if con.execute(f"SELECT 1 FROM metrics WHERE day=? AND source IN {_BIG} LIMIT 1", (day,)).fetchone():
+        _write(CHART_DIR / f"{day}.jsonl.gz", con, day, charts=True)
     return path
 
 
@@ -136,7 +178,7 @@ def export_all(con) -> int:
 
 def import_snapshots(con) -> int:
     n = 0
-    for path in sorted(SNAP_DIR.glob("*.jsonl.gz")):
+    for path in sorted(list(SNAP_DIR.glob("*.jsonl.gz")) + list(CHART_DIR.glob("*.jsonl.gz"))):
         with gzip.open(path, "rt", encoding="utf-8") as f:
             for line in f:
                 rec = json.loads(line)

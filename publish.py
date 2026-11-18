@@ -217,8 +217,10 @@ def week_label(run_id: str) -> str:
     dt = parse_run_date(run_id)
     if not dt:
         return run_id
-    iso = dt.isocalendar()
-    return f"Week {iso.week} · {dt.strftime('%Y-%m-%d')}"
+    # isocalendar() returns a plain tuple on Python 3.8 and a named tuple
+    # afterwards — index it so both work.
+    week = dt.isocalendar()[1]
+    return f"Week {week} · {dt.strftime('%Y-%m-%d')}"
 
 
 # ============================================================================
@@ -335,6 +337,19 @@ def generate_week_page(run_id: str, run_dir: Path, selectables: list[dict]) -> N
     if target.exists():
         shutil.rmtree(target)
     shutil.copytree(run_dir, target)
+    # Track B's raw dump is ~200KB of regenerable JSON — the CSV + markdown
+    # carry the value, so keep the blob out of Pages (and out of git history).
+    raw_track_b = target / "starterstory_raw.json"
+    if raw_track_b.exists():
+        raw_track_b.unlink()
+    # The raw LLM responses are debugging artifacts — VERDICT.md + directions/
+    # are the published truth, and the raw dumps would double the repo size.
+    raw_llm = target / "llm_raw.md"
+    if raw_llm.exists():
+        raw_llm.unlink()
+    raw_llm_dir = target / "llm_raw"
+    if raw_llm_dir.is_dir():
+        shutil.rmtree(raw_llm_dir)
 
     # Generate index.html on top
     dt = parse_run_date(run_id)

@@ -1,48 +1,55 @@
-# Opportunity Loop — TrustMRR startup-direction radar (runs every 3 days)
+# Opportunity Loop — daily breakout intelligence for solo builders
 
-> **Mission:** every Tuesday and Friday morning, surface 3–5 selectable startup
-> directions from TrustMRR + X/web signals — each one a complete PRD + 14-day MVP +
-> 30-day marketing plan ready to ship.
+> **Mission:** every morning, show which small products (apps, SaaS, open source, mini-games,
+> short drama) crossed a measurable line, why, whether buyers are asking for it, and how one or
+> two people could follow — with every number labeled and linked.
 
-The system runs automatically via GitHub Action (`Mon + Thu 17:00 UTC` = `Tue + Fri 01:00 Beijing`). Twice a week — fast enough to catch fresh TrustMRR listings within 72 hours. Results publish to GitHub Pages as a searchable history.
+Runs daily via GitHub Actions (`radar-daily.yml`, 06:30 UTC) and publishes to GitHub Pages.
+The original TrustMRR direction loop (Stage A/B, PRD packages) is retired as a schedule; its
+packages live on at `/archive/` and its templates feed the v3 Build Kit.
 
 **Live site:** `https://<your-github-user>.github.io/opportunity-loop/`
 
 ---
 
-## Radar v2 (daily signals site)
+## v3 — daily breakout briefing (current)
 
-**The daily radar is the product.** It owns the site root (`/` redirects to `/radar/`), updates
-every day, shows what changed since yesterday, and publishes an RSS feed (`/radar/feed.xml`).
-The weekly LLM loop below is retired as a schedule: `weekly.yml` is manual-only, and its build
-packages live on at `/archive/`.
+**v3 is the product.** Every day it answers: *which small products crossed a measurable line, why,
+whether buyers are asking for it, and how one or two people could follow.* Site: `docs/v3/` (the
+root `/` redirects there). Design: `research/v3-design.html`; teardown of Stringers: `research/stringers-analysis.html`.
 
-`radar/` is the v2 layer from the PRD: a daily, LLM-free job that tracks movement across free
-(tier-1) sources and publishes `docs/radar/` — **Today** (rising products + directions worth a
-look), **Directions** (landscape, verified earners, App Store charts, Reddit demand, a 72-hour
-validation kit per niche), **Check an idea** (runs in the browser, live Reddit search) and **Method**.
-
-| Source | How | Label |
-|---|---|---|
-| TrustMRR | public `api/ai` + every historical `trustmrr_raw.json` (backfill) | verified |
-| App Store | Apple RSS top-grossing / top-free per genre + iTunes Lookup | verified rank / estimated ratings |
-| GitHub | Trending page, stars today | verified |
-| Reddit | [Arctic Shift](https://arctic-shift.photon-reddit.com) `posts/search` per direction subreddit | verified counts |
-| Web traffic | [Tranco](https://tranco-list.eu) daily top 1M: rank of every tracked product's website (now vs 7 days ago) + climbing domains that pass a homepage check for tools | verified |
-| Xiaohongshu 小工具 | official Top100 / released-today boards, imported from `data/xhs_tools/<date>.csv` (app-only, not scraped; see the README there) + public posts via TinyFish | verified / inferred |
-| Causal trace | TinyFish CLI on the day's top spikes (CI only) | inferred |
+| Surface | Discovery | Measurement | Label |
+|---|---|---|---|
+| Apps & games | Appark top charts: iOS + Google Play, 15 countries × all + 20 genres, top 200 | Google Play detail (exact installs), iTunes Lookup (rating counts) | verified / estimated proxy |
+| Web & SaaS | TrustMRR, Tranco climbers | TrustMRR payment-verified MRR, Tranco rank | verified |
+| Open source | GitHub Trending, 8 languages | stars/day vs own history | verified |
+| Mini-games | Gravity Engine WeChat + Douyin boards (public top 20) | rank change | verified rank |
+| Short drama | Appark TikTok drama chart + drama-ad chart (30-day backfill) | creatives, impressions | estimated |
+| Demand Echo | Reddit buyer-intent threads; Xiaohongshu public posts **via TinyFish only** | — | verified counts / inferred |
 
 ```bash
-python -m radar collect --backfill   # first time: load history + all sources (~5 min)
-python -m radar collect              # daily
-python -m radar build                # analyze + trace (if tinyfish) + write docs/radar/
+python -m radar collect      # all sources (or --only appark,drama,gravity,itunes,gplay,...)
+python -m radar detect       # the line each product crossed today + the day's picks (radar/v3.json)
+python -m radar investigate  # briefs: data-only, or agent mode when ANTHROPIC_AUTH_TOKEN is set
+python -m radar build        # docs/v3/
+python -m radar all          # everything
 ```
 
-Storage: `data/snapshots/<day>.jsonl.gz` is committed (append-only, one small file per day);
-`data/radar.sqlite` is a gitignored cache rebuilt from those files on demand.
-Directions and their keywords/subreddits live in `radar/taxonomy.py`.
-CI: `.github/workflows/radar-daily.yml` (06:30 UTC). Paid sources (keyword volume, X API, app
-revenue estimates) are tier 2 and deliberately not wired in.
+- **Detection** (`radar/detect.py`, thresholds in `radar/v3.json`): today ≥ 3× the product's own
+  7-day baseline above a floor. Until a product has 3 days of our own history, the source's own change
+  figure is used and the card says `source delta` / `cold start`.
+- **Briefs** (`radar/investigate.py`): one JSON per pick. Data-only mode computes every field from
+  collected data; agent mode (LLM + TinyFish) writes the editorial fields from the gathered evidence and a
+  verify step downgrades unlinked "facts" to "inferred". Grades S–E are always computed by code.
+- **Synthesis** (`radar/synth.py`): directions, playbook mechanisms, D+7/14/30 track record.
+- **CI**: `.github/workflows/radar-daily.yml`, 06:30 UTC. Appark only gives guests today's charts —
+  every missed day is lost history.
+- Xiaohongshu: the manual CSV import (`data/xhs_tools/`) was removed in v3; only TinyFish search remains.
+
+## v2 (retired)
+
+v2 was the daily signals site at `/radar/`. v3 replaced it; its site output and builder were removed.
+`radar/analyze.py` remains because v3 detection reuses its TrustMRR, Tranco and series helpers.
 
 ---
 
@@ -51,8 +58,9 @@ revenue estimates) are tier 2 and deliberately not wired in.
 ```
 loop/                       Stage A (TrustMRR) + Stage B (LLM) + templates + seed
   pipeline.py               Stage A — pure Python stdlib, no secrets
+  starterstory.py           Track B — Starter Story fetcher (separate track)
   AGENT_PROMPT.md           Stage B contract — the canonical spec
-  config.json               thresholds, scoring, keywords
+  config.json               thresholds, scoring, keywords, starterstory settings
   run.sh                    Stage A entry point
   templates/
     verdict.md              VERDICT.md skeleton
@@ -61,7 +69,7 @@ loop/                       Stage A (TrustMRR) + Stage B (LLM) + templates + see
   seed_directions/          six prior validated direction packages (read-only)
   PLAYBOOK.md               full methodology (read by skill + humans)
 
-stage_b.py                  Stage B orchestrator (TinyFish + MiniMax)
+stage_b.py                  Stage B orchestrator (TinyFish + MiniMax, split calls)
 publish.py                  copies run → docs/, regenerates docs/index.md, git push
 .github/workflows/weekly.yml  cron + manual trigger
 docs/                       GitHub Pages output (auto-regenerated weekly)
@@ -81,13 +89,24 @@ _config.yml                 Jekyll (Pages) config — minima theme
    │  • Coarse filter + cluster            │
    │  • Heuristic score (auto_verdict)     │
    │  • Smoke check (non-empty response)   │
+   │  ┌─────────────────────────────────┐  │
+   │  │  Track B — starterstory.py      │  │
+   │  │  • Fetch /data listing pages    │  │
+   │  │  • Enrich top 60 w/ founder X   │  │
+   │  │  • → STARTERSTORY.md (separate) │  │
+   │  └─────────────────────────────────┘  │
    └───────────────────────────────────────┘
                         ↓
    ┌───────────────────────────────────────┐
    │  Stage B — stage_b.py                 │
    │  B1: TinyFish CLI (parallel queries)  │
-   │  B2: MiniMax messages.create          │
-   │      → VERDICT.md + 3–5 directions/   │
+   │  B2a: MiniMax → VERDICT.md            │
+   │       (selectables table, 3–5 rows)   │
+   │  B2b: MiniMax → directions/<slug>.md  │
+   │       (one package per selectable,    │
+   │        3 calls in parallel)           │
+   │  (Track B is context only — never     │
+   │   scored, never a selectable)         │
    └───────────────────────────────────────┘
                         ↓
    ┌───────────────────────────────────────┐
@@ -128,6 +147,7 @@ Settings → Secrets and variables → Actions → New repository secret:
 | `ANTHROPIC_AUTH_TOKEN` | your MiniMax / Anthropic-compatible token | yes |
 | `TINYFISH_API_KEY` | your TinyFish API key (run `tinyfish auth` locally to get one) | yes |
 | `ANTHROPIC_MODEL` | `MiniMax-M3` (default if unset) | no |
+| `STARTERSTORY_COOKIE` | a free Starter Story account's session cookie — unlocks full pagination for Track B | no |
 
 The action reads these same env-var names that your local `~/.claude/settings.json` uses — no special MiniMax magic.
 
@@ -151,6 +171,88 @@ Edit the cron expression if your cadence needs differ:
 - `'0 17 * * *'` — daily (not recommended, $9/mo LLM cost)
 
 See [crontab.guru](https://crontab.guru/).
+
+---
+
+## Track B — Starter Story (separate track)
+
+TrustMRR is the only source that feeds the automatic scoring. Alongside it, every run also
+harvests [Starter Story](https://www.starterstory.com/data) — a database of ~3,500 real
+businesses with revenue, category, monetization model and founder details — as a **separate
+inspiration track**.
+
+**Why separate:** Starter Story labels its revenue figures as research estimates
+("*Estimated from public sources by our research agent — not self-reported*"), while
+TrustMRR exposes verified MRR. Mixing estimated revenue into the same candidate pool lets a
+wrong number become a GO_CANDIDATE. So Track B rows are never merged into `filtered.json` /
+`candidates.csv`, never scored, and never counted toward the 3–5 selectables. A human
+promotes an idea by hand.
+
+**What a run produces:**
+
+| Artifact | Contents |
+|---|---|
+| `starterstory_raw.json` | every harvested business, pre-filter |
+| `starterstory_candidates.csv` | in-band rows with revenue, category, founder, X handle |
+| `STARTERSTORY.md` | the "solo sweet spot" table (closest analogues to a 14-day solo MVP) + the biggest in-band businesses |
+
+**How it works:** Starter Story has no public JSON API — the database is server-rendered
+HTML at `/data`. `loop/starterstory.py` walks a matrix of listing queries (`sort=`,
+`search=`, `category=`, `starting_costs=`), parses each row's revenue badge, then fetches the
+detail page of the top 60 candidates to add description, category and the founder's X handle.
+Requests are sequential and paced — a burst of parallel requests earns a `429`, so the
+fetcher delays between calls and backs off on `429`/`5xx`. Detail pages are cached under
+`loop/cache/starterstory/` for 14 days, so repeat runs cost almost nothing.
+
+**Config** (`loop/config.json` → `starterstory`):
+
+| Key | Default | Meaning |
+|---|---|---|
+| `enabled` | `true` | set `false` to skip Track B entirely |
+| `base_url` | `https://www.starterstory.com` | |
+| `session_cookie` | `""` | set to a free-account session cookie to unlock full pagination (CI: `STARTERSTORY_COOKIE` secret) |
+| `list_paths` | 18 queries | the listing-query matrix to walk |
+| `max_pages` | `5` | pages to follow per query (only when a cookie is set) |
+| `enrich_top_n` | `60` | detail pages fetched per run |
+| `revenue_band_usd` | `[300, 50000]` | which businesses count as in-band |
+| `sweet_spot_usd` | `[500, 20000]` | the band ranked as "solo sweet spot" |
+| `delay_sec` | `3.5` | pause between requests |
+| `max_retries` / `backoff_sec` | `4` / `30` | retry + backoff on `429`/`5xx` |
+| `cache_ttl_days` | `14` | detail-page cache lifetime |
+
+**Coverage limits (anonymous):** the site only serves the first page of each query to
+logged-out visitors, so one run sees ~200–300 of the ~3,500 businesses. A free Starter Story
+account (email signup, no payment) removes the limit — paste its session cookie into
+`session_cookie` and the fetcher starts following the site's own pagination links
+automatically. No other change is needed.
+
+**When it fails:** Track B never breaks the run. A failure writes
+`loop/runs/<id>/starterstory_error.json` and the TrustMRR pipeline continues untouched.
+
+---
+
+## Stage B — split LLM calls
+
+`stage_b.py` does **not** ask the model for `VERDICT.md` and all direction
+packages in one response. One giant call hits two walls: the provider's own
+generation deadline (a 64K-token request came back `500 context deadline
+exceeded`) and `max_tokens` (a 32K request was cut off after 2 of 5 packages).
+
+So B2 is split:
+
+| Call | Produces | `max_tokens` |
+|---|---|---|
+| B2a | `VERDICT.md` — the selectables table, WATCH/KILL, handles | 24000 |
+| B2b | one `directions/<slug>.md` per selectable, 3 in parallel | 32000 |
+
+B2a is retried once if it returns fewer than `min_selectable_directions` rows
+(3 by default, from `config.json`). Each B2b call gets the full context plus
+the verdict and the search evidence for its own slug, so the packages are
+independent of each other.
+
+The provider's reasoning comes back in a separate content block from the
+answer; `stage_b.py` reads only the answer block, and saves every raw response
+under `loop/runs/<id>/llm_raw/` for debugging (not published).
 
 ---
 
@@ -198,13 +300,21 @@ Symptoms: action exits 5, no `VERDICT.md` written. Check the action logs:
 
 - **Auth error**: `ANTHROPIC_AUTH_TOKEN` is wrong or expired. Test locally with the same env vars.
 - **Model not found**: confirm `ANTHROPIC_MODEL` matches a model your provider serves. Default is `MiniMax-M3`.
-- **Context too long**: 32K max_tokens may be exceeded for 5 direction packages. Reduce to 4 directions in `AGENT_PROMPT.md`'s `max_selectable_directions` config, or split `stage_b.py:b2_llm_call` into two calls.
+- **Context too long**: B2 is already split (verdict call + one call per direction). If a single direction call still gets cut off, the raw response is in `loop/runs/<id>/llm_raw/direction_<slug>.md` and the log shows `WARN: response hit max_tokens` — lower `scoring.max_selectable_directions` in `loop/config.json` or ask the model for a tighter package.
 
 ### Stage B fails — TinyFish error
 
 Symptoms: `search_evidence/*.json` files have `error` field set. Likely: `tinyfish auth` not run, or API key rate-limited.
 
 The action catches this in `B1` and exits 4 — Stage A artifacts are preserved as workflow artifacts (Settings → Actions → failed run → Artifacts).
+
+### Track B returns nothing
+
+Symptoms: `starterstory_error.json` in the run folder, or `STARTERSTORY.md` empty.
+
+- **`429 Too Many Requests`** — Starter Story rate-limits bursts. The fetcher already paces itself; if it still trips, raise `starterstory.delay_sec` and lower `enrich_top_n` rather than adding concurrency.
+- **Markup changed** — all selectors live in `loop/starterstory.py`; a rename in the site's HTML breaks parsing in one place. Compare a cached page under `loop/cache/starterstory/` against the live page.
+- **Host unreachable / DNS** — Starter Story down; the run still succeeds via TrustMRR.
 
 ### Publish fails — git push error
 
