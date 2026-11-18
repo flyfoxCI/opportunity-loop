@@ -21,7 +21,9 @@ from .analyze import _series
 from .detect import SURFACE_NAME, chart_name, daily_deltas
 from .taxonomy import BY_SLUG
 
-MODEL = os.environ.get("ANTHROPIC_MODEL", "MiniMax-M3")
+# Same defaults as stage_b.py: any Anthropic-compatible Messages endpoint works (MiniMax by default).
+BASE_URL = os.environ.get("ANTHROPIC_BASE_URL") or "https://api.minimaxi.com/anthropic"
+MODEL = os.environ.get("ANTHROPIC_MODEL") or "MiniMax-M3"
 WEIGHTS = {"money": 0.25, "demand": 0.20, "replicable": 0.20, "room": 0.15, "window": 0.10, "durability": 0.10}
 GRADE_CUTS = ((80, "S"), (65, "A"), (50, "B"), (35, "C"), (20, "D"))
 GRADE_TEXT = {"S": "Act now", "A": "Worth following", "B": "Can try, clear weak spots",
@@ -468,7 +470,7 @@ def agent(rep: dict) -> dict:
     import anthropic
     client = anthropic.Anthropic(
         api_key=os.environ.get("ANTHROPIC_AUTH_TOKEN") or os.environ.get("ANTHROPIC_API_KEY"),
-        base_url=os.environ.get("ANTHROPIC_BASE_URL") or None)
+        base_url=BASE_URL)
     evidence = {k: rep[k] for k in ("lesson_title", "product", "badge", "measure", "charts", "events", "why_grew",
                                     "competitors", "discounts", "demand_echo", "traces", "direction_name", "follow")}
     msg = client.messages.create(model=MODEL, max_tokens=4000, system=AGENT_SYSTEM,
