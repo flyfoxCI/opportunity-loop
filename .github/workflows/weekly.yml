@@ -21,12 +21,15 @@ permissions:
 jobs:
   weekly:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Stage B runs as split LLM calls (1 verdict + one per direction, 3 at a
+    # time) — the whole job needs ~45 min, not 30.
+    timeout-minutes: 60
     env:
       ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
       ANTHROPIC_AUTH_TOKEN: ${{ secrets.ANTHROPIC_AUTH_TOKEN }}
       ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || 'MiniMax-M3' }}
       TINYFISH_API_KEY: ${{ secrets.TINYFISH_API_KEY }}
+      STARTERSTORY_COOKIE: ${{ secrets.STARTERSTORY_COOKIE }}
       ANTHROPIC_LOG: critical
       PYTHONUNBUFFERED: 1
 
@@ -58,7 +61,7 @@ jobs:
         if: env.TINYFISH_API_KEY != ''
         run: tinyfish auth "$TINYFISH_API_KEY"
 
-      - name: Stage A — TrustMRR fetch + coarse filter
+      - name: Stage A — TrustMRR fetch + coarse filter (+ Track B)
         id: stage_a
         run: |
           set -euo pipefail
@@ -78,6 +81,18 @@ jobs:
               print('FAIL: TrustMRR returned empty recentlyListedStartups — API may be down or require auth', file=sys.stderr)
               sys.exit(2)
           print(f'SMOKE OK: {len(recent)} recent listings')
+          "
+
+      - name: Smoke check — Track B (Starter Story) — warn only
+        run: |
+          set -euo pipefail
+          python -c "
+          import json
+          state = json.load(open('loop/state/last_run.json'))
+          ss = state.get('starterstory', {})
+          print(f\"TRACK B: harvested={ss.get('harvested', 0)} in_band={ss.get('in_band', 0)} enriched={ss.get('enriched', 0)} ok={ss.get('ok')}\")
+          if not ss.get('ok', True):
+              print('::warning::Starter Story Track B failed this run — TrustMRR track is unaffected')
           "
 
       - name: Stage B — LLM verification + direction packages
@@ -118,5 +133,7 @@ jobs:
           SELECTABLES=$(jq -r '.selectable_count' loop/state/last_run.json)
           echo "## ✅ weekly opportunity loop — $RUN_ID" >> "$GITHUB_STEP_SUMMARY"
           echo "- Selectables: $SELECTABLES" >> "$GITHUB_STEP_SUMMARY"
+          TRACK_B=$(jq -r '.starterstory.in_band // 0' loop/state/last_run.json)
+          echo "- Track B (Starter Story, not scored): $TRACK_B in-band ideas" >> "$GITHUB_STEP_SUMMARY"
           echo "- Pages: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> "$GITHUB_STEP_SUMMARY"
           echo "- Source run: loop/runs/$RUN_ID/" >> "$GITHUB_STEP_SUMMARY"

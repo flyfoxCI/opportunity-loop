@@ -1,6 +1,6 @@
 ---
 name: opportunity-loop
-description: Run the TrustMRR opportunity loop (Stage A: TrustMRR fetch + coarse filter; Stage B: web/TinyFish verify + 3–5 selectable direction packages). Use when the user asks to scan TrustMRR for startup ideas, run the weekly opportunity loop, find this week's startup directions, generate direction packages, or check what to ship next. Triggers on phrases like "run opportunity loop", "scan TrustMRR", "find weekly directions", "what should I build this week", "TrustMRR + X verification".
+description: Run the TrustMRR opportunity loop (Stage A: TrustMRR fetch + coarse filter, plus a separate Starter Story Track B inspiration pool; Stage B: web/TinyFish verify + 3–5 selectable direction packages). Use when the user asks to scan TrustMRR for startup ideas, run the weekly opportunity loop, find this week's startup directions, generate direction packages, or check what to ship next. Triggers on phrases like "run opportunity loop", "scan TrustMRR", "find weekly directions", "what should I build this week", "TrustMRR + X verification".
 type: Workflow
 tags: trustmrr, opportunity-loop, weekly, x10k, mrr, startup-discovery, direction-radar
 ---
@@ -34,6 +34,12 @@ If Stage A exits non-zero, check `loop/runs/<id>/error.json`. Likely causes: Tru
 2. `loop/runs/<run_id>/REPORT.md` → auto-scored clusters and GO_CANDIDATEs
 3. `loop/runs/<run_id>/candidates.csv` → sortable candidate table
 4. `loop/seed_directions/INDEX.md` → prior validated directions as evidence (read-only)
+
+**Track B (optional read):** `loop/runs/<run_id>/STARTERSTORY.md` and `starterstory_candidates.csv`
+hold ~200–300 Starter Story businesses (separate source, research-estimated revenue). These are
+**not** candidates — never score them, never let them become a direction package. Read them to
+understand a market, and hand one to the user if it looks better than a scored candidate.
+If `starterstory_error.json` exists, Track B failed that run — ignore it and carry on.
 
 ## Step 3 — Stage B (LLM verification + direction packaging)
 
@@ -101,6 +107,8 @@ Show:
 2. Your ranked recommendation (still let the user pick)
 3. WATCH + KILL lists
 4. The full run folder path
+5. If Track B ran: one line with the strongest Starter Story idea (path `STARTERSTORY.md`) — as an
+   alternative worth a human look, not as a selectable
 
 Suggest: "Say `/build <slug>` to start the 14-day MVP for your pick." (Or whatever next-step command the user prefers.)
 

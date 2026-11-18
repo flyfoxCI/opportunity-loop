@@ -30,6 +30,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent
 CONFIG_PATH = ROOT / "config.json"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+import starterstory  # noqa: E402  (needs ROOT on sys.path)
 
 
 def load_config() -> dict[str, Any]:
@@ -197,6 +201,7 @@ def build_report(
     passed: list[dict[str, Any]],
     clusters: dict[str, list[dict[str, Any]]],
     all_items: list[dict[str, Any]],
+    track_b: dict[str, Any] | None = None,
 ) -> str:
     lines = [
         f"# Opportunity Loop Run — {run_id}",
@@ -297,6 +302,33 @@ def build_report(
             "",
         ]
     )
+
+    # Track B — Starter Story. Context only: never scored, never a candidate.
+    lines.extend(
+        [
+            "---",
+            "",
+            "## Track B — Starter Story (inspiration only, NOT scored)",
+            "",
+        ]
+    )
+    if track_b:
+        lines.extend(
+            [
+                starterstory.summarize(track_b),
+                "",
+                "Track B rows are **not** candidates: they are never scored, never",
+                "counted toward the 3–5 selectables, and cannot become a direction",
+                "package on their own. Starter Story revenue is a research estimate",
+                "(the site labels it “not self-reported”), which is why it stays",
+                "separate from the verified-MRR TrustMRR pool. Promote an idea by",
+                "hand if you want it scored. Full list: `STARTERSTORY.md`.",
+                "",
+            ]
+        )
+    else:
+        lines.extend(["Track B unavailable this run (see `starterstory_error.json`).", ""])
+
     return "\n".join(lines)
 
 
@@ -393,7 +425,35 @@ def main() -> None:
         )
     (run_dir / "candidates.csv").write_text("".join(go_lines), encoding="utf-8")
 
-    report = build_report(run_id, cfg, passed, clusters, all_items)
+    # ----- Track B — Starter Story (separate track, never merged) -----
+    track_b = None
+    ss_stats: dict[str, Any] = {"enabled": bool(cfg.get("starterstory", {}).get("enabled", True))}
+    try:
+        track_b = starterstory.fetch_source(cfg, run_dir)
+        starterstory.write_track_artifacts(run_dir, track_b, cfg)
+        ss_stats.update(track_b.get("stats", {}))
+        ss_stats["ok"] = bool(ss_stats.get("ok", True))
+        if not ss_stats["ok"] or ss_stats.get("errors"):
+            (run_dir / "starterstory_error.json").write_text(
+                json.dumps(
+                    {
+                        "error": "starterstory track incomplete",
+                        "errors": ss_stats.get("errors", []),
+                        "run_id": run_id,
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+    except Exception as e:  # fail-soft — Track B must never break the run
+        ss_stats["ok"] = False
+        ss_stats["error"] = str(e)
+        (run_dir / "starterstory_error.json").write_text(
+            json.dumps({"error": str(e), "run_id": run_id}, indent=2), encoding="utf-8"
+        )
+        print(f"[starterstory] track B failed (ignored): {e}", file=sys.stderr)
+
+    report = build_report(run_id, cfg, passed, clusters, all_items, track_b)
     (run_dir / "REPORT.md").write_text(report, encoding="utf-8")
 
     # state
@@ -408,6 +468,7 @@ def main() -> None:
                 1 for p in passed if p["_flags"]["auto_verdict"] == "GO_CANDIDATE"
             ),
         },
+        "starterstory": ss_stats,
         "run_dir": str(run_dir.relative_to(ROOT)),
         "agent_stage": "pending",
         "notes": "",
@@ -424,6 +485,7 @@ def main() -> None:
     print(f"OK run_id={run_id}")
     print(f"report={run_dir / 'REPORT.md'}")
     print(json.dumps(state["counts"]))
+    print(json.dumps({"starterstory": ss_stats}))
 
 
 if __name__ == "__main__":

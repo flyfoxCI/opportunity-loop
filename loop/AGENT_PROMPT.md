@@ -36,6 +36,13 @@
 - Prior validated niches if needed to hit **3–5 selectables** (security, vertical cert coach, pen-plot, trade leads, heritage language, YouTube-only parental, etc.)
 - Max 12 candidates scored; max 5 become full packages
 
+**Track B (Starter Story) is NOT part of the candidate pool.** The `## Track B` section
+of `REPORT.md` and `STARTERSTORY.md` are market context only: Starter Story revenue is a
+research estimate ("not self-reported"), so those rows are never scored, never counted
+toward the 3–5 selectables, and never become a direction package on their own. You may
+*read* them to understand a market (e.g. "three solo businesses in this space already
+run $8K–$15K/mo"), but the direction you ship must come from a scored candidate.
+
 ### 2. For each candidate (max 20 min each)
 
 **Competition (desktop):**
@@ -63,6 +70,11 @@ Assign **demand score 1–5**.
 | <3 | any | WATCH or KILL |
 
 ### 3. Write artifacts into `{run_dir}/`
+
+> **Orchestration note:** `stage_b.py` executes this section in two phases —
+> one call for `VERDICT.md` (A), then one call per selectable for
+> `directions/<slug>.md` (C). The contract below is identical either way; an
+> agent running the whole thing in one pass is equally correct.
 
 #### A. `VERDICT.md` (must list 3–5 selectables)
 
