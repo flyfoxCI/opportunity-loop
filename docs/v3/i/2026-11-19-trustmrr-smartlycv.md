@@ -1,19 +1,19 @@
-# Package job-search help into one measurable workflow
+# Package job-search help into one workflow, then charge quickly
 
 > SmartlyCV · TrustMRR · https://trustmrr.com/startup/smartlycv
-> MRR: 61.7 → 440 (30 days, source-delta)
+> MRR: 61.7 → 450 (30 days, source-delta)
 > Grade B (64/100, Can try, clear weak spots) · direction: Job search & careers · mode: agent
 
 ## Why it moved
-- [fact] MRR increased from $61.70 to $439.67 over 30 days, a verified 7.13x source-reported change. (https://trustmrr.com/startup/smartlycv)
-- [fact] Job-search discussion volume rose from 0 threads in the prior 14 days to 26 threads in the latest 14 days, suggesting active audience demand. (https://www.reddit.com/r/cscareerquestions/comments/1xzi6ne/)
-- [inferred] The available evidence links growth to documentation, but does not establish how that documentation attracted users. (https://docs.tinyfish.ai/cli)
+- [fact] Verified MRR increased from $61.70 to $450.44 over 30 days, a 7.3× source-delta result. (https://trustmrr.com/startup/smartlycv)
+- [not_found] The evidence links a documentation page but does not explain its role in SmartlyCV's growth. (https://docs.tinyfish.ai/cli)
+- [inferred] A 7.3× MRR increase despite only three days of tracked history suggests the revenue movement may have been driven by a short, intense burst rather than sustained compounding. (https://trustmrr.com/startup/smartlycv)
 
 ## Discount the numbers
 - We have 3 day(s) of our own history for this product; the move is measured against the source's own change figure, not our baseline yet.
-- Only 3 days of product history are available.
-- The revenue change is measured against the source's own change figure, not an established baseline.
-- The $439.67 MRR figure is the reported after value for the 30-day badge, not proof that all revenue was newly created during those 30 days.
+- The product has only three days of its own tracked history, so the 30-day movement is measured against the source's change figure rather than an independent baseline.
+- No pricing, trial, acquisition channel, founder, launch date, or customer count was provided.
+- The linked documentation is not shown to belong to SmartlyCV.
 
 ## Demand Echo
 - 26 buyer-intent threads in 14 days
@@ -23,6 +23,6 @@
 - Has anyone here done an "AI Coding" technical assessment? (https://www.reddit.com/r/cscareerquestions/comments/1xuxn4b/)
 
 ## How to follow
-- play: Combine the repeated steps of a painful job-search workflow in one product.
-- wedge: Start with resume tailoring plus interview practice, then add application tracking.
-- avoid: Do not claim the 7.13x lift was caused by the Reddit threads, documentation, or a specific acquisition channel without evidence.
+- play: Package resume tailoring, cover letters, interview practice, and application tracking into one paid workflow.
+- wedge: Lead with a complete job-search workspace and monetize the transition from preparation to application management.
+- avoid: Do not assume the 7.3× MRR increase is durable with only three days of tracked history and no channel evidence.

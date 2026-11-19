@@ -69,57 +69,53 @@
   },
   "minigames": {
    "guidance": {
-    "headline": "Douyin chart surges show demand for instantly readable mini-games, but every observed breakout lacks source-level proof, so builders should validate organic acquisition before scaling spend.",
-    "summary": "The category is crowded at the top but unevenly distributed: 46 of 110 tracked games are casual, while only 6 are simulation-management and 5 each are match-3, poker, tower-defense, and hypercasual. Recent movers such as 暴走植物园 (#79 to #2), 脑子一团火 (#32 to #2), and 阿皮大冒险 (#77 to #14 on the sales chart) suggest strong breakout potential, yet the evidence does not identify the acquisition or monetization changes behind those moves.",
+    "headline": "The clearest open opportunity is a Douyin-first casual mini-game with a one-sentence, instantly visible core loop; three investigated games jumped sharply, but their exact growth triggers remain unproven.",
+    "summary": "Today's boards contain 140 chart slots across 110 distinct games, with casual games leading the category at 46. Rank momentum is real—无尽火线 rose 64 places, 阿皮大冒险 rose 63 places, and 暴走植物园 rose 77 places—but the evidence does not establish whether creative, paid traffic, or another event caused the moves, so builders should test attributable acquisition rather than assume a winning formula.",
     "direction": [
      {
-      "point": "Test simple, visually chaotic mechanics in a differentiated skin or audience framing; the strongest observed moves reached #2 without evidence of a unique gameplay trend, leaving room for presentation-led differentiation rather than wholesale genre cloning.",
-      "evidence": "暴走植物园 rose 77 places from #79 to #2 on Douyin’s fresh-game chart, while 脑子一团火 rose 30 places from #32 to #2 on the popularity chart."
+      "point": "Prioritize a casual Douyin-first game whose core interaction can be understood in one clip without explanation; the board is crowded with 140 slots across 110 games, but casual games still occupy the largest genre lane at 46.",
+      "evidence": "140 chart slots, 110 distinct games, 79 publishers; 休闲 has 46 games, ahead of 1 at 26 and 合成 at 12."
      },
      {
-      "point": "Investigate the zombie-search-extraction combination as a demand hypothesis, not a validated trend: first test which level, character, and failure moments users respond to before committing to a larger build.",
-      "evidence": "阿皮大冒险 climbed 63 places from #77 to #14 on Douyin’s action mini-game sales chart with a zombie-group, search-and-extract premise; no demand trigger was established."
+      "point": "Look for underserved audiences by retaining a proven loop and changing the theme, character framing, or visual identity; the strongest observed breaksouts all used simple, distinctive premises, but none demonstrated a permanent market gap.",
+      "evidence": "无尽火线 moved from #68 to #4, 暴走植物园 from #79 to #2, and 阿皮大冒险 from #77 to #14; only 110 distinct games appear despite 140 slots."
      },
      {
-      "point": "Prioritize differentiated casual prototypes over crowded specialist lanes, because the current boards are concentrated in casual games and offer more whitespace for a distinct presentation than a direct entry into smaller established genres.",
-      "evidence": "46 of 110 distinct games are 休闲, versus 6 模拟经营 and 5 each for 消除, 扑克牌, 塔防, and 超休闲; 79 publishers occupy 140 chart slots across 110 games."
+      "point": "Treat the recent spikes as signals to investigate, not proof of category demand; only one tracked day is available, and newcomer eligibility itself requires seven days of chart history.",
+      "evidence": "The stats include no newcomers, while 无尽火线 and 脑子一团火 each have only one day of observed history."
      }
     ],
     "growth": [
      {
-      "point": "Build short-video creative as separate experiments and tag every post with its own landing path; compare starts and completed rounds so a chart rise is not mistaken for repeatable organic growth.",
-      "evidence": "阿皮大冒险 suggests testing continuous extraction, comedic failure, and repeated-attempt moments, while 音悦节奏球 suggests testing three distinct rhythm hooks; neither product has supplied posts, ads, creator activity, or conversion data."
+      "point": "Open with the mechanic's most visually obvious payoff, then use unique links to test whether that creative actually drives discovery and installs rather than merely coinciding with a rank rise.",
+      "evidence": "无尽火线 rose 64 places from #68 to #4; its evidence shows the rank delta but no identified post, ad, store feature, roundup, or launch event."
      },
      {
-      "point": "Determine whether a breakout came from product changes, creator distribution, platform featuring, or paid traffic before increasing acquisition spend; rank movement alone is insufficient attribution.",
-      "evidence": "无尽火线 rose 64 places from #68 to #4, 音悦节奏球 rose 83 places from #99 to #16, and both have no reported acquisition source, spend, impressions, retention, or new-user data."
+      "point": "Explain the full core loop in 15–30 seconds and lead with a memorable audience or character contrast; this makes the game immediately understandable while preserving the tested interaction.",
+      "evidence": "阿皮大冒险 described its loop as “无厘头宅男，欢乐搜打撤，在丧尸群中三进三出” and rose 63 places from #77 to #14 on the Douyin mini-game bestseller chart."
      },
      {
-      "point": "Use creator-led distribution to expose the core mechanic to narrowly defined audiences, but judge it by completed sessions and retention rather than chart position.",
-      "evidence": "音悦节奏球 reached #16 on the popularity chart, and 阿皮大冒险 reached #14 on the sales chart; both jumps have weak causal evidence and cannot yet be distinguished from paid or platform-driven traffic."
+      "point": "Test one mechanic-led hook rather than assuming the whole game caused the breakout; simple premises can move quickly, but the current data cannot distinguish organic demand from paid traffic or broader chart movement.",
+      "evidence": "暴走植物园 rose 77 places from #79 to #2 on the fresh-game chart, while 脑子一团火 rose from #32 to #2 on the popularity chart; no specific growth action was documented for either."
      }
     ],
     "money": [
      {
-      "point": "Start with free prototype validation and add monetization only after identifying the audience and repeatable acquisition source; none of the observed chart surges provides evidence about a durable pricing or revenue model.",
-      "evidence": "The five investigated products have rank outcomes only, with no reported prices, purchases, revenue, ad spend, or monetization changes; the supplied category data contains no revenue figures."
+      "point": "Do not infer a monetization model from rank movement; first give users a complete free core round, then place paid unlocks at failure-pressure and progression moments.",
+      "evidence": "阿皮大冒险 rose from #77 to #14, but no free-content, locked-content, package, price, trial, or charging-point evidence is available."
      },
      {
-      "point": "Treat the sales-chart mover as a lead-generation signal, not proof that its current monetization works, because a higher sales rank can reflect paid distribution rather than profitable player spending.",
-      "evidence": "阿皮大冒险 moved from #77 to #14 on Douyin’s action mini-game sales chart, but the evidence supplies no sales, revenue, retention, or acquisition data; any app revenue figure should be described as estimated."
-     },
-     {
-      "point": "Avoid budgeting from one-day rank gains; require stable conversion and retention across multiple acquisition tests before funding paid growth.",
-      "evidence": "无尽火线, 音悦节奏球, 暴走植物园, and 脑子一团火 each have only one-day chart changes, with no verified spend, user, revenue, or retention evidence."
+      "point": "Price around the number of completed rounds only after testing the core loop; a tiered structure should unlock optional value without charging before players understand the game.",
+      "evidence": "The only investigated monetization recommendation is to validate the free core loop and paid unlock point first, then design tiers by completed rounds; no actual prices were supplied."
      }
     ],
     "solo": {
-     "build": "Build one lightweight Douyin-native casual game with a simple plant-chaos core, three original skins, and three short-video hooks centered on escalating chaos and reversal.",
-     "avoid": "Do not clone 暴走植物园 or 脑子一团火 from rank movement alone, and do not scale paid traffic on a one-day chart jump; the supplied evidence cannot distinguish product-led growth from bought distribution.",
+     "build": "Build a Douyin-ready casual mini-game with one instantly visible mechanic, a themed reskin for a specific audience, and a complete free round before testing any paid unlock.",
+     "avoid": "Do not clone the zombie theme or assume a one-day ranking jump proves the growth idea works; the causal evidence for all observed breakouts is weak.",
      "first_week": [
-      "Ship a minimal playable prototype plus three skinned openings, and instrument starts, first-round completion, and repeat sessions.",
-      "Record three short videos for separate hooks—escalating chaos, a failed attempt, and a satisfying recovery—with distinct links or codes for attribution.",
-      "Run a small creator or organic test for one week, compare completed rounds and retention by creative and audience, and only then decide whether paid acquisition is justified."
+      "Ship one 15–30 second clip that opens on the mechanic's payoff and demonstrates the full core loop.",
+      "Create distinct tracked links or campaign labels for each clip, then measure clicks, plays, and completed rounds for at least 72 hours.",
+      "Interview or survey recent players about the first confusing or paywall-worthy moment, then place one optional unlock behind a tested progression point."
      ]
     },
     "by": "agent"
@@ -185,53 +181,53 @@
   },
   "chrome": {
    "guidance": {
-    "headline": "New Chrome extensions can still reach meaningful scale quickly by solving one narrow browser workflow, but only 47 of 563 tracked featured extensions were published in the last two years and the recent median is 3,000 users.",
-    "summary": "The clearest opportunity is to win with a focused workflow inside an existing ecosystem or daily routine rather than build another broad utility. Recent launches span translation, Roblox, travel search, screen recording, and browser security, with verified users ranging from 90,000 to 6,000,000. Monetization is unresolved in the supplied data, so a builder should validate willingness to pay before committing to paid infrastructure.",
+    "headline": "Chrome extensions still rewards narrow, immediately useful browser interventions: recent winners range from 6,000,000 users for translation to 100,000 users for specialized shopping, streaming, gaming, and analytics tools.",
+    "summary": "There is a wide open field for focused extensions that solve one visible browser friction point, although only 51 of 580 tracked featured extensions were published in the last two years and recent releases have a 3,000 median user count. The strongest recent products pair a specific action with low friction—such as translating documents, recording screens, filtering search results, or accelerating streams—rather than presenting as broad platforms.",
     "direction": [
      {
-      "point": "Look for narrow, high-frequency browser actions that can be completed in one click or with minimal setup; the recent lineup suggests opportunities around translation, Roblox workflows, award-seat search, and screen capture rather than a generic all-purpose extension.",
-      "evidence": "AnyDoc Translator reached 6,000,000 verified users; RoEarn reached 200,000; seats.aero reached 100,000; and Google Vids Screen Recorder reached 300,000."
+      "point": "Target a clearly visible, recurring friction in the browser workflow; builders should look for tasks users can complete in one interaction and understand from the store listing alone.",
+      "evidence": "AnyDoc Translator combines web translation, PDF translation, preserved layouts, and bilingual subtitles to reach 6,000,000 users; Knockoff filters Amazon search results and sponsored listings to reach 100,000 users."
      },
      {
-      "point": "Prioritize problems attached to platforms users already visit, where the extension can add missing context or actions inside the page; both new commerce and gaming examples use that model.",
-      "evidence": "RoEarn helps users preview Roblox items on avatars and earn rewards with 200,000 verified users, while BetterBLOX adds last-online status and server selection to Roblox with 100,000 verified users."
+      "point": "Look for specialized audiences with immediate utility, especially language, creative, security, shopping, and gaming workflows, where a narrow promise can outperform a generic feature set.",
+      "evidence": "Recent extensions include Adobe Photoshop at 800,000 users, Extension Auditor at 200,000, EXT — Faceit Intelligence at 100,000, and Geometry Dash Lite Game at 100,000."
      },
      {
-      "point": "Favor utility with an immediate, visible outcome—translation, image editing, security checks, or synchronized playback—over undifferentiated customization; several recent products promise a concrete result in the first interaction.",
-      "evidence": "Adobe Photoshop reached 800,000 verified users for background removal and color adjustment, Extension Auditor reached 100,000 for extension permission and malware checks, and ZeroDelay reached 100,000 for synchronizing delayed YouTube live streams."
+      "point": "Use novelty and emotional or entertainment hooks to create a differentiated extension only when the underlying workflow is still useful; a memorable interaction can attract attention without becoming a broad suite.",
+      "evidence": "Cat Gatekeeper uses a cat that hijacks the screen to force breaks and reached 300,000 users; ZeroDelay reached 100,000 users by synchronizing delayed YouTube live streams."
      }
     ],
     "growth": [
      {
-      "point": "Lead with one concrete outcome in the store listing and demonstrate it inside the exact site where the pain occurs; the successful recent launches are described as narrowly solving visible tasks rather than providing broad platforms.",
-      "evidence": "seats.aero searches award availability on Google Flights, Chase Travel, and Amex Travel and has 100,000 verified users; Cat Gatekeeper interrupts social-media use with a hijacking cat and has 300,000."
+      "point": "Build distribution around a specific moment of intent: intercept or improve a page, search, stream, recording, or translation task users already perform rather than asking them to open a separate dashboard.",
+      "evidence": "AnyDoc Translator reaches 6,000,000 users through web and PDF translation; Alibaba Lens reaches 100,000 users through in-page product search; Knockoff reaches 100,000 users by filtering Amazon results directly."
      },
      {
-      "point": "Use shareable, playful, or visually differentiated mechanics to earn distribution beyond direct intent; recent launches combine utility with avatars, cats, games, or polished browser aesthetics.",
-      "evidence": "RoEarn has 200,000 verified users, Cat Gatekeeper has 300,000, Geometry Dash Lite has 100,000, and MYNT: Material You New Tab has 200,000."
+      "point": "Pair a compact core action with an easy-to-describe benefit, because recent products with one obvious proposition are already reaching six-figure user bases.",
+      "evidence": "Google Vids Screen Recorder has 300,000 users with screen capture and sharing; MYNT: Material You New Tab has 200,000; Adobe Photoshop has 800,000 with background removal and color adjustment."
      },
      {
-      "point": "Design for immediate repeat use and low setup friction, because the market is still dominated by older hits and newer products need a narrow reason to become habitual.",
-      "evidence": "Only 47 of 563 tracked featured extensions were published in the last two years, 127 have more than 1 million users, and the median for recent ones is 3,000 users."
+      "point": "Use audiences with recognizable communities and repeated sessions as the initial growth wedge; niche extensions can still scale when the users are highly engaged.",
+      "evidence": "EXT — Faceit Intelligence serves Faceit players with win probability, ratings, and pool detection and has 100,000 users; Geometry Dash Lite Game has 100,000 users with offline browser play."
      }
     ],
     "money": [
      {
-      "point": "Test a free core first, then charge for a clearly separable premium benefit only if users repeatedly receive the free value; none of the supplied recent launches has disclosed pricing, so paid positioning is not yet proven in this sample.",
-      "evidence": "All 12 listed recent launches have null USD values and no stated price, while verified adoption reaches 100,000 for several products such as seats.aero, ZeroDelay, and Extension Auditor."
+      "point": "Favor a free acquisition strategy first: the investigated extensions show user growth but no listed prices, so a builder should validate repeat use before introducing a paid tier.",
+      "evidence": "None of the investigated products reports a price or revenue; AnyDoc Translator, Cat Gatekeeper, Extension Auditor, Knockoff, and EXT — Faceit Intelligence are presented without a listed charge."
      },
      {
-      "point": "For a solo builder, prefer a one-time paid upgrade or low recurring plan over usage-heavy infrastructure, and only introduce recurring pricing after proving frequent value.",
-      "evidence": "The strongest recent free positions include AnyDoc Translator at 6,000,000 verified users, Adobe Photoshop at 800,000, and seats.aero, Extension Auditor, and ZeroDelay at 100,000 each; no monetization details are provided."
+      "point": "When monetization is added, use it for premium workflow depth rather than gating the basic browser action, especially in utility extensions where fast adoption is necessary.",
+      "evidence": "The strongest recent products emphasize immediately useful functions—translation for 6,000,000 users, screen recording for 300,000, and Amazon filtering for 100,000—while no listed pricing data shows an established paid pattern."
      }
     ],
     "solo": {
-     "build": "Build a Chrome extension that searches award-seat availability across Google Flights, Chase Travel, and Amex Travel, with alerts for routes the user watches; seats.aero validates the job with 100,000 verified users.",
-     "avoid": "Do not build another broad productivity suite or assume users will pay immediately: recent median adoption is only 3,000 users, and all 12 supplied recent launches have undisclosed pricing and null USD values.",
+     "build": "Build a Chrome extension that cleans or reorganizes one high-frequency research workflow—for example, filtering duplicate or sponsored results on shopping and research sites—with a one-click action visible in the page.",
+     "avoid": "Do not build another broad productivity suite: only 51 of 580 featured extensions were published in the last two years, and the recent-release median is just 3,000 users despite the category’s largest products having millions.",
      "first_week": [
-      "Interview 10 frequent award-travel users and document which routes and alert rules they would check repeatedly.",
-      "Build a minimal prototype that runs on Google Flights first and captures searched routes without requiring broad permissions.",
-      "Publish a narrow landing page and store listing centered on one outcome—never-missed award availability—then measure activated searches, alert sign-ups, and willingness to pay before adding other travel sites."
+      "Interview 10 users who perform the target workflow weekly and collect five examples of where existing tabs or filters fail.",
+      "Build one minimal in-page action around the clearest recurring failure, with no dashboard, account, or multi-platform scope.",
+      "Release a Chrome Web Store listing that demonstrates the before-and-after result, then track installs, activated users, and four-week repeat use."
      ]
     },
     "by": "agent"
@@ -239,57 +235,57 @@
   },
   "shopify": {
    "guidance": {
-    "headline": "The strongest current openings are focused email and ecommerce utilities, while nearly every Shopify app (87%) uses a free plan plus paid tiers, so builder growth should pair a free install with a clear paid upgrade path.",
-    "summary": "Shopify apps show 370 tracked products across 18 categories, with estimated revenue of $303k+ per month across 303 apps with estimated $10k+ monthly revenue. The most promising new lanes are Newsletters & email marketing, where Judge.me Email Marketing reaches an estimated $15.8k per month, and E-commerce & seller tools, where DORO Product Personalizer reaches an estimated $11.6k per month; both use free-to-install entry points.",
+    "headline": "New Shopify app opportunities are clearest in tightly defined merchant workflows—especially email marketing, product personalization, and review/social-proof collection—where recent releases reached an estimated $10k+/month without yet matching the scale of incumbents.",
+    "summary": "The category has broad demand but unevenly distributed opportunity: 303 of 370 tracked apps are estimated at $10k+/month, yet only 4 launches from the last 12 months had dated releases and reached that threshold. Newcomers are succeeding in narrow, recognizable jobs such as email campaigns, product customization, and social proof, while broad commerce suites remain dominated by long-running incumbents.",
     "direction": [
      {
-      "point": "Target a narrow email-marketing workflow for Shopify merchants rather than building a broad marketing suite: abandoned-cart, campaigns, newsletters, and popups are the validated wedge behind Judge.me Email Marketing.",
-      "evidence": "Judge.me Email Marketing is a new entry with estimated $15.8k monthly revenue and 90 reviews; the Newsletters & email marketing lane has 8 tracked apps and 1 new $10k+ app."
+      "point": "Target a narrow email-marketing workflow rather than building another all-in-one marketing suite; the opportunity is open because Judge.me Email Marketing reached an estimated $15.9k/month shortly after launch, but the lane remains small at only 8 tracked apps.",
+      "evidence": "Judge.me Email Marketing: estimated $15.9k/month, 91 reviews, 128 days old; Newsletters & email marketing has 8 tracked apps and 1 new app above $10k/month."
      },
      {
-      "point": "Look for product-level ecommerce utilities that solve configuration or operational friction, as the largest lane is also producing a newly successful specialized product.",
-      "evidence": "E-commerce & seller tools contains 240 of the tracked apps and includes DORO Product Personalizer, launched 301 days ago with estimated $11.6k monthly revenue and 66 reviews."
+      "point": "Look for product-specific customization and merchandising jobs where merchants can immediately understand the value; DORO Product Personalizer reached an estimated $11.6k/month with a focused offering, although the surrounding lane is competitive.",
+      "evidence": "DORO Product Personalizer: estimated $11.6k/month, 66 reviews, 301 days old; E-commerce & seller tools contains 240 tracked apps and 2 recent apps above $10k/month."
      },
      {
-      "point": "Do not enter as another undifferentiated AI assistant; a general ChatGPT integration is already free, so a builder needs a merchant-specific workflow and measurable outcome.",
-      "evidence": "The ChatGPT Shopify app is free and sits in the AI assistants & agents direction; no revenue estimate is available for it, while newer focused products have estimated $11.6k-$15.8k monthly revenue."
+      "point": "Enter through trust and conversion workflows that produce merchant-visible outcomes, not generic storefront widgets; Trustpilot shows that a focused social-proof proposition can gain an estimated $14.3k/month, while Judge.me Product Reviews demonstrates the much larger incumbent scale.",
+      "evidence": "Trustpilot: estimated $14.3k/month, 82 reviews, 274 days old; Judge.me Product Reviews App: estimated $8.83M/month, 50,431 reviews."
      }
     ],
     "growth": [
      {
-      "point": "Use the app store review base as visible proof for acquisition: products with thousands of reviews can rank and convert where newer, focused apps still need to establish credibility.",
-      "evidence": "Judge.me Product Reviews App has 50,403 reviews and an estimated $8.82M monthly revenue; Loox has 10,133 reviews and an estimated $1.77M monthly revenue."
+      "point": "Use Shopify’s existing merchant distribution and make the first result visible quickly: installable/free products can accumulate reviews at scale, so favor integrations and activation steps that produce store-level outcomes within minutes.",
+      "evidence": "TikTok is free to install with 15,944 reviews and an estimated $2.79M/month; Google & YouTube is free to install with 5,629 reviews and an estimated $985.1k/month; Facebook & Instagram is free to install with 5,887 reviews and an estimated $1.03M/month."
      },
      {
-      "point": "Make the free install the acquisition hook and distribute around one recognizable merchant job; the two newest $10k+ examples both start free.",
-      "evidence": "Judge.me Email Marketing, estimated $15.8k monthly revenue, and DORO Product Personalizer, estimated $11.6k monthly revenue, are both free to install; 323 of 370 apps use a free-plan-plus-paid model."
+      "point": "Expand from a recognizable trigger into adjacent revenue tools after merchants trust the core integration; products with an estimated $10k+/month commonly pair a free entry point with paid features, and 323 of 370 tracked apps use that model.",
+      "evidence": "Free plan plus paid is used by 323 apps (87.3%); Pop Convert, CWILL Popup Email Marketing, PageFly, Trustpilot, DSers, and Loox all offer free plans or installation while reaching estimated revenue above $1M/month in several cases."
      },
      {
-      "point": "Favor products that can show visible store output, such as review feeds, popups, bundles, product customization, or AI-built landing pages, because these can be evaluated inside the merchant’s store.",
-      "evidence": "The top list includes Judge.me, TikTok, Loox, Pop Convert, CWILL Popup Email Marketing, Kaching Bundles, DSers, Snowball, and PageFly, spanning reviews, video, email capture, upsells, sourcing, affiliates, and landing pages."
+      "point": "Build for merchants with an immediate revenue workflow rather than a generic AI feature; the recent ChatGPT app is free but has no estimated revenue, while revenue-oriented tools such as email marketing, reviews, personalization, and dropshipping show measurable traction.",
+      "evidence": "ChatGPT: free, 77 days old, no estimated revenue; Judge.me Email Marketing is estimated at $15.9k/month, Trustpilot at $14.3k/month, DORO at $11.6k/month, and DSers at $1.13M/month."
      }
     ],
     "money": [
      {
-      "point": "Offer a free plan and reserve paid plans for merchants who need advanced volume, automation, or business outcomes; this is the category norm, not an exception.",
-      "evidence": "323 of 370 apps, or 87%, use a free plan plus paid tiers; another 41 are free and only 6 are paid only."
+      "point": "Make the free tier the installation and product-led-acquisition layer, then monetize the workflow merchants use repeatedly; this is the dominant category structure rather than an edge case.",
+      "evidence": "323 of 370 apps (87.3%) use free plan plus paid tiers; 41 are free-only and only 6 are paid-only."
      },
      {
-      "point": "Price the upgrade around meaningful merchant scale rather than hiding the product behind a low-value paid trial, while recognizing that very high-priced offers exist for specialized business tools.",
-      "evidence": "Snowball: Affiliate Marketing starts at $249 per month and has an estimated $1.06M monthly revenue, compared with free-plan offerings from Pop Convert, CWILL, Kaching, DSers, and PageFly."
+      "point": "Charge for premium operating features while preserving a visible free entry point; high-performing review, email, ads, and dropshipping products all combine free access with paid monetization.",
+      "evidence": "Judge.me Product Reviews, Loox, Pop Convert, CWILL Popup Email Marketing, PageFly, DSers, TikTok, and Facebook & Instagram offer free plans or installation, while each has an estimated $985.1k-$8.83M/month."
      },
      {
-      "point": "Do not rely on the listing label alone to estimate revenue: Shopify app revenue in this category is rank- or review-based, and should be presented as estimated when prioritizing opportunities.",
-      "evidence": "The category contains 303 apps with estimated $10k+ monthly revenue, and every cited Shopify app revenue figure such as Judge.me’s estimated $8.82M, DORO’s estimated $11.6k, and Judge.me Email Marketing’s estimated $15.8k is labeled estimated."
+      "point": "Avoid relying on low, paid-only access as the entire model: only 6 of 370 tracked apps are paid-only, and a notably higher-priced outlier shows the importance of proving substantial merchant value before charging from day one.",
+      "evidence": "Paid-only apps represent 1.6% of the category; Snowball: Affiliate Marketing starts at $249/month, has 212 reviews, and an estimated $1.06M/month."
      }
     ],
     "solo": {
-     "build": "Build a focused Shopify email-marketing app for one painful lifecycle job—starting with abandoned-cart emails plus simple newsletter campaigns—with a free tier and a paid plan for higher email volume or advanced automation.",
-     "avoid": "Avoid building another generic AI assistant or all-in-one marketing platform; ChatGPT is already listed as free, while the validated opportunity is a narrow workflow such as the one used by Judge.me Email Marketing.",
+     "build": "Build a focused Shopify app for one conversion gap: abandoned-cart email campaigns for a specific merchant segment, with a free campaign limit, paid automations, and a compact setup flow.",
+     "avoid": "Do not launch a broad all-in-one marketing suite competing directly with Judge.me, Pop Convert, CWILL, and PageFly; Judge.me Email Marketing reached an estimated $15.9k/month, but established review and page-building products already have estimated $8.83M/month and $1.04M/month.",
      "first_week": [
-      "Interview five Shopify merchants or agencies that run abandoned-cart and newsletter campaigns, then select the single workflow they repeatedly pay to solve.",
-      "Build a minimal Shopify app that captures one core event, creates one email, and previews it inside the store editor.",
-      "Launch with a free tier and one paid upgrade trigger, such as monthly email volume or advanced automation, and instrument installs, activation, and paid conversion."
+      "Interview 10 Shopify merchants in one segment about abandoned-cart email and capture the exact triggers they need",
+      "Ship a narrow MVP with one campaign type, Shopify-native setup, and a free tier before adding paid automation",
+      "Recruit 10 pilot stores and instrument activation, campaign sends, revenue generated, and willingness to pay before expanding features"
      ]
     },
     "by": "agent"

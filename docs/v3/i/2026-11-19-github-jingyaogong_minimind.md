@@ -1,21 +1,19 @@
-# Turn a focused AI project into a GitHub star engine
+# Turn a complete open-source tool into a one-command first win
 
 > jingyaogong/minimind · GitHub · https://github.com/jingyaogong/minimind
 > Daily new stars: – → 687 (2 trending day(s) in our data: too few for a baseline, cold-start)
 > Grade B (55/100, Can try, clear weak spots) · direction: Developer tools & APIs · mode: agent
 
 ## Why it moved
-- [fact] The project gained 687 new GitHub stars in one day, reaching 66,579 stars total. (https://github.com/jingyaogong/minimind)
-- [not_found] No specific launch post, release, announcement, or documented distribution event was found. (https://github.com/jingyaogong/minimind)
-- [inferred] A documentation page was traced on 2026-11-19, but its connection to the star increase is inferred and its contents are unavailable. (https://docs.tinyfish.ai/cli)
+- [fact] The project gained 687 new GitHub stars in a day, reaching 66,721 stars. (https://github.com/jingyaogong/minimind)
+- [not_found] The only supplied trace links to documentation whose relevance to this project's star growth cannot be established. (https://docs.tinyfish.ai/cli)
+- [not_found] A dated launch post, shutdown, price change, open-source release event, or community paying signal was not found. (https://github.com/jingyaogong/minimind)
 
 ## Discount the numbers
 - We have 2 day(s) of our own history for this product; the move is measured against the source's own change figure, not our baseline yet.
 - Stars can be bought, and Trending brings its own stars: check forks, issues and real usage.
-- Only two days of product history are available, so the daily move is measured against the source's own change figure rather than a meaningful baseline.
-- GitHub stars can be purchased, and Trending can add visibility; forks, issues, and real usage should be checked.
-- The only demand-echo threads discuss broad self-hosting needs and do not mention this product.
-- The documentation trace may explain awareness, but its relationship to the star spike is inferred.
+- The badge reports 687 daily new stars while the underlying measure reports 667 new stars; both figures are retained as supplied rather than reconciled.
+- The repository evidence does not include the dated post, release, channel, or audience action that produced the increase.
 
 ## Demand Echo
 - 17 buyer-intent threads in 14 days
@@ -25,6 +23,6 @@
 - Self Hosted Music Stack (https://www.reddit.com/r/selfhosted/comments/1xxhxd7/)
 
 ## How to follow
-- play: Launch a narrowly scoped open-source repository with a strong README, a runnable first example, and a concrete path to contribute or extend it.
-- wedge: Target one painful developer workflow with a hosted companion, polished GUI, or production-ready vertical template.
-- avoid: Do not treat stars alone as product-market fit; verify forks, issues, installs, and active usage.
+- play: Ship a narrow derivative that reduces setup time for one specific user and workflow.
+- wedge: A hosted version, GUI shell, or vertical template built on the project.
+- avoid: Do not clone the repository or treat GitHub stars as proof of recurring usage.

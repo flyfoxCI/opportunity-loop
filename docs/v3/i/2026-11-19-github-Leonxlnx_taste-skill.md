@@ -1,19 +1,19 @@
-# Package a taste workflow developers can run immediately
+# Turn a developer workflow gap into an open-source skill
 
 > Leonxlnx/taste-skill · GitHub · https://github.com/Leonxlnx/taste-skill
 > Daily new stars: – → 737 (2 trending day(s) in our data: too few for a baseline, cold-start)
 > Grade B (55/100, Can try, clear weak spots) · direction: Developer tools & APIs · mode: agent
 
 ## Why it moved
-- [inferred] The only explanatory evidence points to documentation, but the snippet contains no details and the causal link is not established. (https://docs.tinyfish.ai/cli)
-- [fact] The project received 737 new GitHub stars in a day; 2 days of tracked history are insufficient to establish a baseline. (https://github.com/Leonxlnx/taste-skill)
-- [not_found] No launch post, referral source, advertisement, fork trend, issue activity, or usage evidence was found. (https://github.com/Leonxlnx/taste-skill)
+- [inferred] The available evidence points to documentation as a likely contributor to discoverability and adoption, but does not establish the precise trigger. (https://docs.tinyfish.ai/cli)
+- [not_found] The project gained 737 new GitHub stars in a day, with no competitor, event, or distribution evidence supplied. (https://github.com/Leonxlnx/taste-skill)
 
 ## Discount the numbers
 - We have 2 day(s) of our own history for this product; the move is measured against the source's own change figure, not our baseline yet.
 - Stars can be bought, and Trending brings its own stars: check forks, issues and real usage.
-- Only 2 days are tracked, so no normal baseline is available.
-- The supplied evidence does not establish how the 737 new stars were acquired.
+- Only two days of product history are available, so the daily movement cannot be compared with a reliable baseline.
+- GitHub stars can be purchased, and Trending visibility may itself add stars; forks, issues, and real usage should be checked.
+- The product description, release date, pricing, and detailed functionality are missing.
 
 ## Demand Echo
 - 17 buyer-intent threads in 14 days
@@ -23,6 +23,6 @@
 - Self Hosted Music Stack (https://www.reddit.com/r/selfhosted/comments/1xxhxd7/)
 
 ## How to follow
-- play: Validate a narrow taste-related workflow with developers, publish a runnable repository and concise setup guide, then measure activation and repeat usage rather than stars alone.
-- wedge: Open-source momentum: the usual wedges are a hosted version, a GUI shell, or a vertical template built on it in the first two weeks.
-- avoid: Do not treat a one-day star spike as proof of demand or copy the project without identifying the exact workflow and audience.
+- play: Launch a narrowly scoped open-source developer utility with a strong README and working documentation.
+- wedge: Within the first two weeks, consider a hosted companion, GUI shell, or vertical template built around the project.
+- avoid: Do not treat stars alone as proof of demand or retention; validate usage, forks, issues, and repeat adoption.
