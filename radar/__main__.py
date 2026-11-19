@@ -1,9 +1,10 @@
 """Opportunity Loop radar CLI (v3).
 
-  python -m radar collect [--backfill] [--only appark,drama,gravity,itunes,gplay,trustmrr,tranco,github,reddit,xhs_web]
+  python -m radar collect [--backfill] [--only appark,drama,gravity,itunes,gplay,chrome,shopify,trustmrr,tranco,github,reddit,xhs_web]
   python -m radar detect            # today's candidates + picks (the line each product crossed)
   python -m radar investigate       # briefs for today's picks (agent mode when LLM keys are set)
   python -m radar playbook          # induce playbooks from the agent's per-brief plays (needs LLM keys)
+  python -m radar categories        # per-category guidance: data/categories.json (LLM when keys are set, else rules)
   python -m radar build             # write the v3 site to docs/v3/
   python -m radar all               # collect, detect, investigate, build
 
@@ -19,7 +20,8 @@ from datetime import datetime, timezone
 from . import sources
 from .store import connect_cached, export_all, export_day
 
-ORDER = ("trustmrr", "tranco", "github", "reddit", "xhs_web", "appark", "drama", "gravity", "itunes", "gplay")
+ORDER = ("trustmrr", "tranco", "github", "reddit", "xhs_web", "appark", "drama", "gravity", "itunes", "gplay", "chrome",
+         "shopify")
 
 
 def _today() -> str:
@@ -28,7 +30,7 @@ def _today() -> str:
 
 def collect(backfill: bool, only: set | None) -> None:
     from .detect import CFG
-    from .feeds import appark, gravity, stores
+    from .feeds import appark, gravity, stores, webstores
     con = connect_cached()
     day = _today()
     cc = CFG["collect"]
@@ -49,6 +51,8 @@ def collect(backfill: bool, only: set | None) -> None:
         # measurement runs after discovery: it measures whatever charted today
         "itunes": lambda: stores.collect_itunes(con, day, cc["itunes"]),
         "gplay": lambda: stores.collect_gplay(con, day, cc["gplay"]),
+        "chrome": lambda: webstores.collect_chrome(con, day, cc.get("chrome")),
+        "shopify": lambda: webstores.collect_shopify(con, day, cc.get("shopify")),
     }
     for name in ORDER:
         if want(name):
@@ -107,6 +111,18 @@ def playbook() -> None:
     con.close()
 
 
+def analyze_categories() -> None:
+    from . import categories as cats
+    con = connect_cached()
+    try:
+        out = cats.analyze(con)
+        by = {k: v["guidance"].get("by") for k, v in out["surfaces"].items()}
+        print(f"[radar] categories {out['updated']}: {json.dumps(by)}", flush=True)
+    except Exception as e:  # noqa: BLE001  a failed analysis keeps yesterday's file
+        print(f"[radar] categories skipped: {e}", flush=True)
+    con.close()
+
+
 def build() -> None:
     from .web import build as web_build
     con = connect_cached()
@@ -116,7 +132,7 @@ def build() -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(prog="radar")
-    ap.add_argument("cmd", choices=["collect", "detect", "investigate", "playbook", "build", "all"])
+    ap.add_argument("cmd", choices=["collect", "detect", "investigate", "playbook", "categories", "build", "all"])
     ap.add_argument("--backfill", action="store_true", help="load historical TrustMRR snapshots from run folders")
     ap.add_argument("--only", default="", help="comma list of sources to collect")
     a = ap.parse_args()
@@ -129,6 +145,8 @@ def main() -> None:
         investigate()
     if a.cmd in ("playbook", "all"):
         playbook()
+    if a.cmd in ("categories", "all"):
+        analyze_categories()
     if a.cmd in ("build", "all"):
         build()
 

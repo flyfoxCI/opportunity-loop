@@ -20,9 +20,10 @@ from .taxonomy import BY_SLUG
 
 CFG = json.loads((Path(__file__).parent / "v3.json").read_text(encoding="utf-8"))
 SURFACE = {"ios": "apps", "play": "apps", "github": "opensource", "trustmrr": "saas", "tranco": "saas",
-           "minigame": "minigames", "drama": "drama", "drama_ad": "drama"}
+           "minigame": "minigames", "drama": "drama", "drama_ad": "drama", "chrome": "chrome", "shopify": "shopify"}
 SURFACE_NAME = {"apps": "Apps & games", "saas": "Web & SaaS", "opensource": "Open source",
-                "minigames": "Mini-games", "drama": "Short drama"}
+                "minigames": "Mini-games", "drama": "Short drama", "chrome": "Chrome extensions",
+                "shopify": "Shopify apps"}
 LIST_NAME = {"free": "Top Free", "paid": "Top Paid", "grossing": "Top Grossing"}
 # Grossing moves mean money; paid charts are thin (a few sales move a rank in a small store).
 LIST_WEIGHT = {"grossing": 1.4, "free": 1.0, "paid": 0.45}
@@ -244,6 +245,8 @@ def detect(con, day: str) -> list:
     cands = []
     cands += rule_cumulative(con, day, "play", "installs", "gp_installs")
     cands += rule_cumulative(con, day, "ios", "ratings", "ios_ratings")
+    cands += rule_cumulative(con, day, "shopify", "reviews", "shop_reviews")
+    cands += rule_cumulative(con, day, "chrome", "users", "cws_users")
     for src in ("ios", "play"):
         cands += rule_charts(con, day, src)
     cands += rule_github(con, day)
