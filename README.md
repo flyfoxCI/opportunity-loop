@@ -74,6 +74,33 @@ python -m radar all          # everything
   Store, 18 categories: reviews, pricing, launch date) in `radar/feeds/webstores.py`.
 - **Product pages** open with four cards (Why it moved · Direction · Growth · Money) and "If it were you".
 
+
+### v5: DuckDB + a Parquet lake (keep every day, forever)
+
+- **Working database:** `data/radar.duckdb`, DuckDB, gitignored; CI keeps it in the Actions cache. It is columnar and
+  compressed, about 5 bytes per metric row: roughly **0.5–0.8 GB for a year** of every source, against 8–9 GB for the old
+  SQLite file.
+- **Durable copy:** `data/lake/<table>/<day>.parquet`, one zstd Parquet file per table per day, about 1–1.5 MB a day at
+  full fidelity. CI syncs it to **Cloudflare R2**. After a cache miss, the database is rebuilt from the lake in seconds
+  (`rebuild_from_lake`).
+- **`product_history`:** a new row whenever a product's content changes (name, description, price, version, release
+  notes; volatile fields like rating and icon are ignored). You can see what an app changed before it took off.
+- **Writes are buffered:** everything is flushed in bulk, because DuckDB is slow row by row. Product writes are patches
+  merged in SQL, so collectors never read rows back in hot loops.
+- **Compaction:** `python -m radar compact` rewrites the file without free blocks; CI runs it on Sundays.
+- **Migration:** on the first v5 run, CI migrates the v4 SQLite cache (full fidelity) into DuckDB and uploads every day to
+  R2. Without that cache it falls back to the v4 snapshots in `data/snapshots` and the `data-charts` release (read-only
+  from now on).
+
+**R2 setup (once):**
+
+1. In the Cloudflare dashboard, open R2, create a bucket (e.g. `opportunity-loop-data`), then go to Manage API tokens
+   and create one with **Object Read & Write** on that bucket.
+2. Add these GitHub repo secrets: `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` and `R2_BUCKET` (the bucket name).
+   `CLOUDFLARE_ACCOUNT_ID` is already set for the deploy and also builds the R2 endpoint.
+
+Without the R2 secrets, the pipeline still runs but logs a warning: only the Actions cache holds the history.
+
 ## v2 (retired)
 
 v2 was the daily signals site at `/radar/`. v3 replaced it; its site output and builder were removed.

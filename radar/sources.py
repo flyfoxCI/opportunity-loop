@@ -24,7 +24,7 @@ import time
 from datetime import datetime, timedelta, timezone
 
 from . import net
-from .store import ROOT, log_source, put_metric, upsert_product
+from .store import ROOT, get_product, log_source, put_metric, update_product, upsert_product, upsert_thread
 from .taxonomy import BY_SLUG, DIRECTIONS, classify, classify_app
 
 TRUSTMRR_API = "https://trustmrr.com/api/ai"
@@ -287,13 +287,10 @@ def fetch_reddit(con, days: int = 14, pages: int = 3, pace: float = 1.2) -> int:
             hits += 1
             weekly_posts[best["slug"]] += per_week
             weekly_comments[best["slug"]] += (p.get("num_comments") or 0) * per_week
-            con.execute(
-                """INSERT INTO threads(id,direction,subreddit,title,body,score,num_comments,created_utc,query,first_seen,author)
-                   VALUES(?,?,?,?,?,?,?,?,?,?,?)
-                   ON CONFLICT(id) DO UPDATE SET score=excluded.score, num_comments=excluded.num_comments""",
-                (p["id"], best["slug"], p.get("subreddit") or sub, p.get("title") or "", body[:700],
-                 p.get("score") or 0, p.get("num_comments") or 0, p.get("created_utc") or 0,
-                 "intent", day, p.get("author") or ""))
+            upsert_thread(con, {"id": p["id"], "direction": best["slug"], "subreddit": p.get("subreddit") or sub,
+                                "title": p.get("title") or "", "body": body[:700], "score": p.get("score") or 0,
+                                "num_comments": p.get("num_comments") or 0, "created_utc": p.get("created_utc") or 0,
+                                "query": "intent", "first_seen": day, "author": p.get("author") or ""})
             rows += 1
         # Saved per subreddit so a crash or timeout keeps what was finished; analyze sums them.
         for slug in weekly_posts:
@@ -520,8 +517,8 @@ def fetch_tranco(con, max_rank: int = 500_000, min_factor: float = 2.0, max_chec
             upsert_product(con, "tranco", dom, day, name=title or dom, url=f"https://{dom}/", description=desc,
                            category="web", direction=direction, direction_conf=conf,
                            meta={"list_day": now_day, "base_day": old_day})
-        elif con.execute("SELECT 1 FROM products WHERE source='tranco' AND pid=?", (dom,)).fetchone():
-            con.execute("UPDATE products SET last_seen=? WHERE source='tranco' AND pid=?", (day, dom))
+        elif get_product(con, "tranco", dom):
+            update_product(con, "tranco", dom, last_seen=day)
         else:
             continue  # rejected within the last 21 days
         put_metric(con, "tranco", dom, "rank", day, rank)

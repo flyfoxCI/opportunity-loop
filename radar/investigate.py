@@ -139,9 +139,9 @@ def _competitors(con, c: dict, day: str, limit: int = 4) -> list:
     d = c["direction"]
     if c["source"] in ("ios", "play"):
         rows = con.execute(
-            "SELECT p.pid, p.name, p.url, p.meta, MIN(m.value) best, m.metric FROM products p JOIN metrics m "
+            "SELECT p.pid, p.name, p.url, p.meta, MIN(m.value) best, arg_min(m.metric, m.value) metric FROM products p JOIN metrics m "
             "ON m.source=p.source AND m.pid=p.pid AND m.day=? AND m.metric LIKE 'rank:%' "
-            "WHERE p.source=? AND p.direction=? AND p.pid<>? GROUP BY p.pid ORDER BY best LIMIT ?",
+            "WHERE p.source=? AND p.direction=? AND p.pid<>? GROUP BY p.pid, p.name, p.url, p.meta ORDER BY best LIMIT ?",
             (day, c["source"], d, c["pid"], limit)).fetchall()
         return [{"name": r["name"], "url": r["url"], "note": f"#{int(r['best'])} {chart_name(r['metric'])}"}
                 for r in rows]
@@ -156,7 +156,7 @@ def _competitors(con, c: dict, day: str, limit: int = 4) -> list:
         rows = con.execute(
             "SELECT p.pid, p.name, p.category, MIN(m.value) best FROM products p JOIN metrics m ON m.source=p.source "
             "AND m.pid=p.pid AND m.day=? AND m.metric LIKE 'rank:%' WHERE p.source='minigame' AND p.pid<>? "
-            "AND p.category=(SELECT category FROM products WHERE source='minigame' AND pid=?) GROUP BY p.pid "
+            "AND p.category=(SELECT category FROM products WHERE source='minigame' AND pid=?) GROUP BY p.pid, p.name, p.category "
             "ORDER BY best LIMIT ?", (day, c["pid"], c["pid"], limit)).fetchall()
         return [{"name": r["name"], "url": "", "note": f"#{int(r['best'])} · {r['category']}"} for r in rows]
     return []

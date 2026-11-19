@@ -99,18 +99,11 @@ def collect_charts(con, day: str, cfg: dict) -> int:
 
 
 def _upsert_app(con, src: str, pid: str, day: str, name: str, meta: dict) -> None:
-    """Merge chart meta into the product row without clobbering store-detail fields."""
-    import json
-    row = con.execute("SELECT meta, description, category, direction, direction_conf, url FROM products "
-                      "WHERE source=? AND pid=?", (src, pid)).fetchone()
-    old = json.loads(row["meta"]) if row and row["meta"] else {}
-    old.update({k: v for k, v in meta.items() if v not in (None, "", [])})
+    """Merge chart meta into the product row without clobbering store-detail fields (a patch: no read)."""
     url = (f"https://apps.apple.com/app/id{pid}" if src == "ios"
            else f"https://play.google.com/store/apps/details?id={pid}")
-    upsert_product(con, src, pid, day, name=name, url=(row["url"] if row and row["url"] else url),
-                   description=(row["description"] if row else "") or "", category=(row["category"] if row else "") or "",
-                   direction=(row["direction"] if row else "other") or "other",
-                   direction_conf=(row["direction_conf"] if row else 0.0) or 0.0, meta=old)
+    upsert_product(con, src, pid, day, name=name, url=url,
+                   meta={k: v for k, v in meta.items() if v not in (None, "", [])})
 
 
 # ---------------------------------------------------------------- TikTok drama

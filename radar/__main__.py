@@ -4,6 +4,7 @@
   python -m radar detect            # today's candidates + picks (the line each product crossed)
   python -m radar investigate       # briefs for today's picks (agent mode when LLM keys are set)
   python -m radar playbook          # induce playbooks from the agent's per-brief plays (needs LLM keys)
+  python -m radar compact           # rewrite data/radar.duckdb without free blocks (CI: weekly)
   python -m radar categories        # per-category guidance: data/categories.json (LLM when keys are set, else rules)
   python -m radar build             # write the v3 site to docs/v3/
   python -m radar all               # collect, detect, investigate, build
@@ -123,6 +124,12 @@ def analyze_categories() -> None:
     con.close()
 
 
+def compact() -> None:
+    from .store import compact as _compact
+    a, b = _compact()
+    print(f"[radar] compacted DuckDB: {a:.0f} MB -> {b:.0f} MB", flush=True)
+
+
 def build() -> None:
     from .web import build as web_build
     con = connect_cached()
@@ -132,7 +139,7 @@ def build() -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(prog="radar")
-    ap.add_argument("cmd", choices=["collect", "detect", "investigate", "playbook", "categories", "build", "all"])
+    ap.add_argument("cmd", choices=["collect", "detect", "investigate", "playbook", "categories", "build", "compact", "all"])
     ap.add_argument("--backfill", action="store_true", help="load historical TrustMRR snapshots from run folders")
     ap.add_argument("--only", default="", help="comma list of sources to collect")
     a = ap.parse_args()
@@ -147,6 +154,8 @@ def main() -> None:
         playbook()
     if a.cmd in ("categories", "all"):
         analyze_categories()
+    if a.cmd == "compact":
+        compact()
     if a.cmd in ("build", "all"):
         build()
 

@@ -28,3 +28,6 @@ venv/
 data/radar.sqlite*
 # v3: App Store / Google Play chart snapshots are MBs/day: CI cache + `data-charts` release, not git
 data/charts/
+# v5: DuckDB working DB (CI: Actions cache) and the Parquet lake (CI: Cloudflare R2)
+data/radar.duckdb*
+data/lake/

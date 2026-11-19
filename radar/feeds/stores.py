@@ -13,7 +13,7 @@ import re
 import urllib.parse
 from datetime import datetime, timezone
 
-from ..store import log_source, put_metric
+from ..store import get_product, log_source, patch_product, put_metric
 from ..taxonomy import classify_app
 from . import http, log
 
@@ -46,19 +46,10 @@ def _charted(con, src: str, day: str) -> dict:
 
 def _merge_meta(con, src: str, pid: str, extra: dict, *, description: str = "", category: str = "",
                 url: str = "", direction: tuple | None = None) -> None:
-    row = con.execute("SELECT meta FROM products WHERE source=? AND pid=?", (src, pid)).fetchone()
-    meta = json.loads(row["meta"]) if row and row["meta"] else {}
-    meta.update({k: v for k, v in extra.items() if v not in (None, "", [])})
-    sets, args = ["meta=?"], [json.dumps(meta, ensure_ascii=False)]
-    if description:
-        sets.append("description=?"); args.append(description[:500])
-    if category:
-        sets.append("category=?"); args.append(category)
-    if url:
-        sets.append("url=?"); args.append(url)
+    fields = {"description": description[:500] if description else None, "category": category or None, "url": url or None}
     if direction:
-        sets += ["direction=?", "direction_conf=?"]; args += [direction[0], direction[1]]
-    con.execute(f"UPDATE products SET {', '.join(sets)} WHERE source=? AND pid=?", (*args, src, pid))
+        fields.update(direction=direction[0], direction_conf=direction[1])
+    patch_product(con, src, pid, meta_update={k: v for k, v in extra.items() if v not in (None, "", [])}, **fields)
 
 
 # ---------------------------------------------------------------- iTunes Lookup
@@ -160,7 +151,7 @@ def collect_gplay(con, day: str, cfg: dict) -> int:
         put_metric(con, "play", pkg, "installs", day, d["installs"])
         put_metric(con, "play", pkg, "ratings", day, d["ratings"])
         put_metric(con, "play", pkg, "rating", day, d["score"])
-        prow = con.execute("SELECT meta FROM products WHERE source='play' AND pid=?", (pkg,)).fetchone()
+        prow = get_product(con, "play", pkg)
         genres = (json.loads(prow["meta"]) if prow and prow["meta"] else {}).get("genres") or [None]
         direction = classify_app(d["name"] or pkg, d["description"], genres[0])
         _merge_meta(con, "play", pkg, {k: d[k] for k in ("installs_label", "genre", "developer", "dev_site",

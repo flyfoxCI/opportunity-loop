@@ -18,7 +18,7 @@ import time
 from datetime import datetime, timezone
 
 from .. import net
-from ..store import log_source, put_metric, upsert_product
+from ..store import get_product, log_source, patch_product, prefetch_products, put_metric, upsert_product
 from ..taxonomy import classify
 
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36",
@@ -152,8 +152,9 @@ def collect_shopify(con, day: str | None = None, cfg: dict | None = None) -> int
             time.sleep(10)
             continue
         cname = cat.replace("-", " ").replace("and", "&").capitalize()
+        prefetch_products(con, "shopify", [it["handle"] for it in items])
         for pos, it in enumerate(items, 1):
-            row = con.execute("SELECT meta FROM products WHERE source='shopify' AND pid=?", (it["handle"],)).fetchone()
+            row = get_product(con, "shopify", it["handle"])
             old = json.loads(row["meta"]) if row and row["meta"] else {}
             direction, conf = classify(it["name"], it["blurb"], "ecommerce shopify store")
             old.update({"icon": it["icon"], "price": it["price"], "bfs": it["bfs"],
@@ -177,10 +178,7 @@ def collect_shopify(con, day: str | None = None, cfg: dict | None = None) -> int
             time.sleep(10)
             continue
         if when:
-            row = con.execute("SELECT meta FROM products WHERE source='shopify' AND pid=?", (h,)).fetchone()
-            meta = json.loads(row["meta"] or "{}")
-            meta["released"] = when
-            con.execute("UPDATE products SET meta=? WHERE source='shopify' AND pid=?", (json.dumps(meta), h))
+            patch_product(con, "shopify", h, meta_update={"released": when})
             got += 1
         time.sleep(cfg.get("pace", 3.0))
     _log(f"shopify: {rows} app rows, {got} launch dates, {len(errors)} errors")
