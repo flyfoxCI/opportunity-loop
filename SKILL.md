@@ -9,7 +9,7 @@ tags: trustmrr, opportunity-loop, weekly, x10k, mrr, startup-discovery, directio
 
 This skill wraps the existing `loop/` system into a one-shot invocation. Stage A is non-interactive (TrustMRR fetch + coarse filter); Stage B is the LLM-driven verification + direction packaging defined in `loop/AGENT_PROMPT.md`.
 
-The same contract is automated weekly via `.github/workflows/weekly.yml` in CI — see README.
+The weekly CI workflow was removed; run this skill (or `stage_b.py`) locally when you want a weekly pass.
 
 ## Pre-flight
 

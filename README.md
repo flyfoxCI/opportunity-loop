@@ -79,8 +79,9 @@ loop/                       Stage A (TrustMRR) + Stage B (LLM) + templates + see
 
 stage_b.py                  Stage B orchestrator (TinyFish + MiniMax, split calls)
 publish.py                  copies run → docs/, regenerates docs/index.md, git push
-.github/workflows/weekly.yml  cron + manual trigger
-docs/                       GitHub Pages output (auto-regenerated weekly)
+.github/workflows/radar-daily.yml       daily v3 pipeline (06:30 UTC) + manual trigger
+.github/workflows/deploy-cloudflare.yml Jekyll build of docs/ → Cloudflare Pages
+docs/                       site source (v3 regenerated daily)
 SKILL.md                    Claude Code slash command
 install.sh                  cp SKILL.md → ~/.claude/skills/opportunity-loop/
 _config.yml                 Jekyll (Pages) config — minima theme
@@ -179,15 +180,9 @@ Then in any Claude Code session, `/opportunity-loop` (or describe what you want)
 
 ### 5. (Optional) Adjust the cron
 
-`.github/workflows/weekly.yml` currently fires `0 17 * * 1,4` UTC = **Tuesday + Friday 01:00 Beijing** (~every 3 days).
-Edit the cron expression if your cadence needs differ:
-
-- `'0 17 * * 0'` — once a week (Sun)
-- `'0 17 * * 1,4'` — twice a week (Mon + Thu) ← current
-- `'0 17 */2 * *'` — every 2 days
-- `'0 17 * * *'` — daily (not recommended, $9/mo LLM cost)
-
-See [crontab.guru](https://crontab.guru/).
+The weekly v2 workflow was removed; the weekly loop now runs only locally (`/opportunity-loop` or `stage_b.py`).
+`.github/workflows/radar-daily.yml` fires `30 6 * * *` UTC (14:30 Beijing), about 1.5 h after Appark refreshes the
+day's charts. See [crontab.guru](https://crontab.guru/).
 
 ---
 
@@ -337,7 +332,7 @@ Symptoms: `starterstory_error.json` in the run folder, or `STARTERSTORY.md` empt
 
 - **No remote**: `git remote add origin git@github.com:<user>/opportunity-loop.git`
 - **Permission denied**: workflow's `GITHUB_TOKEN` has `contents: write` set explicitly. For cross-repo pushes, you'd need a PAT.
-- **Conflicts**: another run is in progress. The `concurrency:` block in `weekly.yml` serializes runs; if it still happens, `git pull --rebase` then re-run.
+- **Conflicts**: another run is in progress. The `concurrency:` block in `radar-daily.yml` serializes runs; if it still happens, `git pull --rebase` then re-run.
 
 ### Pages site doesn't update
 
@@ -353,7 +348,7 @@ Symptoms: `starterstory_error.json` in the run folder, or `STARTERSTORY.md` empt
 - **`loop/config.json`** — all hard thresholds. Change `target_selectable_directions` to up/down the output count.
 - **`loop/seed_directions/`** — six prior validated direction packages as evidence. Read-only.
 - **`loop/templates/`** — the three skeleton templates (verdict, direction-go, direction-go-narrow).
-- **`.github/workflows/weekly.yml`** — cron schedule + step ordering. `concurrency:` prevents run collisions.
+- **`.github/workflows/radar-daily.yml`** — daily cron + step ordering. `concurrency:` prevents run collisions.
 
 ---
 
