@@ -265,7 +265,7 @@ def detect(con, day: str) -> list:
         if src in ("ios", "play"):
             pub_size[(p.get("meta") or {}).get("company_id") or (p.get("meta") or {}).get("developer")] += 1
     recent = {r[0] for r in con.execute(
-        "SELECT json_extract(json,'$.entity') FROM candidates WHERE picked=1 AND day>=? AND day<?",
+        "SELECT json_extract_string(json,'$.entity') FROM candidates WHERE picked=1 AND day>=? AND day<?",
         ((_d(day) - timedelta(days=14)).strftime("%Y-%m-%d"), day))}
 
     merged = {}
