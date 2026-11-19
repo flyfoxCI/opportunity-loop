@@ -26,6 +26,11 @@ BASE_URL = os.environ.get("ANTHROPIC_BASE_URL") or "https://api.minimaxi.com/ant
 MODEL = os.environ.get("ANTHROPIC_MODEL") or "MiniMax-M3"
 WEIGHTS = {"money": 0.25, "demand": 0.20, "replicable": 0.20, "room": 0.15, "window": 0.10, "durability": 0.10}
 GRADE_CUTS = ((80, "S"), (65, "A"), (50, "B"), (35, "C"), (20, "D"))
+VISIBILITY = {"unknown": "Few people know it yet", "circle": "Spreading in one circle", "public": "Widely known"}
+CAUSES = {"distribution": "Distribution play", "product": "The product itself", "timing": "Timing / platform event",
+          "resources": "Existing resources"}
+PLAY_CATEGORIES = {"direction": "Finding a direction", "growth": "Growth", "monetization": "Monetization"}
+CAUSALITY = {"hard": "Clear cause", "medium": "Likely cause", "weak": "Cause unproven"}
 GRADE_TEXT = {"S": "Act now", "A": "Worth following", "B": "Can try, clear weak spots",
               "C": "Learn from it", "D": "Just be aware", "E": "Don't touch"}
 
@@ -435,7 +440,25 @@ def brief(con, c: dict, day: str) -> dict:
     if rep["grade"]["grade"] in ("S", "A"):
         rep["build_kit"] = _build_kit(c, ev)
     rep["staying_power"] = "unclear"
+    first = next((w for w in rep["why_grew"] if w.get("label") != "not_found"), None)
+    rep["verdict"] = first["text"] if first else ""
+    rep["how_to_follow"] = rep["follow"].get("wedge") or ""
+    rep["visibility"] = ""  # unknown until the agent has looked
+    rep["causes"] = _causes(c, ev)
+    rep["story"] = []
     return rep
+
+
+def _causes(c: dict, ev: dict) -> list:
+    """Data-only guess at the growth cause; the agent replaces it."""
+    out = []
+    if c["source"] in ("drama_ad", "minigame") or any(t for t in ev["traces"]):
+        out.append("distribution")
+    if any(e["text"].startswith("Shipped") for e in ev["events"]):
+        out.append("product")
+    if c.get("big_publisher"):
+        out.append("resources")
+    return out
 
 
 # ---------------------------------------------------------------- agent mode
@@ -449,7 +472,34 @@ takeaway (one sentence a builder can apply), why_grew [{text,label:fact|inferred
 positioning {for_whom, job, before_it, wedge}, differentiators [{claim, evidence, label}],
 moat (one line), discounts [strings], mechanism (2-5 word tag of the growth move),
 staying_power (pulse|has-legs|unclear), follow {play, wedge, avoid},
-build_kit {validate_72h:[3], mvp_14d:[3], first_30_users:[3]}.
+build_kit {validate_72h:[3], mvp_14d:[3], first_30_users:[3]},
+verdict (1-2 sentences: why it took off, concrete, with the numbers from the evidence),
+how_to_follow (1-2 sentences: don't clone it; the part it did badly or the market/audience/channel it left open),
+visibility (unknown = few people know it yet | circle = spreading inside one community | public = covered widely),
+causes (subset of ["distribution", "product", "timing", "resources"]: what drove the growth; resources = money,
+audience or a portfolio the founder already had),
+plays: read the product through three lenses and return one entry per lens the evidence supports (0-3 entries,
+at most one per category):
+  - direction: why a gap opened here, now; who created the demand (an official date, a shutdown or price change,
+    a leader that stopped updating, an open-source hit, people already paying in a chat/community/crowdfunding)
+  - growth: where the users actually came from (a post and its hook, a reply under someone's viral post, short videos,
+    ads found or not found in the evidence, store search/featuring, a roundup, a platform launch)
+  - monetization: how and at which moment the money is taken (what is free, what is locked, plan shape, price, trial)
+  each entry: {category: direction|growth|monetization,
+    move (the concrete, copyable action a solo builder can take this week: imperative, with the specific detail that
+          makes it work — the number, the moment, the channel; max 45 words; no product name),
+    why (one sentence: the mechanism, why the move works),
+    did (exactly what THIS product did: dated, with its own words quoted verbatim when the evidence has them,
+         prices, channels),
+    result (what happened after, dated numbers, and what the number is NOT — cumulative vs new, the whole lane rising,
+            other changes the same week),
+    causality: hard (the move clearly caused the lift: timing + mechanism + no rival explanation) |
+               medium (plausible, timing fits, other causes not excluded) | weak (it uses the move and grew, cause unproven),
+    urls [evidence URLs for this entry, only from the evidence]}
+  Skip a lens rather than guess: an entry needs evidence of what the product did.
+story [{heading, body}] 4-6 short sections for the product page, in this order where evidence allows:
+what it is, where users come from, how it makes money, who built it, what it does badly, if it were you
+(verdict, who it suits, how to start, what would prove this wrong). Plain prose, mark guesses "(inferred)".
 A 'fact' must cite a URL that appears in the evidence."""
 
 
@@ -473,7 +523,7 @@ def agent(rep: dict) -> dict:
         base_url=BASE_URL)
     evidence = {k: rep[k] for k in ("lesson_title", "product", "badge", "measure", "charts", "events", "why_grew",
                                     "competitors", "discounts", "demand_echo", "traces", "direction_name", "follow")}
-    msg = client.messages.create(model=MODEL, max_tokens=4000, system=AGENT_SYSTEM,
+    msg = client.messages.create(model=MODEL, max_tokens=8000, system=AGENT_SYSTEM,
                                  messages=[{"role": "user", "content": json.dumps(evidence, ensure_ascii=False)}])
     text = "".join(getattr(b, "text", "") for b in msg.content)
     m = re.search(r"\{.*\}", text, re.S)
@@ -484,8 +534,23 @@ def agent(rep: dict) -> dict:
     for claim in out.get("why_grew", []):  # verify: a fact needs a URL we actually gathered
         if claim.get("label") == "fact" and claim.get("url") not in allowed:
             claim["label"] = "inferred"
+    if out.get("visibility") not in VISIBILITY:
+        out.pop("visibility", None)
+    out["causes"] = [x for x in out.get("causes") or [] if x in CAUSES]
+    plays, seen = [], set()
+    for pl in out.get("plays") or ([out["play"]] if isinstance(out.get("play"), dict) else []):
+        if (isinstance(pl, dict) and pl.get("move") and pl.get("category") in PLAY_CATEGORIES
+                and pl["category"] not in seen):
+            seen.add(pl["category"])
+            if pl.get("causality") not in CAUSALITY:
+                pl["causality"] = "weak"
+            pl["urls"] = [u for u in pl.get("urls") or [] if u in allowed]
+            plays.append(pl)
+    out["plays"] = plays
+    out.pop("play", None)
+    out["story"] = [x for x in out.get("story") or [] if isinstance(x, dict) and x.get("heading") and x.get("body")]
     for k in ("lesson_title", "what", "takeaway", "why_grew", "positioning", "differentiators", "moat",
-              "mechanism", "staying_power"):
+              "mechanism", "staying_power", "verdict", "how_to_follow", "visibility", "causes", "plays", "story"):
         if out.get(k):
             rep[k] = out[k]
     if out.get("discounts"):

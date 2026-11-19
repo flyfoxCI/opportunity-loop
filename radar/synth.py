@@ -188,3 +188,94 @@ def directions(con, day: str) -> list:
 
 def direction_meta(slug: str) -> dict:
     return BY_SLUG.get(slug) or {"name": slug, "group": "Other", "subreddits": []}
+
+
+# ---------------------------------------------------------------- product database
+
+def products(con) -> list:
+    """One row per product (entity) we have briefed: its latest brief plus every breakout we recorded."""
+    by = defaultdict(list)
+    for rep in investigations(con):
+        by[rep["entity"]].append(rep)
+    out = []
+    for ent, reps in by.items():
+        reps.sort(key=lambda r: r["day"], reverse=True)
+        out.append({"entity": ent, "rep": reps[0], "breakouts": reps})
+    return sorted(out, key=lambda p: (-p["rep"]["grade"]["score"], p["rep"]["product"].get("name") or ""))
+
+
+def _metric_rows(con, src: str, pid: str, like: str) -> list:
+    return con.execute("SELECT metric, day, value FROM metrics WHERE source=? AND pid=? AND metric LIKE ? "
+                       "AND value IS NOT NULL ORDER BY day", (src, pid, like)).fetchall()
+
+
+def _one(con, src: str, pid: str, metric: str) -> list:
+    return [(r["day"], r["value"]) for r in _metric_rows(con, src, pid, metric)]
+
+
+def history(con, rep: dict) -> list:
+    """Charts for the product page: [{title, series: [(label, [(day, v)])], rank, note}]. Only non-empty ones."""
+    from .feeds.appark import GENRES  # noqa: F401  (chart_name needs it loaded)
+    plat = {"ios": "iOS", "play": "Android"}
+    srcs = [(rep["source"], rep["pid"])] + [(s["source"], s["pid"]) for s in rep.get("siblings") or []]
+    out = []
+
+    def add(title, series, rank=False, note="", money=False):
+        series = [(lbl, pts) for lbl, pts in series if pts]
+        if series:
+            out.append({"title": title, "series": series, "rank": rank, "note": note, "money": money})
+
+    for src, pid in sorted(srcs, key=lambda x: x[0] != "play"):
+        if src in ("ios", "play"):
+            if src == "play":
+                add("Android · total installs", [("installs", _one(con, src, pid, "installs"))],
+                    note="Google refreshes the install count every other day: a flat day doesn't mean no installs.")
+            add(f"{plat[src]} · ratings (total)", [("ratings", _one(con, src, pid, "ratings"))])
+            # kind ("overall" | "category") -> list -> country -> {day: best rank}
+            ranks = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
+            regions = defaultdict(set)
+            best_cat = {}
+            for r in _metric_rows(con, src, pid, "rank:%"):
+                _k, lst, cc, cat = (r["metric"].split(":") + ["", "", ""])[:4]
+                kind = "overall" if cat == "36" else "category"
+                cur = ranks[kind][lst][cc]
+                cur[r["day"]] = min(cur.get(r["day"], 1e9), r["value"])
+                regions[r["day"]].add(cc)
+                if kind == "category":
+                    best_cat[r["day"]] = min(best_cat.get(r["day"], 1e9), r["value"])
+            for kind in ("overall", "category"):
+                lst = next((x for x in ("grossing", "free", "paid") if ranks[kind].get(x)), None)
+                if lst:
+                    top = sorted(ranks[kind][lst].items(), key=lambda kv: min(kv[1].values()))[:3]
+                    add(f"{plat[src]} · Top {lst.title()}{' (category chart)' if kind == 'category' else ''} rank, by region",
+                        [(cc.upper(), sorted(pts.items())) for cc, pts in top], rank=True,
+                        note="Lower is better; the line breaks on days it was off the chart.")
+                    break
+            add(f"{plat[src]} · best category rank, any region", [("best", sorted(best_cat.items()))], rank=True,
+                note="The best rank it held that day across the category charts we collect.")
+            add(f"{plat[src]} · regions where it's on any chart we collect",
+                [("regions", [(d, len(v)) for d, v in sorted(regions.items())])])
+        elif src == "github":
+            add("GitHub · total stars", [("stars", _one(con, src, pid, "stars"))])
+            add("GitHub · stars gained per day", [("stars today", _one(con, src, pid, "stars_today"))],
+                note="Stars can be bought, and Trending brings its own stars.")
+        elif src == "trustmrr":
+            add("Monthly recurring revenue (payment-verified)", [("MRR", _one(con, src, pid, "mrr"))], money=True)
+            add("Paying subscribers", [("subscribers", _one(con, src, pid, "subs"))])
+            add("Web traffic rank (Tranco)", [("rank", _one(con, src, pid, "tranco_rank"))], rank=True)
+        elif src == "tranco":
+            add("Web traffic rank (Tranco)", [("rank", _one(con, src, pid, "rank"))], rank=True)
+        elif src == "drama_ad":
+            add("Ad creatives per day", [("creatives", _one(con, src, pid, "creatives")),
+                                         ("new creatives", _one(con, src, pid, "new_creatives"))],
+                note="Appark's estimate from ad libraries, not spend.")
+            add("Ad impressions (estimated)", [("impressions", _one(con, src, pid, "impressions"))])
+        elif src == "drama":
+            add("TikTok drama chart rank", [("rank", _one(con, src, pid, "rank:tiktok"))], rank=True)
+        elif src == "minigame":
+            boards = defaultdict(list)
+            for r in _metric_rows(con, src, pid, "rank:%"):
+                boards[r["metric"][5:].replace(":", " · ").replace("_", " ")].append((r["day"], r["value"]))
+            add("Mini-game chart rank, by board", sorted(boards.items())[:3], rank=True,
+                note="Public top 20 only: the line breaks when it drops out.")
+    return out
