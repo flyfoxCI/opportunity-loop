@@ -8,7 +8,7 @@ Runs daily via GitHub Actions (`radar-daily.yml`, 06:30 UTC) and publishes to Gi
 The original TrustMRR direction loop (Stage A/B, PRD packages) is retired as a schedule; its
 packages live on at `/archive/` and its templates feed the v3 Build Kit.
 
-**Live site:** `https://<your-github-user>.github.io/opportunity-loop/`
+**Live site:** Cloudflare Pages, `https://<project>.pages.dev/` (deployed by `.github/workflows/deploy-cloudflare.yml`)
 
 ---
 
@@ -31,6 +31,7 @@ root `/` redirects there). Design: `research/v3-design.html`; teardown of String
 python -m radar collect      # all sources (or --only appark,drama,gravity,itunes,gplay,...)
 python -m radar detect       # the line each product crossed today + the day's picks (radar/v3.json)
 python -m radar investigate  # briefs: data-only, or agent mode when ANTHROPIC_AUTH_TOKEN is set
+python -m radar playbook     # induce playbooks from the agent's per-brief plays -> data/playbook.json
 python -m radar build        # docs/v3/
 python -m radar all          # everything
 ```
@@ -41,7 +42,14 @@ python -m radar all          # everything
 - **Briefs** (`radar/investigate.py`): one JSON per pick. Data-only mode computes every field from
   collected data; agent mode (LLM + TinyFish) writes the editorial fields from the gathered evidence and a
   verify step downgrades unlinked "facts" to "inferred". Grades S–E are always computed by code.
-- **Synthesis** (`radar/synth.py`): directions, playbook mechanisms, D+7/14/30 track record.
+- **Synthesis** (`radar/synth.py`): directions, the product DB (one page per product with its daily
+  history), D+7/14/30 track record.
+- **Playbooks** (`radar/playbook.py`, modelled on `research/stringers-plays-analysis.md`): the agent reads each
+  product through three lenses (direction, growth, monetization) and records the move it used, with causality
+  hard / medium / weak. A daily *draft* pass groups moves shared by 2+ products into plays (recipe, mechanism, five
+  steps with evidence, cases, tried-it-didn't-work, who it suits / risks, notes); a *verify* pass re-reads each
+  play against its cases' full briefs, regrades causality and drops what doesn't hold. Ids are kept in
+  `data/playbook.json` (committed). Breakouts that faded by D+7 are added as counter-examples automatically.
 - **CI**: `.github/workflows/radar-daily.yml`, 06:30 UTC. Appark only gives guests today's charts —
   every missed day is lost history.
 - Xiaohongshu: the manual CSV import (`data/xhs_tools/`) was removed in v3; only TinyFish search remains.
@@ -131,11 +139,20 @@ gh repo create opportunity-loop --public --source=. --remote=origin --push
 # (or manually: create empty repo on GitHub, then `git remote add origin git@github.com:<user>/opportunity-loop.git && git push -u origin main`)
 ```
 
-### 2. Enable GitHub Pages
+### 2. Publish on Cloudflare Pages
 
-Settings → Pages → Build from branch → Branch: `main` · Folder: `/docs` → Save.
+`.github/workflows/deploy-cloudflare.yml` builds `docs/` with Jekyll and uploads it to Cloudflare Pages after every
+daily/weekly run and every push that touches `docs/`.
 
-The site will be live at `https://<user>.github.io/opportunity-loop/` within ~30 seconds of the first push.
+1. Cloudflare dashboard → Workers & Pages → Create → Pages → **Upload assets** (direct upload, not "Connect to Git")
+   → project name `opportunity-loop` → upload any small file once to create it. (Or run
+   `npx wrangler pages project create opportunity-loop --production-branch main`.)
+2. Create an API token: My Profile → API Tokens → Create token → Custom → permission
+   *Account · Cloudflare Pages · Edit*. Copy your Account ID from the Workers & Pages overview.
+3. Repo → Settings → Secrets and variables → Actions: add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
+   (and a variable `CF_PAGES_PROJECT` if you named the project differently).
+4. Actions → "deploy to Cloudflare Pages" → Run workflow. The site is at `https://opportunity-loop.pages.dev/`.
+5. Optional: Pages project → Custom domains. Once Cloudflare works, turn off GitHub Pages (Settings → Pages → None).
 
 ### 3. Add repo secrets
 

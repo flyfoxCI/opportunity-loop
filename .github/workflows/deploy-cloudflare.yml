@@ -1,0 +1,55 @@
+name: deploy to Cloudflare Pages
+
+# Builds docs/ with Jekyll (the v3 site is static HTML; the archive pages and the `/` redirect need Liquid) and
+# uploads _site to Cloudflare Pages.
+# Triggers: a push to main that touches docs/, and the end of the daily/weekly workflows. Their commits are pushed
+# with GITHUB_TOKEN, which never starts other workflows, so `push` alone would miss every daily update.
+# Needs repo secrets CLOUDFLARE_API_TOKEN (permission: Account · Cloudflare Pages · Edit) and CLOUDFLARE_ACCOUNT_ID.
+# Optional repo variable CF_PAGES_PROJECT (default: opportunity-loop).
+on:
+  push:
+    branches: [main]
+    paths: ['docs/**', '.github/workflows/deploy-cloudflare.yml']
+  workflow_run:
+    workflows: ['radar daily (v3 briefing)', 'opportunity loop (every 3 days)']
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: true   # only the newest commit matters
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    # after a data workflow, deploy only if it succeeded (a failed run committed nothing new)
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PROJECT: ${{ vars.CF_PAGES_PROJECT || 'opportunity-loop' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main          # workflow_run would otherwise check out the commit *before* the data push
+          fetch-depth: 1
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Build site with Jekyll
+        run: |
+          gem install --no-document 'jekyll:~> 4.3' kramdown-parser-gfm
+          # baseurl is empty: Cloudflare serves the site at the domain root, not under /opportunity-loop/
+          jekyll build --source docs --destination _site --baseurl ''
+          test -f _site/index.html && test -f _site/v3/index.html
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name=${{ env.PROJECT }} --branch=main --commit-dirty=true

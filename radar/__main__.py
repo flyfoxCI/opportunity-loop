@@ -3,6 +3,7 @@
   python -m radar collect [--backfill] [--only appark,drama,gravity,itunes,gplay,trustmrr,tranco,github,reddit,xhs_web]
   python -m radar detect            # today's candidates + picks (the line each product crossed)
   python -m radar investigate       # briefs for today's picks (agent mode when LLM keys are set)
+  python -m radar playbook          # induce playbooks from the agent's per-brief plays (needs LLM keys)
   python -m radar build             # write the v3 site to docs/v3/
   python -m radar all               # collect, detect, investigate, build
 
@@ -94,6 +95,18 @@ def investigate() -> None:
     con.close()
 
 
+def playbook() -> None:
+    from . import playbook as pb
+    con = connect_cached()
+    day = _today()
+    try:
+        n = pb.induce(con, day)
+        print(f"[radar] playbook {day}: {n} plays", flush=True)
+    except Exception as e:  # noqa: BLE001  a failed induction keeps yesterday's playbook
+        print(f"[radar] playbook skipped: {e}", flush=True)
+    con.close()
+
+
 def build() -> None:
     from .web import build as web_build
     con = connect_cached()
@@ -103,7 +116,7 @@ def build() -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(prog="radar")
-    ap.add_argument("cmd", choices=["collect", "detect", "investigate", "build", "all"])
+    ap.add_argument("cmd", choices=["collect", "detect", "investigate", "playbook", "build", "all"])
     ap.add_argument("--backfill", action="store_true", help="load historical TrustMRR snapshots from run folders")
     ap.add_argument("--only", default="", help="comma list of sources to collect")
     a = ap.parse_args()
@@ -114,6 +127,8 @@ def main() -> None:
         detect()
     if a.cmd in ("investigate", "all"):
         investigate()
+    if a.cmd in ("playbook", "all"):
+        playbook()
     if a.cmd in ("build", "all"):
         build()
 

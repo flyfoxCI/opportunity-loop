@@ -1,7 +1,7 @@
 """Write the v3 site to docs/v3/.
 
-Pages: Today (index), item reports (i/), directions (d/), charts, playbooks, track record, method,
-archive (day/). Machine twins: *.md, llms.txt, api/*.json, feed.xml. No JS framework; one CSS file,
+Pages: Today (index), item reports (i/), product database (db/), playbooks (plays/), directions (d/), charts,
+track record, archive (day/). Machine twins: *.md, llms.txt, api/*.json, feed.xml. No JS framework; one CSS file,
 one small JS file for tabs and search. Everything renders without JS.
 """
 
@@ -14,9 +14,10 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .. import synth
-from ..detect import CFG, SURFACE_NAME, chart_name
-from ..feeds import appark, gravity, stores
+from .. import playbook, synth
+from ..detect import SURFACE_NAME, chart_name
+from ..feeds import gravity
+from ..investigate import CAUSALITY, CAUSES, PLAY_CATEGORIES, VISIBILITY
 from ..taxonomy import BY_SLUG
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -81,9 +82,8 @@ def fdate(d: str) -> str:
 # ---------------------------------------------------------------- components
 
 def page(title: str, body: str, *, base: str = "", active: str = "", desc: str = "", day: str = "") -> str:
-    nav = [("index.html", "Today", "today"), ("d/index.html", "Directions", "dirs"), ("plays.html", "Playbooks", "plays"),
-           ("charts.html", "Charts", "charts"), ("record.html", "Track record", "record"),
-           ("method.html", "Method", "method")]
+    nav = [("index.html", "Today", "today"), ("db/index.html", "Product DB", "db"), ("plays/index.html", "Playbooks", "plays"),
+           ("d/index.html", "Directions", "dirs"), ("charts.html", "Charts", "charts"), ("record.html", "Track record", "record")]
     links = "".join(f'<a href="{base}{h}" class="{"on" if k == active else ""}">{t}</a>' for h, t, k in nav)
     return f"""<!doctype html>
 <html lang="en">
@@ -106,7 +106,7 @@ def page(title: str, body: str, *, base: str = "", active: str = "", desc: str =
 </div></header>
 <main class="wrap">{body}</main>
 <footer class="foot wrap">
-  <div>{SITE} · daily breakout intelligence · data {e(day)} · <a href="{base}method.html">how this is made</a> ·
+  <div>{SITE} · daily breakout intelligence · data {e(day)} ·
   <a href="{base}llms.txt">llms.txt</a> · <a href="{base}api/today.json">JSON</a> · <a href="{base}feed.xml">RSS</a></div>
   <div class="muted">Every number links to its source and carries a label: verified, estimated, inferred or not found.
   Charts are never padded. Not investment advice.</div>
@@ -255,8 +255,7 @@ def today_page(day: str, reps: list, cands: list, all_days: list) -> str:
     rows = "".join(cand_row(c, "", inv_ids) for c in rest[:400])
     agent_n = sum(1 for r in reps if r["mode"] == "agent")
     mode_note = ("" if agent_n else '<div class="note">These briefs are <b>data-only</b>: every number is measured, '
-                 'the trigger says "not checked" until the agent investigation (LLM + TinyFish) runs in CI. '
-                 '<a href="method.html#modes">What changes in agent mode</a></div>')
+                 'the trigger says "not checked" until the agent investigation (LLM + TinyFish) runs in CI.</div>')
     prev = [d for d in all_days if d < day][:6]
     return f"""
 <section class="hero">
@@ -503,7 +502,7 @@ def charts_page(con, day: str) -> str:
                 boards += (f'<div class="panel"><h3>{gravity.PLATFORM_NAME[plat]} · {bname}</h3><table class="tbl">'
                            f'<tbody>{rows}</tbody></table></div>')
     return f"""<section class="hero slim"><h1>Charts today</h1><p class="sub">The raw movement behind the briefs: biggest rank jumps,
-mini-game boards, drama charts and trending repos for {fdate(day)}. Derived from the sources on the <a href="method.html">Method</a> page.</p></section>
+mini-game boards, drama charts and trending repos for {fdate(day)}.</p></section>
 <div class="tabs static"><a href="#apps">App Store</a><a href="#play">Google Play</a><a href="#mini">Mini-games</a><a href="#drama">Drama</a><a href="#gh">GitHub</a></div>
 <div class="grid2">
 <div class="panel" id="apps"><h3>App Store · biggest jumps into a top 100</h3><table class="tbl"><tbody>{movers('ios') or '<tr><td class=muted>No data today.</td></tr>'}</tbody></table></div>
@@ -517,18 +516,294 @@ mini-game boards, drama charts and trending repos for {fdate(day)}. Derived from
 <div class="panel" id="gh"><h3>GitHub · most stars today</h3><table class="tbl"><tbody>{gh_html or '<tr><td class=muted>No data today.</td></tr>'}</tbody></table></div>"""
 
 
-def plays_page(plays: list) -> str:
-    cards = ""
-    for pl in plays:
-        cases = "".join(f'<li>{grade_badge(r["grade"])} <a href="i/{slug(r["id"])}.html">{e(r["product"]["name"])}</a> '
-                        f'<span class="muted small">{fdate(r["day"])} · {e(r["badge"].get("metric"))}</span></li>' for r in pl["cases"])
-        cards += (f'<article class="play"><div class="pst {"ok" if pl["status"] == "verified play" else ""}">{e(pl["status"])}</div>'
-                  f'<h3>{e(pl["mechanism"].capitalize())}</h3><p class="muted">{pl["n"]} products · {pl["agent"]} agent-checked · '
-                  f'last seen {fdate(pl["last"])}</p><ul class="plain">{cases}</ul></article>')
-    return f"""<section class="hero slim"><h1>Playbooks</h1><p class="sub">Growth moves that more than one product has used.
-Every investigation is tagged with its mechanism; a mechanism becomes a <b>verified play</b> once three products share it and
-the agent has checked at least one. Counter-examples (same move, no lift) are added as the follow-up audit runs.</p></section>
-<div class="plays">{cards or '<p class="muted">Playbooks form as investigations accumulate.</p>'}</div>"""
+PLATFORM = {"ios": "iOS", "play": "Android", "github": "GitHub", "trustmrr": "Web", "tranco": "Web",
+            "minigame": "Mini-game", "drama": "TikTok", "drama_ad": "Drama ads"}
+DB_TABS = [("apps", "index.html"), ("saas", "saas.html"), ("opensource", "opensource.html"),
+           ("minigames", "minigames.html"), ("drama", "drama.html")]
+
+
+def linechart(ch: dict) -> str:
+    """Multi-series line chart with axes, inline SVG. Rank charts are inverted (#1 on top); lines break at gaps."""
+    W, H, L, R, T, B = 640, 190, 46, 64, 12, 24
+    series = ch["series"]
+    days = sorted({d for _, pts in series for d, _ in pts})
+    vals = [v for _, pts in series for _, v in pts]
+    d0 = datetime.strptime(days[0], "%Y-%m-%d")
+    span = max(1, (datetime.strptime(days[-1], "%Y-%m-%d") - d0).days)
+    lo, hi = min(vals), max(vals)
+    if hi == lo:
+        lo, hi = (lo - 1, hi + 1) if ch["rank"] or abs(lo) < 20 else (lo * 0.9, hi * 1.1)
+
+    def x(d):
+        return L + (datetime.strptime(d, "%Y-%m-%d") - d0).days / span * (W - L - R) if len(days) > 1 else (W - R + L) / 2
+
+    def y(v):
+        f = (v - lo) / (hi - lo)
+        return T + (f if ch["rank"] else 1 - f) * (H - T - B)
+
+    whole = ch["rank"] or (hi - lo) >= 10 or all(float(v).is_integer() for v in vals)
+    fmt = (lambda v: "#" + fnum(round(v))) if ch["rank"] else (lambda v: fnum(round(v) if whole else v, ch.get("money")))
+    grid = ""
+    for v in (lo, (lo + hi) / 2, hi):
+        grid += (f'<line x1="{L}" x2="{W - R}" y1="{y(v):.1f}" y2="{y(v):.1f}" class="gl"/>'
+                 f'<text x="{L - 6}" y="{y(v) + 4:.1f}" text-anchor="end" class="ax">{fmt(v)}</text>')
+    n_ticks = min(5, len(days))
+    for i in range(n_ticks):
+        d = days[round(i * (len(days) - 1) / max(1, n_ticks - 1))]
+        grid += f'<text x="{x(d):.1f}" y="{H - 6}" text-anchor="middle" class="ax">{fdate(d)}</text>'
+    lines = ""
+    for k, (lbl, pts) in enumerate(series):
+        segs, cur = [], []
+        for d, v in pts:
+            if cur and (datetime.strptime(d, "%Y-%m-%d") - datetime.strptime(cur[-1][0], "%Y-%m-%d")).days > 2:
+                segs.append(cur)
+                cur = []
+            cur.append((d, v))
+        segs.append(cur)
+        for sg in segs:
+            if len(sg) == 1:
+                lines += f'<circle cx="{x(sg[0][0]):.1f}" cy="{y(sg[0][1]):.1f}" r="3" class="s{k}"/>'
+            else:
+                lines += (f'<polyline class="s{k}" fill="none" points="'
+                          + " ".join(f"{x(d):.1f},{y(v):.1f}" for d, v in sg) + '"/>')
+        ld, lv = pts[-1]
+        lines += f'<circle cx="{x(ld):.1f}" cy="{y(lv):.1f}" r="3" class="s{k}"/>'
+        if len(series) == 1:  # several series: latest values go in the legend so labels don't collide
+            lines += f'<text x="{x(ld) + 6:.1f}" y="{y(lv) + 4:.1f}" class="lb s{k}">{e(fmt(lv))}</text>'
+    legend = ("" if len(series) == 1 else '<div class="lg">' + "".join(
+        f'<span><i class="s{k}"></i>{e(lbl)} <b>{e(fmt(pts[-1][1]))}</b></span>' for k, (lbl, pts) in enumerate(series)) + "</div>")
+    obs = len({d for _, pts in series for d, _ in pts})
+    cap = (f"Data {days[0]} → {days[-1]} ({span + 1} days, {obs} observations)" if len(days) > 1
+           else f"Data {days[0]}: first observation, the line grows daily")
+    return (f'<figure class="lc"><figcaption>{e(ch["title"])}</figcaption>{legend}'
+            f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="{e(ch["title"])}">{grid}{lines}</svg>'
+            f'<div class="muted small">{cap}.{(" " + e(ch["note"])) if ch.get("note") else ""}</div></figure>')
+
+
+def move_text(b: dict) -> str:
+    rank = b.get("rule") in synth.RANK_RULES
+    money = b.get("rule") == "revenue"
+    f = (lambda v: "#" + fnum(v)) if rank else (lambda v: fnum(v, money))
+    return (f"{f(b['before'])} → {f(b['after'])}" if b.get("before") else f(b.get("after"))) if b.get("after") is not None else ""
+
+
+def vis_pill(v: str) -> str:
+    if not v:
+        return '<span class="vis vx" title="The agent hasn’t looked yet">visibility not checked</span>'
+    return f'<span class="vis v-{e(v)}">{e(VISIBILITY.get(v, v))}</span>'
+
+
+def cause_tags(rep: dict) -> str:
+    return "".join(f'<span class="tg">{e(CAUSES.get(c, c))}</span>' for c in rep.get("causes") or [])
+
+
+def platforms(rep: dict) -> list:
+    out = [rep["source"]] + [s["source"] for s in rep.get("siblings") or []]
+    return sorted(set(out), key=lambda s: ("play", "ios").index(s) if s in ("play", "ios") else 9)
+
+
+def db_item(row: dict, base: str) -> str:
+    rep = row["rep"]
+    p, g = rep["product"], rep["grade"]
+    plats = platforms(rep)
+    verdict = rep.get("verdict") or rep.get("what") or (p.get("description") or "").strip().split("\n")[0][:200]
+    follow = rep.get("how_to_follow") or (rep.get("follow") or {}).get("wedge") or ""
+    text = " ".join([p.get("name") or "", rep["direction_name"], verdict, follow, p.get("developer") or "",
+                     " ".join(CAUSES.get(c, c) for c in rep.get("causes") or [])]).lower()
+    return f"""<li data-p="{' '.join(plats)}" data-v="{e(rep.get('visibility') or 'x')}" data-g="{g['grade']}" data-text="{e(text)}">
+  <span class="lg">{icon(p, 48)}</span>
+  <div class="bd">
+    <div class="hd">{grade_badge(g)}<a class="nm" href="{base}db/p/{slug(row['entity'])}.html">{e(short(p.get('name'), 60))}</a>{''.join(f'<i class="st">{PLATFORM.get(x, x)}</i>' for x in plats)}</div>
+    {f'<div class="vd">{e(verdict)}</div>' if verdict else ''}
+    {f'<div class="how"><b>How to follow</b> {e(follow)}</div>' if follow else ''}
+    <div class="mt">{vis_pill(rep.get('visibility'))}{cause_tags(rep)}<a class="tg ghost" href="{base}d/{e(rep['direction'])}.html">{e(rep['direction_name'])}</a>
+      <span class="muted">{e(p.get('developer') or '')}{' · ' if p.get('developer') else ''}{len(row['breakouts'])} breakout{'s' if len(row['breakouts']) > 1 else ''} · last {fdate(rep['day'])}</span></div>
+  </div>
+</li>"""
+
+
+def db_page(surface: str, rows: list, counts: dict) -> str:
+    base = "../"
+    tabs = "".join(f'<a class="tab{" on" if s == surface else ""}" href="{f}">{SURFACE_NAME[s]} <span>{counts.get(s, 0)}</span></a>'
+                   for s, f in DB_TABS)
+    plats = sorted({x for r in rows for x in platforms(r["rep"])})
+    pf = ("" if len(plats) < 2 else '<span class="grp">' + '<button data-g="p" data-x="" class="on">All</button>' + "".join(
+        f'<button data-g="p" data-x="{x}">{PLATFORM.get(x, x)}</button>' for x in plats) + "</span>")
+    vf = ('<span class="grp"><button data-g="v" data-x="" class="on">Any visibility</button>' + "".join(
+        f'<button data-g="v" data-x="{k}">{e(v)}</button>' for k, v in VISIBILITY.items()) + "</span>")
+    gf = ('<span class="grp"><button data-g="g" data-x="" class="on">All grades</button>' + "".join(
+        f'<button data-g="g" data-x="{x}">{x}</button>' for x in "SABCDE" if any(r["rep"]["grade"]["grade"] == x for r in rows))
+        + "</span>")
+    items = "".join(db_item(r, base) for r in rows)
+    return f"""<section class="hero slim"><h1>Product DB · {SURFACE_NAME[surface]}</h1>
+<p class="sub">Every product that crossed a line and got a brief, kept and re-measured daily. For each one: why it took off, how you
+could follow without cloning it, and a grade for the odds that one or two people make money from it within months:
+<b>S</b> act now · <b>A</b> worth following, one or two bets · <b>B</b> can try, clear weak spots · <b>C</b> learn from it ·
+<b>D</b> just be aware · <b>E</b> don't touch. The coloured label says how many people already know it: the fewer, the better
+the opening. Sorted by grade.</p></section>
+<div class="tabs dbtabs">{tabs}</div>
+<div class="dbf">{pf}{vf}{gf}<input class="dbq" type="search" placeholder="Search name, move, market…" aria-label="Search"><span class="muted small">showing <b class="dbn">{len(rows)}</b></span></div>
+<ol class="dbl">{items or '<li class="muted">Nothing here yet: products appear once they get a brief.</li>'}</ol>"""
+
+
+def product_page(row: dict, charts: list, in_plays: dict | None = None) -> str:
+    rep = row["rep"]
+    p, g = rep["product"], rep["grade"]
+    base = "../../"
+    plats = platforms(rep)
+    verdict = rep.get("verdict") or ""
+    follow = rep.get("how_to_follow") or (rep.get("follow") or {}).get("wedge") or ""
+    what = rep.get("what") or (p.get("description") or "").strip().split("\n")[0][:240]
+    m, sm = rep.get("measure") or {}, rep.get("sibling_measure") or {}
+    facts = []
+    if p.get("released"):
+        facts.append(f"launched {p['released']}" + (f" ({p['age_days']} days ago)" if p.get("age_days") is not None else ""))
+    inst = m.get("installs") if rep["source"] == "play" else sm.get("installs")
+    if inst:
+        facts.append(f"Android installs {fnum(inst)}")
+    if m.get("ratings"):
+        facts.append(f"{PLATFORM.get(rep['source'])} ratings {fnum(m['ratings'])}")
+    if m.get("stars"):
+        facts.append(f"{fnum(m['stars'])} stars")
+    charts_on = rep.get("charts") or []
+    if charts_on:
+        best = min(charts_on, key=lambda c: c["rank"])
+        facts.append(f"best rank today #{best['rank']} on {e(best['chart'])}")
+    summ = [("What it is", e(what)), ("Why it took off", e(verdict) or '<span class="muted">Not checked yet: the agent '
+                                                                         'investigation fills this in.</span>'),
+            (grade_badge(g) + " How you could follow", e(follow) or '<span class="muted">No wedge found in the data.</span>'),
+            ("Grade", f"<b>{g['grade']}: {e(g['text'])}</b> <span class='muted'>score {g['score']}/100</span> "
+                      f"{vis_pill(rep.get('visibility'))} {cause_tags(rep)}")]
+    summ_html = "".join(f'<div class="kv"><span class="k">{k}</span><div>{v}</div></div>' for k, v in summ)
+    lens = ""
+    for m in sorted(rep.get("plays") or [], key=lambda m: list(PLAY_CATEGORIES).index(m["category"])):
+        pls = (in_plays or {}).get((rep["id"], m["category"]), [])
+        lens += (f'<div class="lens"><span class="k">{e(PLAY_CATEGORIES[m["category"]])}</span><div><b>{e(m.get("move"))}</b>'
+                 + (f'<p class="muted">{e(m["why"])}</p>' if m.get("why") else "")
+                 + (f'<p>{e(m["did"])}</p>' if m.get("did") else "")
+                 + (f'<p><span class="k2">Result</span> {e(m.get("result"))} {causality_tag(m.get("causality"))}</p>' if m.get("result") else "")
+                 + "".join(f'<p><a href="{base}plays/{pid}.html">In the playbook: {e(rc)} →</a></p>' for pid, rc in pls)
+                 + "</div></div>")
+    lens_html = (f'<section class="blk"><h2>Direction · growth · monetization <span class="muted">the moves it used</span></h2>{lens}</section>'
+                 if lens else "")
+    story = "".join(f'<h3>{e(s["heading"])}</h3>' + "".join(f"<p>{e(par)}</p>" for par in str(s["body"]).split("\n") if par.strip())
+                    for s in rep.get("story") or [])
+    if not story:
+        why = "".join(f'<li>{chip(c.get("label", "inferred"))} {e(c.get("text"))}'
+                      + (f' <a href="{e(c["url"])}" target="_blank" rel="noopener">↗</a>' if c.get("url") else "") + "</li>"
+                      for c in rep.get("why_grew", []))
+        disc = "".join(f"<li>{e(x)}</li>" for x in rep.get("discounts", []))
+        story = (f'<p class="muted">The long-form write-up (where users come from, how it makes money, who built it, what it '
+                 f'does badly, what you could do) is written by the agent investigation. Until then, what the data says:</p>'
+                 f'<h3>Why it moved</h3><ul class="claims">{why}</ul>'
+                 + (f'<h3>Discount the numbers</h3><ul>{disc}</ul>' if disc else ""))
+    brk = "".join(f'<tr><td>{fdate(r["day"])}</td><td>{e(RULE_TEXT.get(r["badge"].get("rule"), r["badge"].get("rule")))}</td>'
+                  f'<td>{e(r["badge"].get("metric"))} <b class="num">{move_text(r["badge"])}</b></td><td>{grade_badge(r["grade"])}</td>'
+                  f'<td><a href="{base}i/{slug(r["id"])}.html">{e(r["lesson_title"])} →</a></td></tr>' for r in row["breakouts"])
+    comps = "".join(f'<tr><td>{("<a href=" + chr(34) + e(c["url"]) + chr(34) + " target=_blank rel=noopener>" + e(c["name"]) + "</a>") if c.get("url") else e(c["name"])}</td>'
+                    f'<td class="muted">{e(c.get("note") or c.get("how_it_differs"))}</td></tr>' for c in rep.get("competitors", []))
+    links = [f'<a href="{e(p.get("url"))}" target="_blank" rel="noopener">{PLATFORM.get(rep["source"], "Source")} page ↗</a>']
+    links += [f'<a href="{e(s["url"])}" target="_blank" rel="noopener">{PLATFORM.get(s["source"])} page ↗</a>'
+              for s in rep.get("siblings") or []]
+    if p.get("site"):
+        links.append(f'<a href="{e(p["site"])}" target="_blank" rel="noopener">Website ↗</a>')
+    chart_html = "".join(linechart(c) for c in charts)
+    body = f"""<a class="back" href="{base}db/{dict(DB_TABS).get(rep['surface'], 'index.html')}">← Product DB · {e(SURFACE_NAME.get(rep['surface'], ''))}</a>
+<div class="crumb">{e(SURFACE_NAME.get(rep['surface'], ''))} · {' + '.join(PLATFORM.get(x, x) for x in plats)} · written {fdate(rep['day'])}</div>
+<div class="who big">{icon(p, 44)}<span><b>{e(p.get('name'))}</b>{(' · ' + e(p['developer'])) if p.get('developer') else ''}</span></div>
+<h1 class="ph1">{e(rep['lesson_title'])}</h1>
+<section class="kvs">{summ_html}</section>
+<section class="blk"><h2>Data <span class="muted">updated daily</span></h2>
+  <p class="facts">{' · '.join(facts) or '<span class="muted">No store measurements for this surface.</span>'}</p>
+  <div class="lcs">{chart_html or '<p class="muted">No time series for this product yet.</p>'}</div></section>
+{lens_html}
+<section class="blk story">{story}</section>
+<section class="blk"><h2>Breakouts we recorded</h2><div class="tblwrap"><table class="tbl prodbrk"><tbody>{brk}</tbody></table></div></section>
+{f'<section class="blk"><h2>Peers</h2><table class="tbl"><tbody>{comps}</tbody></table></section>' if comps else ''}
+<p class="links">{' · '.join(links)}</p>"""
+    return page(f"{p.get('name')} · Product DB · {SITE}", body, base=base, active="db",
+                desc=f"{p.get('name')}: {verdict or rep['lesson_title']}", day=rep["day"])
+
+
+def plays_index(plays: list) -> str:
+    base = "../"
+    cats = {k: sum(1 for p in plays if p["category"] == k) for k in PLAY_CATEGORIES}
+    induced = any(p["induced"] for p in plays)
+    tabs = (f'<button class="tab on" data-f="all">All <span>{len(plays)}</span></button>' + "".join(
+        f'<button class="tab" data-f="{k}">{e(v)} <span>{cats[k]}</span></button>' for k, v in PLAY_CATEGORIES.items() if cats[k]))
+    rows = ""
+    for i, pl in enumerate(plays, 1):
+        icons = "".join(icon(c["rep"]["product"], 22) for c in pl["cases"][:6])
+        head = (f'<a class="rc" href="{pl["id"]}.html">{e(pl["recipe"])}</a>' if pl["induced"] else f'<b class="rc">{e(pl["recipe"])}</b>')
+        cases = "" if pl["induced"] else '<ul class="plain small">' + "".join(
+            f'<li>{grade_badge(c["rep"]["grade"])} <a href="{base}i/{slug(c["rid"])}.html">{e(short(c["rep"]["product"]["name"]))}</a> '
+            f'<span class="muted">{fdate(c["rep"]["day"])} · {e(c["rep"]["badge"].get("metric"))}</span></li>' for c in pl["cases"][:5]) + "</ul>"
+        why = f'<div class="why">{e(pl["why"])}</div>' if pl.get("why") else ""
+        rows += (f'<li data-surface="{e(pl["category"])}" data-text="{e((pl["recipe"] + " " + pl.get("why", "")).lower())}">'
+                 f'<span class="no">{i}</span><div>{head}{why}'
+                 f'<div class="mt"><span>{pl["n"]} products{(" · " + str(pl["n_verified"]) + " with a clear cause") if pl["induced"] else (" · " + e(pl.get("status", "")))}'
+                 f' · last seen {fdate(pl["last"])}</span><span class="tg">{e(PLAY_CATEGORIES.get(pl["category"], ""))}</span>'
+                 f'<span class="ics">{icons}</span></div>{cases}</div></li>')
+    note = ("" if induced else '<div class="note">The playbook is induced by the agent from the growth move found in each '
+            'investigation, and a move becomes a play once two or more products used it. No agent run has produced one yet, '
+            'so below are the growth mechanisms tagged on each brief.</div>')
+    return f"""<section class="hero slim"><h1>Playbooks</h1><p class="sub">Concrete moves that more than one product used recently and
+that you can copy. Induced from the products we investigated, then checked case by case: what each one did, what happened, how sure we
+are it caused the lift, and who tried the same move without a lift. Follow the play, not the category.</p></section>
+{note}<div class="bar"><div class="tabs">{tabs}</div><input class="search" type="search" placeholder="Filter plays" aria-label="Filter"></div>
+<ol class="playl">{rows or '<li class="muted">Playbooks form as investigations accumulate.</li>'}</ol>"""
+
+
+def causality_tag(c: str) -> str:
+    return f'<span class="cz cz-{e(c)}">{e(CAUSALITY.get(c, c))}</span>' if c in CAUSALITY else ""
+
+
+def play_page(pl: dict, num: int, day: str) -> str:
+    base = "../"
+    steps = "".join(f'<li><p class="do">{e(s["do"])}{" <span class=inf>inferred step: no case shows it directly</span>" if s.get("inferred") else ""}</p>'
+                    + (f'<blockquote>{e(s["evidence"])}</blockquote>' if s.get("evidence") else "") + "</li>"
+                    for s in pl.get("steps") or [])
+
+    def case(c):
+        r = c["rep"]
+        p = r["product"]
+        return (f'<article class="case"><div class="ch">{icon(p, 36)}<div><b>{e(short(p.get("name"), 50))}</b>'
+                f'<i>{e(r.get("what") or r["direction_name"])}</i></div><span class="fg">{e(r["badge"].get("metric"))} {move_text(r["badge"])}</span></div>'
+                + (f'<p>{e(c.get("did"))}</p>' if c.get("did") else "")
+                + (f'<p class="rs"><span class="k">Result</span> {e(c.get("result"))} {causality_tag(c.get("causality"))}</p>'
+                   if c.get("result") else "")
+                + f'<a href="{base}db/p/{slug(r["entity"])}.html">product page</a> · <a href="{base}i/{slug(r["id"])}.html">full investigation →</a></article>')
+
+    def counter(c):
+        r = c.get("rep")
+        name = e(short(r["product"].get("name"), 50)) if r else e(c.get("name"))
+        link = f' <a href="{base}i/{slug(r["id"])}.html">investigation →</a>' if r else ' <span class="muted small">(not investigated by us)</span>'
+        return f'<li><b>{name}</b> {e(c.get("what"))}{link}</li>'
+    cases = "".join(case(c) for c in pl["cases"])
+    counters = "".join(counter(c) for c in pl["counter"])
+    risks = "".join(f"<li>{e(x)}</li>" for x in pl.get("risks") or [])
+    suits = ""
+    if pl.get("suits") or pl.get("prerequisites") or risks:
+        suits = ('<section class="blk"><h2>Who it suits, and when it doesn’t work</h2>'
+                 + (f'<p>{e(pl["suits"])}</p>' if pl.get("suits") else "")
+                 + (f'<h3>Prerequisites</h3><p>{e(pl["prerequisites"])}</p>' if pl.get("prerequisites") else "")
+                 + (f'<h3>Risks</h3><ol>{risks}</ol>' if risks else "") + "</section>")
+    notes = "".join(f"<p>{e(x)}</p>" for x in pl.get("notes") or [])
+    if pl.get("changed"):
+        notes += f'<p class="muted"><b>What checking changed:</b> {e(pl["changed"])}</p>'
+    icons = "".join(icon(c["rep"]["product"], 26) for c in pl["cases"][:8])
+    body = f"""<a class="back" href="index.html">← Playbooks</a>
+<div class="crumb">#{num} · {e(PLAY_CATEGORIES.get(pl['category'], ''))}</div>
+<h1 class="ph1">{e(pl['recipe'])}</h1>
+{f'<p class="lede">{e(pl["why"])}</p>' if pl.get('why') else ''}
+<p class="proof"><span class="ics">{icons}</span>{pl['n']} products used it · {pl['n_verified']} with a clear cause · last verified {fdate(pl['last'])}</p>
+{f'<h2 class="sec">How to do it</h2><ol class="steps">{steps}</ol>' if steps else ''}
+<h2 class="sec">Who did it</h2><div class="cases">{cases}</div>
+{f'<h2 class="sec">Tried it, didn’t work</h2><section class="blk"><ul class="plain cnt">{counters}</ul></section>' if counters else ''}
+{suits}
+{f'<section class="blk story"><h2>Worth saying more</h2>{notes}</section>' if notes else ''}"""
+    return page(f"{pl['recipe'][:70]} · Playbooks · {SITE}", body, base=base, active="plays", desc=pl.get("why") or pl["recipe"],
+                day=day)
 
 
 def record_page(fu: dict) -> str:
@@ -553,73 +828,6 @@ def record_page(fu: dict) -> str:
 Off the chart or back to baseline = <b>faded</b>.</p></section>{pending}
 <div class="tblwrap"><table class="tbl"><thead><tr><th>Grade</th>{head}</tr></thead><tbody>{body_rows}</tbody></table></div>
 <h2 class="sec">Every brief</h2><div class="tblwrap"><table class="tbl"><thead><tr><th>Product</th><th>Published</th>{head}</tr></thead><tbody>{recent}</tbody></table></div>"""
-
-
-def method_page(con, day: str) -> str:
-    specs = [appark.SPEC, stores.GP_SPEC, stores.IT_SPEC, gravity.SPEC, appark.DRAMA_SPEC,
-             {"name": "TrustMRR", "surface": "saas", "label": "verified", "endpoint": "trustmrr.com/api/ai",
-              "history": "API + our snapshots", "role": "measurement: payment-verified revenue"},
-             {"name": "GitHub Trending", "surface": "opensource", "label": "verified", "endpoint": "github.com/trending",
-              "history": "our daily snapshots", "role": "discovery: stars today, 8 languages"},
-             {"name": "Tranco", "surface": "saas", "label": "verified", "endpoint": "tranco-list.eu",
-              "history": "daily lists by date", "role": "measurement: web traffic rank"},
-             {"name": "Reddit (Arctic Shift)", "surface": "demand", "label": "verified counts",
-              "endpoint": "arctic-shift.photon-reddit.com", "history": "API", "role": "Demand Echo: buyer-intent threads"},
-             {"name": "Xiaohongshu via TinyFish", "surface": "demand", "label": "inferred", "endpoint": "TinyFish search",
-              "history": "CI only, when TinyFish is configured", "role": "Demand Echo (CN): public 小工具 posts"}]
-    key = {"Appark charts": "appark", "Google Play detail": "gplay", "iTunes Lookup": "itunes",
-           "Gravity Engine mini-games": "gravity", "Appark drama": "drama", "TrustMRR": "trustmrr",
-           "GitHub Trending": "github", "Tranco": "tranco", "Reddit (Arctic Shift)": "reddit",
-           "Xiaohongshu via TinyFish": "xhs_web"}
-    rows = ""
-    for s in specs:
-        k = key[s["name"]]
-        last = con.execute("SELECT day, ok, rows, note FROM source_runs WHERE source=? ORDER BY day DESC LIMIT 1", (k,)).fetchone()
-        first = con.execute("SELECT MIN(day) FROM source_runs WHERE source=?", (k,)).fetchone()[0]
-        status = ("<span class='ok'>●</span> " + fdate(last["day"]) + f" · {last['rows']:,} rows") if last and last["ok"] else (
-            ("<span class='bad'>●</span> " + fdate(last["day"]) + " failed") if last else "<span class='muted'>○ not run here</span>")
-        rows += (f'<tr><td><b>{e(s["name"])}</b><div class="muted small">{e(s["endpoint"])}</div></td><td>{e(s["role"])}</td>'
-                 f'<td>{chip("verified" if s["label"].startswith("verified") else ("inferred" if s["label"] == "inferred" else "estimated"))} '
-                 f'<span class="muted small">{e(s["label"])}</span></td><td class="small">{e(s["history"])}'
-                 f'{("<br><span class=muted>since " + fdate(first) + "</span>") if first else ""}</td><td class="small">{status}</td></tr>')
-    R = CFG["rules"]
-    rules = "".join(f'<tr><td><b>{e(RULE_TEXT.get(k, k))}</b></td><td class="small">{e(v.get("label"))}</td><td class="small">{e(_rule_text(k, v))}</td></tr>'
-                    for k, v in R.items() if isinstance(v, dict))
-    return f"""<section class="hero slim"><h1>Method</h1><p class="sub">Where every number comes from, how a product “crosses a line”,
-how briefs are written and graded, and what we refuse to do.</p></section>
-<h2 class="sec">Sources</h2><div class="tblwrap"><table class="tbl"><thead><tr><th>Source</th><th>Role</th><th>Label</th><th>History</th><th>Last run</th></tr></thead><tbody>{rows}</tbody></table></div>
-<p class="muted small">Appark and Gravity Engine endpoints are public but undocumented. We pace requests, publish derived ranks and links,
-and never re-host raw chart dumps. Appark gives guests today's charts only, so history starts the day we start collecting.</p>
-<h2 class="sec">The line a product must cross</h2>
-<p>A product qualifies when today is at least <b>{R['gp_installs']['mult']:.0f}×</b> its own average over the previous {R['baseline_days']} days, above an absolute floor.
-New sources have no history yet: until a product has {R['min_baseline_points']} days in our data, we use the change figure the source itself reports and label the card
-<span class="basis basis-source-delta">source delta</span> or <span class="basis basis-cold-start">cold start</span> instead of <span class="basis basis-own-baseline">own baseline</span>.</p>
-<div class="tblwrap"><table class="tbl"><thead><tr><th>Rule</th><th>Metric</th><th>Threshold</th></tr></thead><tbody>{rules}</tbody></table></div>
-<h2 class="sec">Picking what to brief</h2>
-<p>score = strength × publisher penalty × freshness × (0.5 + direction fit) × (1 + demand echo) × novelty.
-Grossing-chart moves weigh 1.4×, paid-chart moves 0.45× (a few sales move a thin paid chart); products launched in the last year weigh 1.3×,
-older than three years 0.55×. Big platforms are penalised, products briefed in the last 14 days are skipped,
-each surface gets at least {CFG['pick']['min_per_surface']} briefs and at most {int(CFG['pick']['max_share_per_surface'] * 100)}% of the {CFG['pick']['budget']} daily slots.</p>
-<h2 class="sec" id="modes">Two modes of brief</h2>
-<div class="grid2"><div class="panel"><h3>Data-only (always)</h3><p>Every field is computed from collected data: badge, curve, charts, measurements,
-dated events, peers, Demand Echo, discounts, grade, market-gap wedge. The headline describes the move; the trigger reads “not checked” unless evidence exists.</p></div>
-<div class="panel"><h3>Agent-checked (CI with keys)</h3><p>TinyFish searches the web for the trigger; an LLM writes the lesson headline, positioning,
-differentiators, moat, wedge and Build Kit <b>from the gathered evidence only</b>. A verify step downgrades any “fact” whose link we didn't gather to “inferred”.
-Badges and grades stay computed by code.</p></div></div>
-<h2 class="sec">Labels</h2><p>{chip('fact')} linked to a source · {chip('verified')} measured by us or payment-verified · {chip('estimated')} a third party's estimate or a proxy ·
-{chip('inferred')} our reading of the evidence · {chip('not_found')} we looked and didn't find it.</p>"""
-
-
-def _rule_text(k: str, v: dict) -> str:
-    if "mult" in v:
-        return f"≥ {v['mult']}× own baseline and ≥ {v.get('floor', 0):,}/day" + (
-            f"; cold start ≥ {v['cold_floor']:,}" if v.get("cold_floor") else "") + (
-            f"; or ≥ {int(v['fresh_share'] * 100)}% of creatives new today" if v.get("fresh_share") else "")
-    if "min_jump" in v:
-        return f"up ≥ {v['min_jump']} places into the top {v['max_rank']}"
-    if "max_rank" in v:
-        return f"new or improved inside the top {v['max_rank']}"
-    return "v2 logic: MRR ×1.3 in 30 days (≥ $100 gain) / Tranco rank ×1.3 in 7 days"
 
 
 def archive_page(days: list, counts: dict) -> str:
@@ -669,7 +877,9 @@ Every page has a Markdown twin. Data date: {day}.
 ## Pages
 - [Today]({'index.md'}): today's briefs, ranked by grade
 - [Today as JSON](api/today.json): briefs + every candidate that crossed a line
-- [Directions](d/index.html), [Playbooks](plays.html), [Charts](charts.html), [Track record](record.html), [Method](method.html)
+- [Product DB](db/index.html): every product we investigated, by surface, graded, with daily history
+- [Playbooks](plays/index.html): copyable moves verified by more than one product
+- [Directions](d/index.html), [Charts](charts.html), [Track record](record.html)
 
 ## Labels
 fact (linked) · verified (measured / payment-verified) · estimated (third-party or proxy) · inferred · not_found
@@ -695,7 +905,7 @@ def write(con) -> None:
     day = days[0]
     if OUT.exists():
         shutil.rmtree(OUT)
-    for sub in ("i", "d", "day", "api", "assets"):
+    for sub in ("i", "d", "day", "api", "assets", "db"):
         (OUT / sub).mkdir(parents=True, exist_ok=True)
     for f in STATIC.iterdir():
         shutil.copy(f, OUT / "assets" / f.name)
@@ -716,11 +926,31 @@ def write(con) -> None:
         (OUT / "d" / f"{d['slug']}.html").write_text(page(f"{d['name']} · {SITE}", direction_page(d, "../"), base="../",
                                                           active="dirs", day=day), encoding="utf-8")
     (OUT / "charts.html").write_text(page(f"Charts · {SITE}", charts_page(con, day), active="charts", day=day), encoding="utf-8")
-    (OUT / "plays.html").write_text(page(f"Playbooks · {SITE}", plays_page(synth.plays(con)), active="plays", day=day),
-                                    encoding="utf-8")
+    plays = playbook.assemble(con, day)
+    (OUT / "plays").mkdir(exist_ok=True)
+    (OUT / "plays" / "index.html").write_text(page(f"Playbooks · {SITE}", plays_index(plays), base="../", active="plays",
+                                                   day=day), encoding="utf-8")
+    for i, pl in enumerate(plays, 1):
+        if pl["induced"]:
+            (OUT / "plays" / f"{pl['id']}.html").write_text(play_page(pl, i, day),
+                                                            encoding="utf-8")
+    rows = synth.products(con)
+    db_counts = {s: sum(1 for r in rows if r["rep"]["surface"] == s) for s in SURFACE_ORDER}
+    (OUT / "db" / "p").mkdir(parents=True, exist_ok=True)
+    for s, fname in DB_TABS:
+        (OUT / "db" / fname).write_text(page(f"Product DB · {SURFACE_NAME[s]} · {SITE}",
+                                             db_page(s, [r for r in rows if r["rep"]["surface"] == s], db_counts),
+                                             base="../", active="db", day=day), encoding="utf-8")
+    in_plays = {}
+    for pl in plays:
+        if pl["induced"]:
+            for c in pl["cases"]:
+                in_plays.setdefault((c["rid"], pl["category"]), []).append((pl["id"], pl["recipe"]))
+    for r in rows:
+        (OUT / "db" / "p" / f"{slug(r['entity'])}.html").write_text(product_page(r, synth.history(con, r["rep"]), in_plays),
+                                                                    encoding="utf-8")
     (OUT / "record.html").write_text(page(f"Track record · {SITE}", record_page(synth.followups(con, day)), active="record",
                                           day=day), encoding="utf-8")
-    (OUT / "method.html").write_text(page(f"Method · {SITE}", method_page(con, day), active="method", day=day), encoding="utf-8")
     counts = {}
     for d in days:
         cs = synth.candidates(con, d)

@@ -34,3 +34,29 @@ function olTheme() {
     if (saved) { var b = document.querySelector('.tab[data-f="' + saved + '"]'); if (b) b.click(); }
   } catch (e) {}
 })();
+/* Product DB: platform / visibility / grade buttons + search; items carry data-p, data-v, data-g, data-text. */
+(function () {
+  var bar = document.querySelector(".dbf");
+  if (!bar) return;
+  var sel = { p: "", v: "", g: "" }, q = bar.querySelector(".dbq"), n = bar.querySelector(".dbn");
+  var items = document.querySelectorAll(".dbl > li[data-g]");
+  function apply() {
+    var t = (q && q.value || "").trim().toLowerCase(), shown = 0;
+    items.forEach(function (li) {
+      var ok = (!sel.p || (" " + li.dataset.p + " ").indexOf(" " + sel.p + " ") !== -1) &&
+        (!sel.v || li.dataset.v === sel.v) && (!sel.g || li.dataset.g === sel.g) &&
+        (!t || (li.dataset.text || "").indexOf(t) !== -1);
+      li.classList.toggle("hidden", !ok);
+      if (ok) shown++;
+    });
+    if (n) n.textContent = shown;
+  }
+  bar.addEventListener("click", function (ev) {
+    var b = ev.target.closest("button[data-g]");
+    if (!b) return;
+    bar.querySelectorAll('button[data-g="' + b.dataset.g + '"]').forEach(function (x) { x.classList.toggle("on", x === b); });
+    sel[b.dataset.g] = b.dataset.x;
+    apply();
+  });
+  if (q) q.addEventListener("input", apply);
+})();
