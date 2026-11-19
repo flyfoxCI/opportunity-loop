@@ -3,12 +3,16 @@
 > Daily breakout intelligence for solo builders: which small products (apps, SaaS, open source, mini-games, short drama)
 > crossed a measurable line today, why, whether buyers are asking for it, and how one or two people could follow.
 
-Every page has a Markdown twin. Data date: 2026-11-18.
+Every page has a Markdown twin. Data date: 2026-11-19.
 
 ## Pages
 - [Today](index.md): today's briefs, ranked by grade
 - [Today as JSON](api/today.json): briefs + every candidate that crossed a line
-- [Directions](d/index.html), [Playbooks](plays.html), [Charts](charts.html), [Track record](record.html), [Method](method.html)
+- [Product DB](db/index.html): money lenses (followed and earning, unique angle, new and earning) over every app, SaaS and
+  Shopify app we can price, plus every product we investigated
+- [Categories](cat/index.html): one deep page per surface: apps, mini-programs, web & SaaS, Chrome extensions, Shopify apps
+- [Playbooks](plays/index.html): copyable moves verified by more than one product
+- [Directions](d/index.html), [Charts](charts.html), [Track record](record.html)
 
 ## Labels
 fact (linked) · verified (measured / payment-verified) · estimated (third-party or proxy) · inferred · not_found

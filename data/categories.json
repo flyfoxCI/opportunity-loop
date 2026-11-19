@@ -1,0 +1,299 @@
+{
+ "updated": "2026-11-19",
+ "surfaces": {
+  "apps": {
+   "guidance": {
+    "headline": "The best solo-builder opening is a sharply localized, single-workflow app—especially in meal planning, developer utilities, or music practice—rather than a broad all-purpose utility.",
+    "summary": "The category still rewards new entrants: 356 recent launches reportedly generate at least an estimated $10k per month, with 43 estimated above $100k, while the newcomer median is $39.5k per month. Chart evidence points to localization, visible product improvements, narrow practitioner workflows, and fast free-to-paid or paid-upfront models, but the revenue figures are estimates and the available examples generally lack install or conversion data.",
+    "direction": [
+     {
+      "point": "Target an underserved country and a single high-friction workflow instead of launching a generic utility; Supanator reached #11 in Indonesia, #25 in the US, and #31 in Brazil for mobile Supabase management, while its category also charts in Germany, Japan, Mexico, Saudi Arabia, Turkey, and India.",
+      "evidence": "Supanator: Kelola Supabase; ID Top Grossing Developer Tools #11, up 128 positions, plus US #25 and BR #31."
+     },
+     {
+      "point": "Look for meal-planning products that make budget and waste decisions tangible, then localize around a specific market; the category has 47 recent apps reaching an estimated $10k per month, and Whipp reached the US Food & Drink #3 grossing position only 14 days after release.",
+      "evidence": "Nutrition & calorie tracking: 47 new $10k apps out of 316 total; Whipp ($778.8k estimated), mise ($585.7k estimated), and TapCook ($502.8k estimated)."
+     },
+     {
+      "point": "Test specialized mobile workflows for professionals and practitioners where one paid or narrowly scoped utility can rank quickly; ProPi moved from #131 to #4 in Indonesia’s paid-utilities chart, while RUB A DUB & CYPHER PLAYER went from #101 to #1 in Japan’s paid Music chart two days after launch.",
+      "evidence": "ProPi System Analyzer: +127 chart positions to ID Top Paid Utilities #4; RUB A DUB & CYPHER PLAYER: JP Top Paid Music #101 to #1 in two days."
+     }
+    ],
+    "growth": [
+     {
+      "point": "Make a concrete product improvement visible at the exact moment of use, then monitor the relevant country-category chart for 72 hours; PushWard shipped widget and gauge fixes and rose 163 places in Brazil, while AnyREC rose from #60 to #7.",
+      "evidence": "PushWard: BR Top Grossing Developer Tools #177 to #14 after v1.30.1; AnyREC: BR Top Grossing Developer Tools #60 to #7 and Top Free #26 to #33."
+     },
+     {
+      "point": "Use a country-specific store page and creator-led demonstrations to make the same product relevant to a local audience; AnyREC had chart visibility in Brazil and Japan, while TranslaCat’s Saudi rank jump supports testing local acquisition rather than assuming a global message will work.",
+      "evidence": "AnyREC: BR Top Grossing #7 and JP Top Free #78; TranslaCat: SA Top Free #115 to #16 in one day after purchase-flow improvements."
+     },
+     {
+      "point": "Turn utility usage into a contribution loop by asking activated users to share a reusable plan or tip; mise added community features for sharing dishes and budget-planning tips and subsequently rose 136 places in Indonesia, although causation is not proven.",
+      "evidence": "mise v1.1.40 on November 11, 2026; ID Top Grossing Food & Drink #7 to #6, with a 136-place rise reported."
+     },
+     {
+      "point": "Launch with a very narrow proposition and use store visibility to identify which market-category pair is working; Scout reached #11 in Brazil and #8 in Indonesia after a v2.7.0 release, but fell to #80 in the US, showing that localization fit matters.",
+      "evidence": "Scout: BR Top Grossing Shopping #82 to #11, ID #8, US #80 after v2.7.0."
+     }
+    ],
+    "money": [
+     {
+      "point": "The dominant model is in-app purchases: free apps that build a habit, then subscriptions or upgrades for recurring value. This is the safer default for broad consumer utilities, but the exact plan should be tested rather than copied.",
+      "evidence": "345 of 356 recent launches use in-app purchases versus 11 paid upfront; mise, Supanator, Scout, and Widget Al-Qur’an are free with in-app purchases, while their prices and conversion rates are not supplied."
+     },
+     {
+      "point": "For a genuinely specialized utility with immediate professional value, test a modest upfront price and no subscription; ProPi charges Rp 399ribu without in-app purchases, and RUB A DUB & CYPHER PLAYER launched at ¥300 without recorded in-app purchases.",
+      "evidence": "ProPi: Rp 399ribu, ID Top Paid Utilities #4; RUB A DUB & CYPHER PLAYER: ¥300, JP Top Paid Music #1 and overall paid #37."
+     },
+     {
+      "point": "Place the upgrade after demonstrated recurring intent: meal planning after a useful weekly plan, database monitoring after a user manages a project, or alerts after defining a persistent search; these products show strong chart visibility but do not disclose their paid offers.",
+      "evidence": "mise’s estimated $585.7k, Supanator’s #11 ID grossing rank, and Scout’s #11 BR grossing rank; prices, trials, and paywall timing are undocumented."
+     },
+     {
+      "point": "Reduce payment friction in the market being localized, especially before asking users to subscribe; TranslaCat automatically exposed memberships and gifts after sign-in and enabled annual memberships to be paid monthly in supported markets before its Saudi chart rise.",
+      "evidence": "TranslaCat v1.0.35; SA Top Free #115 to #16, though revenue and conversion were not provided."
+     }
+    ],
+    "solo": {
+     "build": "Build a localized budget-aware meal-plan companion for one market: let users import a weekly grocery budget, generate a plan around stores and household size, and save leftover ingredients; add a community template where users share one low-cost weekly plan.",
+     "avoid": "Do not launch another broad meal planner, database dashboard, recorder, or screen-recording utility; the evidence shows chart jumps but no proof of broad demand or durable distribution, and mise, Supanator, and AnyREC each point to a narrower wedge.",
+     "first_week": [
+      "Interview 10 budget-conscious households or meal planners in the chosen country and identify the most frequent planning failure.",
+      "Publish two concrete templates—one around budget limits and one around reducing food waste—and measure template completions and shares.",
+      "Ship a basic weekly planner with grocery-budget limits, leftover tracking, and one invitation loop; track activation, shared plans, and repeat weekly use before adding subscriptions."
+     ]
+    },
+    "by": "agent"
+   }
+  },
+  "minigames": {
+   "guidance": {
+    "headline": "Douyin chart surges show demand for instantly readable mini-games, but every observed breakout lacks source-level proof, so builders should validate organic acquisition before scaling spend.",
+    "summary": "The category is crowded at the top but unevenly distributed: 46 of 110 tracked games are casual, while only 6 are simulation-management and 5 each are match-3, poker, tower-defense, and hypercasual. Recent movers such as 暴走植物园 (#79 to #2), 脑子一团火 (#32 to #2), and 阿皮大冒险 (#77 to #14 on the sales chart) suggest strong breakout potential, yet the evidence does not identify the acquisition or monetization changes behind those moves.",
+    "direction": [
+     {
+      "point": "Test simple, visually chaotic mechanics in a differentiated skin or audience framing; the strongest observed moves reached #2 without evidence of a unique gameplay trend, leaving room for presentation-led differentiation rather than wholesale genre cloning.",
+      "evidence": "暴走植物园 rose 77 places from #79 to #2 on Douyin’s fresh-game chart, while 脑子一团火 rose 30 places from #32 to #2 on the popularity chart."
+     },
+     {
+      "point": "Investigate the zombie-search-extraction combination as a demand hypothesis, not a validated trend: first test which level, character, and failure moments users respond to before committing to a larger build.",
+      "evidence": "阿皮大冒险 climbed 63 places from #77 to #14 on Douyin’s action mini-game sales chart with a zombie-group, search-and-extract premise; no demand trigger was established."
+     },
+     {
+      "point": "Prioritize differentiated casual prototypes over crowded specialist lanes, because the current boards are concentrated in casual games and offer more whitespace for a distinct presentation than a direct entry into smaller established genres.",
+      "evidence": "46 of 110 distinct games are 休闲, versus 6 模拟经营 and 5 each for 消除, 扑克牌, 塔防, and 超休闲; 79 publishers occupy 140 chart slots across 110 games."
+     }
+    ],
+    "growth": [
+     {
+      "point": "Build short-video creative as separate experiments and tag every post with its own landing path; compare starts and completed rounds so a chart rise is not mistaken for repeatable organic growth.",
+      "evidence": "阿皮大冒险 suggests testing continuous extraction, comedic failure, and repeated-attempt moments, while 音悦节奏球 suggests testing three distinct rhythm hooks; neither product has supplied posts, ads, creator activity, or conversion data."
+     },
+     {
+      "point": "Determine whether a breakout came from product changes, creator distribution, platform featuring, or paid traffic before increasing acquisition spend; rank movement alone is insufficient attribution.",
+      "evidence": "无尽火线 rose 64 places from #68 to #4, 音悦节奏球 rose 83 places from #99 to #16, and both have no reported acquisition source, spend, impressions, retention, or new-user data."
+     },
+     {
+      "point": "Use creator-led distribution to expose the core mechanic to narrowly defined audiences, but judge it by completed sessions and retention rather than chart position.",
+      "evidence": "音悦节奏球 reached #16 on the popularity chart, and 阿皮大冒险 reached #14 on the sales chart; both jumps have weak causal evidence and cannot yet be distinguished from paid or platform-driven traffic."
+     }
+    ],
+    "money": [
+     {
+      "point": "Start with free prototype validation and add monetization only after identifying the audience and repeatable acquisition source; none of the observed chart surges provides evidence about a durable pricing or revenue model.",
+      "evidence": "The five investigated products have rank outcomes only, with no reported prices, purchases, revenue, ad spend, or monetization changes; the supplied category data contains no revenue figures."
+     },
+     {
+      "point": "Treat the sales-chart mover as a lead-generation signal, not proof that its current monetization works, because a higher sales rank can reflect paid distribution rather than profitable player spending.",
+      "evidence": "阿皮大冒险 moved from #77 to #14 on Douyin’s action mini-game sales chart, but the evidence supplies no sales, revenue, retention, or acquisition data; any app revenue figure should be described as estimated."
+     },
+     {
+      "point": "Avoid budgeting from one-day rank gains; require stable conversion and retention across multiple acquisition tests before funding paid growth.",
+      "evidence": "无尽火线, 音悦节奏球, 暴走植物园, and 脑子一团火 each have only one-day chart changes, with no verified spend, user, revenue, or retention evidence."
+     }
+    ],
+    "solo": {
+     "build": "Build one lightweight Douyin-native casual game with a simple plant-chaos core, three original skins, and three short-video hooks centered on escalating chaos and reversal.",
+     "avoid": "Do not clone 暴走植物园 or 脑子一团火 from rank movement alone, and do not scale paid traffic on a one-day chart jump; the supplied evidence cannot distinguish product-led growth from bought distribution.",
+     "first_week": [
+      "Ship a minimal playable prototype plus three skinned openings, and instrument starts, first-round completion, and repeat sessions.",
+      "Record three short videos for separate hooks—escalating chaos, a failed attempt, and a satisfying recovery—with distinct links or codes for attribution.",
+      "Run a small creator or organic test for one week, compare completed rounds and retention by creative and audience, and only then decide whether paid acquisition is justified."
+     ]
+    },
+    "by": "agent"
+   }
+  },
+  "saas": {
+   "guidance": {
+    "headline": "A focused, demonstrable workflow can still win in Web & SaaS, but the strongest revenue opportunities are narrow AI utilities, creator video tools, and trading utilities.",
+    "summary": "The category contains 314 payment-verified indie products with a median MRR of $432, while 166 were founded in the last 12 months and 23 exceed $10k MRR. Builders should avoid broad feature suites and instead own one urgent workflow, prove it with a visible output, and place subscription checkout after the first successful result. The evidence shows strong momentum in products such as TrendStory, Chart Scanner AI, and NeoScene, but does not identify their precise acquisition channels.",
+    "direction": [
+     {
+      "point": "Look for underserved users inside specific professional or creator niches where one recurring decision or output is valuable, rather than launching another broad all-in-one platform. Chart Scanner AI focuses on chart interpretation, while Ace Pitcher focuses on baseball-pitching programs; Chart Scanner AI grew from $193.46 to $3,059.20 MRR in 30 days, although the causal driver is unverified.",
+      "evidence": "314 indie products have payment-verified MRR; median MRR is $432. Chart Scanner AI reached $3,059.20 MRR, and Ace Pitcher reached $934.99."
+     },
+     {
+      "point": "Prioritize workflows with an obvious before-and-after artifact: a chart reading, short video, photo conversion, or completed job-search task can be demonstrated more easily than an abstract AI feature. NeoScene reached $3,654 MRR from $329.90, while Scalereach.ai reached $5,149.55 MRR by repurposing long videos into short clips.",
+      "evidence": "NeoScene grew 11.1x in 30 days; Scalereach.ai recorded $5,149.55 payment-verified MRR and 10,301.9% growth."
+     },
+     {
+      "point": "Treat established lanes as opportunities to specialize, not only to copy: AI video, trading tools, lead generation, and AI assistants already contain large-revenue products, so a builder needs a narrower segment or distribution edge. New $10k+ products appeared in AI video, trading, lead gen, AI agents, AI photo, phone utilities, and other lanes.",
+      "evidence": "White Glove Content has $72,365 MRR, TrendStory $67,035, Orion AI Solutions $57,862, and Boothie $52,185; the AI assistants and agents lane alone contains 34 products."
+     }
+    ],
+    "growth": [
+     {
+      "point": "Acquire users by publishing a concrete demonstration in the community where the target already discusses the problem, but treat this as a hypothesis to test rather than a proven channel. IT Tools improved web-traffic rank from 279,719 to 61,163 in seven days, yet its traffic trigger was not found.",
+      "evidence": "IT Tools' verified web-traffic rank rose from 279,719 to 61,163; no attributable post, ad, feature, or launch was identified."
+     },
+     {
+      "point": "Build distribution around repeatable outputs and high-intent utility searches: each successful export, interpretation, or completed workflow can both demonstrate value and reveal which use case attracts users. TrendStory creates short-form videos across TikTok, Instagram, and YouTube Shorts, while IT Tools suggests a separate landing page for each developer utility.",
+      "evidence": "TrendStory grew from $38,149.23 to $67,035.28 MRR in 30 days; IT Tools' suggested strategy is one no-signup landing page per utility with traffic measured separately."
+     },
+     {
+      "point": "For job-search products, test distribution inside active career communities while narrowing the product to one stage such as tailoring an application or practicing an interview. SmartlyCV's MRR increased 7.13x, but no product-specific acquisition action was found, so the community tactic is not established as its cause.",
+      "evidence": "SmartlyCV rose from $61.70 to $439.67 MRR in 30 days; 26 job-search threads appeared in the latest 14 days versus none in the prior 14 days."
+     }
+    ],
+    "money": [
+     {
+      "point": "Put the paid moment after the user receives one useful result, then charge for repeat use, speed, or volume. TrendStory's recommended pattern is one free creation workflow, an instrumented successful export, and an upgrade when the user needs repeated or faster output.",
+      "evidence": "TrendStory grew from $38,149.23 to $67,035.28 MRR in 30 days, although its actual plan shape, price, trial, and payment moment are not provided."
+     },
+     {
+      "point": "Use subscriptions for recurring utility value, but make the purchase feel like continuation of a demonstrated workflow rather than a generic AI subscription. All investigated leaders are subscription-based, including Chart Scanner AI, SmartlyCV, TrendStory, and Scalereach.ai.",
+      "evidence": "Chart Scanner AI reached $3,059.20 MRR; SmartlyCV $439.67; TrendStory $67,035.28; Scalereach.ai $5,149.55. The evidence does not provide their prices or plan structures."
+     },
+     {
+      "point": "A simple paid utility can work when it removes a specific installation or setup burden. INXANITY Labs pairs free browser-game discovery with a $19.99/month Windows launcher, while helumi sells instant access to a low-footprint cloud drive finder.",
+      "evidence": "INXANITY Labs' Windows launcher is $19.99/month; helumi grew from $93.48 to $533.48 MRR in 18 days."
+     }
+    ],
+    "solo": {
+     "build": "Build a focused short-video repurposing utility for one creator segment: paste one long-form video link, generate platform-ready short clips, and let the user export the first result before subscribing for repeated output.",
+     "avoid": "Do not launch a broad AI toolbox or clone TrendStory's full feature set; the evidence does not show which acquisition channel drove TrendStory's 1.76x MRR growth, and Scalereach.ai and White Glove Content already occupy the AI-video lane.",
+     "first_week": [
+      "Interview five creators in one short-form community and narrow the audience to one repeatable content format.",
+      "Build one link-to-clip workflow with a visible before-and-after output and instrument the first successful export.",
+      "Test one subscription upgrade after export for repeated or faster output, while tracking each acquisition source separately."
+     ]
+    },
+    "by": "agent"
+   }
+  },
+  "chrome": {
+   "guidance": {
+    "headline": "New Chrome extensions can still reach meaningful scale quickly by solving one narrow browser workflow, but only 47 of 563 tracked featured extensions were published in the last two years and the recent median is 3,000 users.",
+    "summary": "The clearest opportunity is to win with a focused workflow inside an existing ecosystem or daily routine rather than build another broad utility. Recent launches span translation, Roblox, travel search, screen recording, and browser security, with verified users ranging from 90,000 to 6,000,000. Monetization is unresolved in the supplied data, so a builder should validate willingness to pay before committing to paid infrastructure.",
+    "direction": [
+     {
+      "point": "Look for narrow, high-frequency browser actions that can be completed in one click or with minimal setup; the recent lineup suggests opportunities around translation, Roblox workflows, award-seat search, and screen capture rather than a generic all-purpose extension.",
+      "evidence": "AnyDoc Translator reached 6,000,000 verified users; RoEarn reached 200,000; seats.aero reached 100,000; and Google Vids Screen Recorder reached 300,000."
+     },
+     {
+      "point": "Prioritize problems attached to platforms users already visit, where the extension can add missing context or actions inside the page; both new commerce and gaming examples use that model.",
+      "evidence": "RoEarn helps users preview Roblox items on avatars and earn rewards with 200,000 verified users, while BetterBLOX adds last-online status and server selection to Roblox with 100,000 verified users."
+     },
+     {
+      "point": "Favor utility with an immediate, visible outcome—translation, image editing, security checks, or synchronized playback—over undifferentiated customization; several recent products promise a concrete result in the first interaction.",
+      "evidence": "Adobe Photoshop reached 800,000 verified users for background removal and color adjustment, Extension Auditor reached 100,000 for extension permission and malware checks, and ZeroDelay reached 100,000 for synchronizing delayed YouTube live streams."
+     }
+    ],
+    "growth": [
+     {
+      "point": "Lead with one concrete outcome in the store listing and demonstrate it inside the exact site where the pain occurs; the successful recent launches are described as narrowly solving visible tasks rather than providing broad platforms.",
+      "evidence": "seats.aero searches award availability on Google Flights, Chase Travel, and Amex Travel and has 100,000 verified users; Cat Gatekeeper interrupts social-media use with a hijacking cat and has 300,000."
+     },
+     {
+      "point": "Use shareable, playful, or visually differentiated mechanics to earn distribution beyond direct intent; recent launches combine utility with avatars, cats, games, or polished browser aesthetics.",
+      "evidence": "RoEarn has 200,000 verified users, Cat Gatekeeper has 300,000, Geometry Dash Lite has 100,000, and MYNT: Material You New Tab has 200,000."
+     },
+     {
+      "point": "Design for immediate repeat use and low setup friction, because the market is still dominated by older hits and newer products need a narrow reason to become habitual.",
+      "evidence": "Only 47 of 563 tracked featured extensions were published in the last two years, 127 have more than 1 million users, and the median for recent ones is 3,000 users."
+     }
+    ],
+    "money": [
+     {
+      "point": "Test a free core first, then charge for a clearly separable premium benefit only if users repeatedly receive the free value; none of the supplied recent launches has disclosed pricing, so paid positioning is not yet proven in this sample.",
+      "evidence": "All 12 listed recent launches have null USD values and no stated price, while verified adoption reaches 100,000 for several products such as seats.aero, ZeroDelay, and Extension Auditor."
+     },
+     {
+      "point": "For a solo builder, prefer a one-time paid upgrade or low recurring plan over usage-heavy infrastructure, and only introduce recurring pricing after proving frequent value.",
+      "evidence": "The strongest recent free positions include AnyDoc Translator at 6,000,000 verified users, Adobe Photoshop at 800,000, and seats.aero, Extension Auditor, and ZeroDelay at 100,000 each; no monetization details are provided."
+     }
+    ],
+    "solo": {
+     "build": "Build a Chrome extension that searches award-seat availability across Google Flights, Chase Travel, and Amex Travel, with alerts for routes the user watches; seats.aero validates the job with 100,000 verified users.",
+     "avoid": "Do not build another broad productivity suite or assume users will pay immediately: recent median adoption is only 3,000 users, and all 12 supplied recent launches have undisclosed pricing and null USD values.",
+     "first_week": [
+      "Interview 10 frequent award-travel users and document which routes and alert rules they would check repeatedly.",
+      "Build a minimal prototype that runs on Google Flights first and captures searched routes without requiring broad permissions.",
+      "Publish a narrow landing page and store listing centered on one outcome—never-missed award availability—then measure activated searches, alert sign-ups, and willingness to pay before adding other travel sites."
+     ]
+    },
+    "by": "agent"
+   }
+  },
+  "shopify": {
+   "guidance": {
+    "headline": "The strongest current openings are focused email and ecommerce utilities, while nearly every Shopify app (87%) uses a free plan plus paid tiers, so builder growth should pair a free install with a clear paid upgrade path.",
+    "summary": "Shopify apps show 370 tracked products across 18 categories, with estimated revenue of $303k+ per month across 303 apps with estimated $10k+ monthly revenue. The most promising new lanes are Newsletters & email marketing, where Judge.me Email Marketing reaches an estimated $15.8k per month, and E-commerce & seller tools, where DORO Product Personalizer reaches an estimated $11.6k per month; both use free-to-install entry points.",
+    "direction": [
+     {
+      "point": "Target a narrow email-marketing workflow for Shopify merchants rather than building a broad marketing suite: abandoned-cart, campaigns, newsletters, and popups are the validated wedge behind Judge.me Email Marketing.",
+      "evidence": "Judge.me Email Marketing is a new entry with estimated $15.8k monthly revenue and 90 reviews; the Newsletters & email marketing lane has 8 tracked apps and 1 new $10k+ app."
+     },
+     {
+      "point": "Look for product-level ecommerce utilities that solve configuration or operational friction, as the largest lane is also producing a newly successful specialized product.",
+      "evidence": "E-commerce & seller tools contains 240 of the tracked apps and includes DORO Product Personalizer, launched 301 days ago with estimated $11.6k monthly revenue and 66 reviews."
+     },
+     {
+      "point": "Do not enter as another undifferentiated AI assistant; a general ChatGPT integration is already free, so a builder needs a merchant-specific workflow and measurable outcome.",
+      "evidence": "The ChatGPT Shopify app is free and sits in the AI assistants & agents direction; no revenue estimate is available for it, while newer focused products have estimated $11.6k-$15.8k monthly revenue."
+     }
+    ],
+    "growth": [
+     {
+      "point": "Use the app store review base as visible proof for acquisition: products with thousands of reviews can rank and convert where newer, focused apps still need to establish credibility.",
+      "evidence": "Judge.me Product Reviews App has 50,403 reviews and an estimated $8.82M monthly revenue; Loox has 10,133 reviews and an estimated $1.77M monthly revenue."
+     },
+     {
+      "point": "Make the free install the acquisition hook and distribute around one recognizable merchant job; the two newest $10k+ examples both start free.",
+      "evidence": "Judge.me Email Marketing, estimated $15.8k monthly revenue, and DORO Product Personalizer, estimated $11.6k monthly revenue, are both free to install; 323 of 370 apps use a free-plan-plus-paid model."
+     },
+     {
+      "point": "Favor products that can show visible store output, such as review feeds, popups, bundles, product customization, or AI-built landing pages, because these can be evaluated inside the merchant’s store.",
+      "evidence": "The top list includes Judge.me, TikTok, Loox, Pop Convert, CWILL Popup Email Marketing, Kaching Bundles, DSers, Snowball, and PageFly, spanning reviews, video, email capture, upsells, sourcing, affiliates, and landing pages."
+     }
+    ],
+    "money": [
+     {
+      "point": "Offer a free plan and reserve paid plans for merchants who need advanced volume, automation, or business outcomes; this is the category norm, not an exception.",
+      "evidence": "323 of 370 apps, or 87%, use a free plan plus paid tiers; another 41 are free and only 6 are paid only."
+     },
+     {
+      "point": "Price the upgrade around meaningful merchant scale rather than hiding the product behind a low-value paid trial, while recognizing that very high-priced offers exist for specialized business tools.",
+      "evidence": "Snowball: Affiliate Marketing starts at $249 per month and has an estimated $1.06M monthly revenue, compared with free-plan offerings from Pop Convert, CWILL, Kaching, DSers, and PageFly."
+     },
+     {
+      "point": "Do not rely on the listing label alone to estimate revenue: Shopify app revenue in this category is rank- or review-based, and should be presented as estimated when prioritizing opportunities.",
+      "evidence": "The category contains 303 apps with estimated $10k+ monthly revenue, and every cited Shopify app revenue figure such as Judge.me’s estimated $8.82M, DORO’s estimated $11.6k, and Judge.me Email Marketing’s estimated $15.8k is labeled estimated."
+     }
+    ],
+    "solo": {
+     "build": "Build a focused Shopify email-marketing app for one painful lifecycle job—starting with abandoned-cart emails plus simple newsletter campaigns—with a free tier and a paid plan for higher email volume or advanced automation.",
+     "avoid": "Avoid building another generic AI assistant or all-in-one marketing platform; ChatGPT is already listed as free, while the validated opportunity is a narrow workflow such as the one used by Judge.me Email Marketing.",
+     "first_week": [
+      "Interview five Shopify merchants or agencies that run abandoned-cart and newsletter campaigns, then select the single workflow they repeatedly pay to solve.",
+      "Build a minimal Shopify app that captures one core event, creates one email, and previews it inside the store editor.",
+      "Launch with a free tier and one paid upgrade trigger, such as monthly email volume or advanced automation, and instrument installs, activation, and paid conversion."
+     ]
+    },
+    "by": "agent"
+   }
+  }
+ }
+}
