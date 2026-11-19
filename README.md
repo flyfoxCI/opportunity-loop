@@ -54,6 +54,26 @@ python -m radar all          # everything
   every missed day is lost history.
 - Xiaohongshu: the manual CSV import (`data/xhs_tools/`) was removed in v3; only TinyFish search remains.
 
+
+### v4: guidance first
+
+- **Product DB** opens on four money lenses, the questions stringers.io's App DB asks. They cover every app on a grossing
+  chart, every TrustMRR SaaS and every tracked Shopify app (games and big publishers left out):
+  - *Others followed, and made money too*
+  - *A unique angle, nobody followed yet*
+  - *Launched 3 months ago, $10k+/month*
+  - *Launched this year, $100k+/month*
+
+  App and Shopify revenue is **estimated** (`radar/appdb.py`: grossing rank → revenue power law per country, or reviews ×
+  price). SaaS MRR is payment-verified. "Investigated by us" keeps the graded briefs.
+- **Categories** (`cat/`) has one deep page each for Apps, Mini-programs, Web & SaaS, Chrome extensions and Shopify apps.
+  Each page puts guidance first (where to look, how users arrive, how they charge, what to build or avoid), then lanes,
+  pricing models, markets and newcomers. `python -m radar categories` writes `data/categories.json`, using the LLM when
+  its keys are set and rules otherwise.
+- **New sources:** `chrome` (Chrome Web Store, 18 categories: users, rating, publish date) and `shopify` (Shopify App
+  Store, 18 categories: reviews, pricing, launch date) in `radar/feeds/webstores.py`.
+- **Product pages** open with four cards (Why it moved · Direction · Growth · Money) and "If it were you".
+
 ## v2 (retired)
 
 v2 was the daily signals site at `/radar/`. v3 replaced it; its site output and builder were removed.

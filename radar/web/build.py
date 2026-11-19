@@ -11,10 +11,11 @@ import html
 import json
 import re
 import shutil
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from .. import playbook, synth
+from .. import appdb, categories, playbook, synth
+from ..categories import fusd
 from ..detect import SURFACE_NAME, chart_name
 from ..feeds import gravity
 from ..investigate import CAUSALITY, CAUSES, PLAY_CATEGORIES, VISIBILITY
@@ -29,10 +30,11 @@ LABEL_TEXT = {"fact": "fact", "inferred": "inferred", "not_found": "not found", 
 RULE_TEXT = {"chart_jump": "Chart jump", "chart_new": "New on chart", "gp_installs": "Install spike",
              "ios_ratings": "Ratings spike", "gh_stars": "Star spike", "minigame_rank": "Mini-game climb",
              "drama_ads": "Ad surge", "drama_chart": "Drama chart", "revenue": "Revenue climb",
-             "web_traffic": "Traffic climb"}
+             "web_traffic": "Traffic climb", "shop_reviews": "Review spike", "cws_users": "User spike"}
 SOURCE_TEXT = {"ios": "App Store", "play": "Google Play", "github": "GitHub", "trustmrr": "TrustMRR",
-               "tranco": "Web", "minigame": "Mini-game", "drama": "TikTok drama", "drama_ad": "Drama ads"}
-SURFACE_ORDER = ["apps", "saas", "opensource", "minigames", "drama"]
+               "tranco": "Web", "minigame": "Mini-game", "drama": "TikTok drama", "drama_ad": "Drama ads",
+               "chrome": "Chrome Web Store", "shopify": "Shopify App Store"}
+SURFACE_ORDER = ["apps", "saas", "minigames", "chrome", "shopify", "opensource", "drama"]
 
 
 def e(s) -> str:
@@ -85,6 +87,7 @@ NAV_ICON = {
     "today": '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
     "db": '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
     "plays": '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+    "cats": '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
     "dirs": '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
     "charts": '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
     "record": '<path d="M20 6 9 17l-5-5"/>',
@@ -92,7 +95,8 @@ NAV_ICON = {
 
 
 def page(title: str, body: str, *, base: str = "", active: str = "", desc: str = "", day: str = "") -> str:
-    nav = [("index.html", "Today", "today"), ("db/index.html", "Product DB", "db"), ("plays/index.html", "Playbooks", "plays"),
+    nav = [("index.html", "Today", "today"), ("db/index.html", "Product DB", "db"), ("cat/index.html", "Categories", "cats"),
+           ("plays/index.html", "Playbooks", "plays"),
            ("d/index.html", "Directions", "dirs"), ("charts.html", "Charts", "charts"), ("record.html", "Track record", "record")]
     links = "".join(f'<a href="{base}{h}" class="{"on" if k == active else ""}"><svg width="16" height="16" viewBox="0 0 24 24" '
                     f'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '
@@ -547,9 +551,11 @@ mini-game boards, drama charts and trending repos for {fdate(day)}.</p></section
 
 
 PLATFORM = {"ios": "iOS", "play": "Android", "github": "GitHub", "trustmrr": "Web", "tranco": "Web",
-            "minigame": "Mini-game", "drama": "TikTok", "drama_ad": "Drama ads"}
-DB_TABS = [("apps", "index.html"), ("saas", "saas.html"), ("opensource", "opensource.html"),
-           ("minigames", "minigames.html"), ("drama", "drama.html")]
+            "minigame": "Mini-game", "drama": "TikTok", "drama_ad": "Drama ads", "chrome": "Chrome", "shopify": "Shopify"}
+DB_TABS = [("apps", "briefs.html"), ("saas", "briefs-saas.html"), ("minigames", "briefs-minigames.html"),
+           ("chrome", "briefs-chrome.html"), ("shopify", "briefs-shopify.html"), ("opensource", "briefs-opensource.html"),
+           ("drama", "briefs-drama.html")]
+LENS_FILES = [("followed", "index.html"), ("unique", "unique.html"), ("m3_10k", "new-3m.html"), ("y_100k", "year-100k.html")]
 
 
 def linechart(ch: dict) -> str:
@@ -654,10 +660,77 @@ def db_item(row: dict, base: str) -> str:
 </li>"""
 
 
-def db_page(surface: str, rows: list, counts: dict) -> str:
+def db_nav(active: str, lens_counts: dict, n_briefs: int) -> str:
+    tabs = "".join(f'<a class="tab{" on" if k == active else ""}" href="{f}">{e(appdb.LENSES[k][0])} <span>{lens_counts.get(k, 0)}</span></a>'
+                   for k, f in LENS_FILES)
+    tabs += f'<a class="tab{" on" if active == "briefs" else ""}" href="briefs.html">Investigated by us <span>{n_briefs}</span></a>'
+    return f'<div class="tabs dbtabs">{tabs}</div>'
+
+
+def age_text(days) -> str:
+    if days is None:
+        return ""
+    if days < 31:
+        return f"launched {days} days ago"
+    if days < 365:
+        return f"launched {round(days / 30.4)} months ago"
+    return f"launched {days / 365:.1f} years ago"
+
+
+def lens_row(r: dict, base: str, inv: dict) -> str:
+    href = inv.get((r["source"], r["pid"]))
+    link = f'{base}db/p/{href}.html' if href else r["url"]
+    ext = "" if href else ' target="_blank" rel="noopener"'
+    plats = " ".join(r["platforms"])
+    fol = ""
+    if r.get("followers"):
+        chips = "".join(f'<span class="fchip">{icon(f, 18)}{e(short(f["name"], 22))} <b>{fusd(f["usd"])}</b></span>'
+                        for f in r["followers"])
+        fol = f'<div class="fol"><span class="muted">{r["n_followers"]} similar earn{"s" if r["n_followers"] == 1 else ""}:</span>{chips}</div>'
+    money = (f'<span class="mv">{fusd(r["usd"])}<small>/mo</small></span><small>{"verified MRR" if r["label"] == "verified" else "estimated"}'
+             f'{"" if r["label"] == "verified" else " · " + fusd(r["usd"] * .4) + "–" + fusd(r["usd"] * 2.5)}</small>'
+             if r.get("usd") else f'<span class="mv">{int(r["users"] or 0):,}</span><small>users</small>')
+    chg = f'<small class="up">↑{int(r["chg"])} today</small>' if r.get("chg") else ""
+    text = " ".join([r["name"], r["developer"] or "", r["direction_name"], r["desc"] or "", r["basis"] or ""]).lower()
+    return f"""<li data-p="{e(plats)}" data-v="x" data-g="x" data-text="{e(text)}">
+  <span class="lg">{icon(r, 52)}</span>
+  <div class="bd">
+    <div class="hd"><a class="nm" href="{e(link)}"{ext}>{e(short(r['name'], 60))}</a>{f'<span class="age">{age_text(r["age_days"])}</span>' if r.get('age_days') is not None else ''}{''.join(f'<i class="st">{PLATFORM.get(x, x)}</i>' for x in r['platforms'])}</div>
+    <div class="line">{e(r['developer'] or '')}{' · ' if r['developer'] else ''}<a href="{base}d/{e(r['direction'])}.html">{e(r['direction_name'])}</a>{(' · ' + e(r['basis'])) if r.get('basis') else ''}</div>
+    {f'<div class="vd">{e(r["desc"])}</div>' if r.get('desc') else ''}
+    {fol}
+  </div>
+  <div class="rc">{money}{chg}</div>
+</li>"""
+
+
+def db_lens_page(key: str, rows: list, lanes: list, inv: dict, lens_counts: dict, n_briefs: int) -> str:
     base = "../"
-    tabs = "".join(f'<a class="tab{" on" if s == surface else ""}" href="{f}">{SURFACE_NAME[s]} <span>{counts.get(s, 0)}</span></a>'
-                   for s, f in DB_TABS)
+    title, sub = appdb.LENSES[key]
+    plats = sorted({x for r in rows for x in r["platforms"]}, key=lambda x: list(PLATFORM).index(x) if x in PLATFORM else 99)
+    pf = '<span class="grp"><button data-g="p" data-x="" class="on">All</button>' + "".join(
+        f'<button data-g="p" data-x="{x}">{PLATFORM.get(x, x)}</button>' for x in plats) + "</span>"
+    items = "".join(lens_row(r, base, inv) for r in rows[:150])
+    lane_html = "".join(
+        f'<a class="cat c{i % 6}" href="{base}d/{e(l["slug"])}.html"><span class="ics">{"".join(icon(x, 26) for x in l["examples"][:3])}</span>'
+        f'<b>{e(l["name"])}</b><small>{l["new_10k"]} new earning $10k+ · {l["total"]:,} tracked</small></a>'
+        for i, l in enumerate([l for l in lanes if l["slug"] != "other" and l["new_10k"]][:12]))
+    return f"""<section class="hero slim"><h1>Product DB</h1>
+<p class="sub">{e(sub)} Revenue for store apps and Shopify apps is <b>estimated</b> from grossing rank or review count (it can
+be off by 2–3× either way); Web &amp; SaaS revenue is payment-verified. Games and big publishers are left out: these lists are
+for one or two builders.</p></section>
+{db_nav(key, lens_counts, n_briefs)}
+<div class="dbf">{pf}<input class="dbq" type="search" placeholder="Search name, lane, developer…" aria-label="Search"><span class="muted small">showing <b class="dbn">{min(150, len(rows))}</b>{f' of {len(rows):,}' if len(rows) > 150 else ''}</span></div>
+<div class="dbhead"><span>Product · what it does · who copied it</span><span>Est. per month</span></div>
+<ol class="dbl">{items or '<li class="muted">Nothing matches today.</li>'}</ol>
+<h2 class="sec">By lane <span class="muted">where products launched in the last year earn $10k+/month</span></h2>
+<div class="cats">{lane_html}</div>"""
+
+
+def db_page(surface: str, rows: list, counts: dict, lens_counts: dict | None = None) -> str:
+    base = "../"
+    tabs = "".join(f'<a class="{"on" if s == surface else ""}" href="{f}">{SURFACE_NAME[s]} <span>{counts.get(s, 0)}</span></a>'
+                   for s, f in DB_TABS if counts.get(s) or s == surface)
     plats = sorted({x for r in rows for x in platforms(r["rep"])})
     pf = ("" if len(plats) < 2 else '<span class="grp">' + '<button data-g="p" data-x="" class="on">All</button>' + "".join(
         f'<button data-g="p" data-x="{x}">{PLATFORM.get(x, x)}</button>' for x in plats) + "</span>")
@@ -667,18 +740,78 @@ def db_page(surface: str, rows: list, counts: dict) -> str:
         f'<button data-g="g" data-x="{x}">{x}</button>' for x in "SABCDE" if any(r["rep"]["grade"]["grade"] == x for r in rows))
         + "</span>")
     items = "".join(db_item(r, base) for r in rows)
-    return f"""<section class="hero slim"><h1>Product DB · {SURFACE_NAME[surface]}</h1>
+    return f"""<section class="hero slim"><h1>Product DB</h1>
 <p class="sub">Every product that crossed a line and got a brief, kept and re-measured daily. For each one: why it took off, how you
 could follow without cloning it, and a grade for the odds that one or two people make money from it within months:
 <b>S</b> act now · <b>A</b> worth following, one or two bets · <b>B</b> can try, clear weak spots · <b>C</b> learn from it ·
 <b>D</b> just be aware · <b>E</b> don't touch. The coloured label says how many people already know it: the fewer, the better
 the opening. Sorted by grade.</p></section>
-<div class="tabs dbtabs">{tabs}</div>
+{db_nav("briefs", lens_counts or {}, sum(counts.values()))}
+<div class="tabs static subtabs">{tabs}</div>
 <div class="dbf">{pf}{vf}{gf}<input class="dbq" type="search" placeholder="Search name, move, market…" aria-label="Search"><span class="muted small">showing <b class="dbn">{len(rows)}</b></span></div>
 <ol class="dbl">{items or '<li class="muted">Nothing here yet: products appear once they get a brief.</li>'}</ol>"""
 
 
-def product_page(row: dict, charts: list, in_plays: dict | None = None) -> str:
+def product_guidance(rep: dict, base: str, in_plays: dict, money: dict | None, lane: dict | None) -> str:
+    plays = {m["category"]: m for m in rep.get("plays") or [] if m.get("category")}
+    p = rep["product"]
+
+    def play_card(cat):
+        m = plays.get(cat)
+        if not m:
+            return ""
+        pls = in_plays.get((rep["id"], cat), [])
+        return (f'<p class="mv1">{e(m.get("move"))}</p>' + (f'<p>{e(m["why"])}</p>' if m.get("why") else "")
+                + (f'<p class="muted">{e(m["did"])}</p>' if m.get("did") else "")
+                + (f'<p><span class="k2">Result</span> {e(m["result"])} {causality_tag(m.get("causality"))}</p>' if m.get("result") else "")
+                + "".join(f'<p><a href="{base}plays/{pid}.html">In the playbook: {e(rc)} →</a></p>' for pid, rc in pls))
+    why = rep.get("verdict") or next((c["text"] for c in rep.get("why_grew") or [] if c.get("label") != "not_found"), "")
+    why_html = (f'<p class="mv1">{e(why)}</p>' if why else '<p class="muted">The trigger is not explained yet.</p>') + (
+        f'<p>{cause_tags(rep)}</p>' if rep.get("causes") else "")
+    pos = rep.get("positioning") or {}
+    direction = play_card("direction")
+    if not direction:
+        bits = []
+        if pos.get("before_it") or pos.get("wedge"):
+            bits.append(f'<p class="mv1">{e(pos.get("wedge") or "")}</p>')
+            if pos.get("before_it"):
+                bits.append(f'<p><span class="k2">Before it</span> {e(pos["before_it"])}</p>')
+        if lane and lane.get("new_10k"):
+            bits.append(f'<p>In <a href="{base}d/{e(lane["slug"])}.html">{e(lane["name"])}</a>, {lane["new_10k"]} products '
+                        f'launched in the last year earn $10k+/month (estimated): the lane is open to newcomers.</p>')
+        elif lane:
+            bits.append(f'<p>{e(lane["name"])}: {lane["total"]:,} products tracked, none launched in the last year earns '
+                        f'$10k+/month yet.</p>')
+        direction = "".join(bits) or '<p class="muted">No direction evidence yet.</p>'
+    growth = play_card("growth")
+    if not growth:
+        b = rep.get("badge") or {}
+        de = rep.get("demand_echo") or {}
+        growth = (f'<p class="mv1">{e(rep.get("mechanism") or RULE_TEXT.get(b.get("rule"), "Unexplained climb"))}</p>'
+                  f'<p>{e(b.get("metric"))} {move_text(b)} {e(b.get("window") or "")}.</p>'
+                  + (f'<p>{de["threads_14d"]} buyer-intent Reddit threads in this lane over 14 days.</p>' if de.get("threads_14d") else ""))
+    monet = play_card("monetization")
+    if not monet:
+        model = ("in-app purchases" if p.get("iap") else (f"paid upfront, {p['price']}" if p.get("price") and p["price"] != "Free" else ""))
+        bits = [f'<p class="mv1">{e(model.capitalize())}</p>'] if model else []
+        if money and money.get("usd"):
+            bits.append(f'<p><b>{fusd(money["usd"])}/month</b> {"verified MRR" if money["label"] == "verified" else "estimated from " + e(money["basis"])}.</p>')
+        monet = "".join(bits) or '<p class="muted">No money signal in the data.</p>'
+    f = rep.get("follow") or {}
+    you = rep.get("how_to_follow") or f.get("wedge") or ""
+    you_html = ""
+    if you or f.get("play") or f.get("avoid"):
+        you_html = ('<div class="you"><h3>If it were you</h3>'
+                    + (f'<p><span class="k">Do</span>{e(you)}</p>' if you else "")
+                    + (f'<p><span class="k">Copy</span>{e(f["play"])}</p>' if f.get("play") else "")
+                    + (f'<p><span class="k">Avoid</span>{e(f["avoid"])}</p>' if f.get("avoid") else "") + "</div>")
+    cols = "".join(f'<div class="gcol {c}"><h3>{t}</h3>{h}</div>' for t, c, h in (
+        ("Why it moved", "c5", why_html), ("Direction", "c0", direction), ("Growth", "c2", growth), ("Money", "c3", monet)))
+    return f'<section class="guide prod"><div class="gcols four">{cols}</div>{you_html}</section>'
+
+
+def product_page(row: dict, charts: list, in_plays: dict | None = None, money: dict | None = None,
+                 lane: dict | None = None) -> str:
     rep = row["rep"]
     p, g = rep["product"], rep["grade"]
     base = "../../"
@@ -707,17 +840,6 @@ def product_page(row: dict, charts: list, in_plays: dict | None = None) -> str:
             ("Grade", f"<b>{g['grade']}: {e(g['text'])}</b> <span class='muted'>score {g['score']}/100</span> "
                       f"{vis_pill(rep.get('visibility'))} {cause_tags(rep)}")]
     summ_html = "".join(f'<div class="kv"><span class="k">{k}</span><div>{v}</div></div>' for k, v in summ)
-    lens = ""
-    for m in sorted(rep.get("plays") or [], key=lambda m: list(PLAY_CATEGORIES).index(m["category"])):
-        pls = (in_plays or {}).get((rep["id"], m["category"]), [])
-        lens += (f'<div class="lens"><span class="k">{e(PLAY_CATEGORIES[m["category"]])}</span><div><b>{e(m.get("move"))}</b>'
-                 + (f'<p class="muted">{e(m["why"])}</p>' if m.get("why") else "")
-                 + (f'<p>{e(m["did"])}</p>' if m.get("did") else "")
-                 + (f'<p><span class="k2">Result</span> {e(m.get("result"))} {causality_tag(m.get("causality"))}</p>' if m.get("result") else "")
-                 + "".join(f'<p><a href="{base}plays/{pid}.html">In the playbook: {e(rc)} →</a></p>' for pid, rc in pls)
-                 + "</div></div>")
-    lens_html = (f'<section class="blk"><h2>Direction · growth · monetization <span class="muted">the moves it used</span></h2>{lens}</section>'
-                 if lens else "")
     story = "".join(f'<h3>{e(s["heading"])}</h3>' + "".join(f"<p>{e(par)}</p>" for par in str(s["body"]).split("\n") if par.strip())
                     for s in rep.get("story") or [])
     if not story:
@@ -740,17 +862,17 @@ def product_page(row: dict, charts: list, in_plays: dict | None = None) -> str:
     if p.get("site"):
         links.append(f'<a href="{e(p["site"])}" target="_blank" rel="noopener">Website ↗</a>')
     chart_html = "".join(linechart(c) for c in charts)
-    body = f"""<a class="back" href="{base}db/{dict(DB_TABS).get(rep['surface'], 'index.html')}">← Product DB · {e(SURFACE_NAME.get(rep['surface'], ''))}</a>
+    body = f"""<a class="back" href="{base}db/{dict(DB_TABS).get(rep['surface'], 'briefs.html')}">← Product DB · {e(SURFACE_NAME.get(rep['surface'], ''))}</a>
 <div class="crumb">{e(SURFACE_NAME.get(rep['surface'], ''))} · {' + '.join(PLATFORM.get(x, x) for x in plats)} · written {fdate(rep['day'])}</div>
 <header class="phead"><div>
 <div class="who big">{icon(p, 52)}<span><b>{e(p.get('name'))}</b>{(' · ' + e(p['developer'])) if p.get('developer') else ''}</span></div>
 <h1 class="ph1">{e(rep['lesson_title'])}</h1></div>
 <div class="gbox">{grade_badge(g, True)}<b>{g['score']} / 100</b><span>{e(g['text'])}</span></div></header>
+{product_guidance(rep, base, in_plays or {}, money, lane)}
 <section class="kvs">{summ_html}</section>
 <section class="blk"><h2>Data <span class="muted">updated daily</span></h2>
   <p class="facts">{' · '.join(facts) or '<span class="muted">No store measurements for this surface.</span>'}</p>
   <div class="lcs">{chart_html or '<p class="muted">No time series for this product yet.</p>'}</div></section>
-{lens_html}
 <section class="blk story">{story}</section>
 <section class="blk"><h2>Breakouts we recorded</h2><div class="tblwrap"><table class="tbl prodbrk"><tbody>{brk}</tbody></table></div></section>
 {f'<section class="blk"><h2>Peers</h2><table class="tbl"><tbody>{comps}</tbody></table></section>' if comps else ''}
@@ -840,6 +962,113 @@ def play_page(pl: dict, num: int, day: str) -> str:
                 day=day)
 
 
+CAT_FILES = {"apps": "apps.html", "minigames": "minigames.html", "saas": "web.html", "chrome": "chrome.html",
+             "shopify": "shopify.html"}
+
+
+def guidance_html(g: dict) -> str:
+    def pts(xs):
+        return "".join(f'<li><b>{e(x.get("point"))}</b>' + (f'<span>{e(x.get("evidence"))}</span>' if x.get("evidence") else "")
+                       + "</li>" for x in xs or [] if isinstance(x, dict) and x.get("point"))
+    cols = ""
+    for k, t, cls in (("direction", "Where to look", "c0"), ("growth", "How users arrive", "c2"), ("money", "How they charge", "c3")):
+        li = pts(g.get(k))
+        cols += f'<div class="gcol {cls}"><h3>{t}</h3><ul>{li or "<li class=muted>Not enough evidence yet.</li>"}</ul></div>'
+    solo = g.get("solo") or {}
+    steps = "".join(f"<li>{e(x)}</li>" for x in solo.get("first_week") or [])
+    you = ""
+    if solo.get("build") or solo.get("avoid"):
+        you = ('<div class="you"><h3>If you build here</h3>'
+               + (f'<p><span class="k">Build</span>{e(solo["build"])}</p>' if solo.get("build") else "")
+               + (f'<p><span class="k">Avoid</span>{e(solo["avoid"])}</p>' if solo.get("avoid") else "")
+               + (f'<ol>{steps}</ol>' if steps else "") + "</div>")
+    by = ('<span class="lbl lbl-inferred">agent analysis</span>' if g.get("by") == "agent"
+          else '<span class="lbl lbl-not_found">rules from the data</span>')
+    summ = f'<p class="gs">{e(g["summary"])}</p>' if g.get("summary") else ""
+    return (f'<section class="guide"><p class="gh">{e(g.get("headline"))}</p>{summ}'
+            f'<div class="gcols">{cols}</div>{you}<p class="muted small">{by}</p></section>')
+
+
+def mini_rows(rows: list, base: str, inv: dict, n: int = 12) -> str:
+    return '<ol class="dbl">' + "".join(lens_row(r, base, inv) for r in rows[:n]) + "</ol>"
+
+
+def lanes_table(lanes: list, base: str) -> str:
+    body = "".join(f'<tr><td><a href="{base}d/{e(l["slug"])}.html">{e(l["name"])}</a></td><td class="num"><b>{l["new_10k"]}</b></td>'
+                   f'<td class="num">{l["total"]:,}</td><td class="num">{fusd(l["usd"])}</td><td>'
+                   + " · ".join(f'{e(short(x["name"], 26))} <span class="muted">{fusd(x["usd"])}</span>' for x in l["examples"][:3])
+                   + "</td></tr>" for l in lanes if l["slug"] != "other")
+    return (f'<div class="tblwrap"><table class="tbl"><thead><tr><th>Lane</th><th>New, $10k+/mo</th><th>Tracked</th>'
+            f'<th>Est. month, all</th><th>Who</th></tr></thead><tbody>{body}</tbody></table></div>')
+
+
+def bars(items: list) -> str:
+    return '<div class="bars">' + "".join(
+        f'<div class="hb"><span>{e(k)}</span><i style="width:{max(2, share * 100):.0f}%"></i><b>{v:,}</b></div>'
+        for k, v, share in items) + "</div>"
+
+
+def cat_page(surface: str, st: dict, g: dict, briefs: list, inv: dict) -> str:
+    base = "../"
+    name, sub = categories.SURFACES[surface]
+    tiles = "".join(f'<div class="tile"><b>{e(v)}</b><span>{e(k)}</span>{f"<em>{e(h)}</em>" if h else ""}</div>'
+                    for v, k, h in st["kpis"])
+    nav = "".join(f'<a class="{"on" if k == surface else ""}" href="{f}">{e(categories.SURFACES[k][0])}</a>' for k, f in CAT_FILES.items())
+    body = ""
+    if st.get("lanes"):
+        body += f'<h2 class="sec">Lanes <span class="muted">sorted by how many products launched in the last year earn $10k+/month</span></h2>{lanes_table(st["lanes"], base)}'
+    if st.get("models"):
+        body += f'<h2 class="sec">How the earners charge</h2>{bars(st["models"])}'
+    if st.get("markets"):
+        tot = sum(v for _, v in st["markets"]) or 1
+        body += (f'<h2 class="sec">Where newcomers make money <span class="muted">country of the chart that ranks them best</span></h2>'
+                 + bars([(k, v, v / tot) for k, v in st["markets"]]))
+    if st.get("top_new"):
+        what = "users" if surface == "chrome" else "estimated month"
+        body += f'<h2 class="sec">Newcomers that already earn <span class="muted">launched recently, sorted by {what}</span></h2>{mini_rows(st["top_new"], base, inv)}'
+    if st.get("growers"):
+        body += f'<h2 class="sec">Fastest-growing MRR <span class="muted">30-day growth, payment-verified</span></h2>{mini_rows(st["growers"], base, inv)}'
+    if st.get("top") and not st.get("top_new"):
+        body += f'<h2 class="sec">Biggest earners</h2>{mini_rows(st["top"], base, inv)}'
+    if st.get("cats"):
+        rows = "".join(f'<tr><td>{e(c)}</td><td class="num">{n}</td><td class="num">{u:,}</td><td class="num"><b>{y}</b></td></tr>'
+                       for c, n, u, y in st["cats"])
+        body += (f'<h2 class="sec">Store categories</h2><div class="tblwrap"><table class="tbl"><thead><tr><th>Category</th>'
+                 f'<th>Tracked</th><th>Users, all</th><th>Published ≤2 years</th></tr></thead><tbody>{rows}</tbody></table></div>')
+    if st.get("genres"):
+        tot = sum(v for _, v in st["genres"]) or 1
+        body += f'<h2 class="sec">What charts on the boards <span class="muted">genre of every chart slot today</span></h2>' + bars(
+            [(k, v, v / tot) for k, v in st["genres"]])
+    if st.get("fresh"):
+        rows = "".join(f'<tr><td>{e(f["name"])}</td><td class="muted">{e(f["category"])}</td><td>{e(f["board"])}</td>'
+                       f'<td class="num"><b>#{f["rank"]}</b></td></tr>' for f in st["fresh"])
+        body += f'<h2 class="sec">New on the boards</h2><div class="tblwrap"><table class="tbl"><tbody>{rows}</tbody></table></div>'
+    if st.get("publishers"):
+        tot = sum(v for _, v in st["publishers"]) or 1
+        body += '<h2 class="sec">Who publishes them</h2>' + bars([(k, v, v / tot) for k, v in st["publishers"]])
+    if briefs:
+        body += (f'<h2 class="sec">Investigated here, last 14 days <span class="muted">{len(briefs)} briefs</span></h2>'
+                 f'<div class="cards">{"".join(card(r, base) for r in sorted(briefs, key=lambda r: -r["grade"]["score"])[:12])}</div>')
+    return f"""<section class="hero slim"><h1>{e(name)}</h1><p class="sub">{e(sub)}. What is working here, for whom, and what one or
+two people could build: guidance first, then the numbers behind it.</p></section>
+<div class="tabs static subtabs">{nav}</div>
+{guidance_html(g)}
+<div class="tiles">{tiles}</div>
+{body}"""
+
+
+def cat_index(st: dict, guid: dict) -> str:
+    cards = ""
+    for i, (k, f) in enumerate(CAT_FILES.items()):
+        g = guid.get(k, {}).get("guidance") or {}
+        v, lbl, _ = st[k]["kpis"][1]
+        cards += (f'<a class="ccard c{i % 6}" href="{f}"><span class="cn">{e(categories.SURFACES[k][0])}</span>'
+                  f'<b>{e(g.get("headline") or "")}</b><span class="ck"><em>{e(v)}</em> {e(lbl)}</span></a>')
+    return f"""<section class="hero slim"><h1>Categories</h1><p class="sub">One deep page per kind of product: apps, mini-programs,
+web &amp; SaaS, Chrome extensions and Shopify apps. Each says where the openings are, how products there get users, how they
+charge, and what a solo builder should try first.</p></section><div class="ccards">{cards}</div>"""
+
+
 def record_page(fu: dict) -> str:
     stats = fu["stats"]
     head = "".join(f"<th>D+{h}</th>" for h in synth.HORIZONS)
@@ -911,7 +1140,9 @@ Every page has a Markdown twin. Data date: {day}.
 ## Pages
 - [Today]({'index.md'}): today's briefs, ranked by grade
 - [Today as JSON](api/today.json): briefs + every candidate that crossed a line
-- [Product DB](db/index.html): every product we investigated, by surface, graded, with daily history
+- [Product DB](db/index.html): money lenses (followed and earning, unique angle, new and earning) over every app, SaaS and
+  Shopify app we can price, plus every product we investigated
+- [Categories](cat/index.html): one deep page per surface: apps, mini-programs, web & SaaS, Chrome extensions, Shopify apps
 - [Playbooks](plays/index.html): copyable moves verified by more than one product
 - [Directions](d/index.html), [Charts](charts.html), [Track record](record.html)
 
@@ -971,17 +1202,49 @@ def write(con) -> None:
     rows = synth.products(con)
     db_counts = {s: sum(1 for r in rows if r["rep"]["surface"] == s) for s in SURFACE_ORDER}
     (OUT / "db" / "p").mkdir(parents=True, exist_ok=True)
+    # v4: the money lenses over every product we can price, and one deep page per category
+    uday = appdb._day(con)
+    uni = appdb.universe(con, uday)
+    lens = appdb.lenses(uni, uday)
+    lens_counts = {k: len(v) for k, v in lens.items()}
+    lanes = appdb.by_lane(appdb.solo_fit(uni))
+    lane_of = {l["slug"]: l for l in lanes}
+    inv, money_of = {}, {}
+    by_key = {(r["source"], r["pid"]): r for r in uni}
+    for r in rows:
+        rep = r["rep"]
+        for src, pid in [(rep["source"], rep["pid"])] + [(x["source"], x["pid"]) for x in rep.get("siblings") or []]:
+            inv[(src, pid)] = slug(r["entity"])
+            if (src, pid) in by_key and r["entity"] not in money_of:
+                money_of[r["entity"]] = by_key[(src, pid)]
+    for k, fname in LENS_FILES:
+        (OUT / "db" / fname).write_text(page(f"{appdb.LENSES[k][0]} · Product DB · {SITE}",
+                                             db_lens_page(k, lens[k], lanes, inv, lens_counts, sum(db_counts.values())),
+                                             base="../", active="db", day=day), encoding="utf-8")
     for s, fname in DB_TABS:
         (OUT / "db" / fname).write_text(page(f"Product DB · {SURFACE_NAME[s]} · {SITE}",
-                                             db_page(s, [r for r in rows if r["rep"]["surface"] == s], db_counts),
+                                             db_page(s, [r for r in rows if r["rep"]["surface"] == s], db_counts, lens_counts),
                                              base="../", active="db", day=day), encoding="utf-8")
+    cat_stats = categories.stats(con, uday, uni)
+    guid = categories.load().get("surfaces") or {}
+    (OUT / "cat").mkdir(exist_ok=True)
+    (OUT / "cat" / "index.html").write_text(page(f"Categories · {SITE}", cat_index(cat_stats, guid), base="../",
+                                                 active="cats", day=day), encoding="utf-8")
+    recent = [r for r in all_reps if r["day"] >= (datetime.strptime(day, "%Y-%m-%d") - timedelta(days=14)).strftime("%Y-%m-%d")]
+    for k, fname in CAT_FILES.items():
+        g = (guid.get(k) or {}).get("guidance") or categories._rules(k, cat_stats[k], [r for r in recent if r["surface"] == k])
+        (OUT / "cat" / fname).write_text(page(f"{categories.SURFACES[k][0]} · Categories · {SITE}",
+                                              cat_page(k, cat_stats[k], g, [r for r in recent if r["surface"] == k], inv),
+                                              base="../", active="cats", day=day), encoding="utf-8")
     in_plays = {}
     for pl in plays:
         if pl["induced"]:
             for c in pl["cases"]:
                 in_plays.setdefault((c["rid"], pl["category"]), []).append((pl["id"], pl["recipe"]))
     for r in rows:
-        (OUT / "db" / "p" / f"{slug(r['entity'])}.html").write_text(product_page(r, synth.history(con, r["rep"]), in_plays),
+        (OUT / "db" / "p" / f"{slug(r['entity'])}.html").write_text(product_page(r, synth.history(con, r["rep"]), in_plays,
+                                                                                 money_of.get(r["entity"]),
+                                                                                 lane_of.get(r["rep"]["direction"])),
                                                                     encoding="utf-8")
     (OUT / "record.html").write_text(page(f"Track record · {SITE}", record_page(synth.followups(con, day)), active="record",
                                           day=day), encoding="utf-8")

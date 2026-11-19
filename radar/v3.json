@@ -16,6 +16,8 @@
     "gravity": {"pace": 1.0},
     "itunes": {"pace": 1.0},
     "gplay": {"gp_max": 600, "pace": 0.3},
+    "chrome": {"pace": 1.5},
+    "shopify": {"pace": 3.0, "detail_max": 100},
     "github_languages": ["", "python", "typescript", "javascript", "go", "rust", "swift", "kotlin"]
   },
 
@@ -24,6 +26,8 @@
     "min_baseline_points": 3,
     "gp_installs":   {"mult": 3.0, "floor": 300,  "label": "Daily installs",        "unit": ""},
     "ios_ratings":   {"mult": 3.0, "floor": 20,   "label": "Daily new ratings",     "unit": ""},
+    "shop_reviews":  {"mult": 3.0, "floor": 5,    "label": "Daily new reviews",     "unit": ""},
+    "cws_users":     {"mult": 3.0, "floor": 2000, "label": "Daily new users",       "unit": ""},
     "gh_stars":      {"mult": 3.0, "floor": 100,  "cold_floor": 400, "label": "Daily new stars", "unit": ""},
     "chart_jump":    {"min_jump": 30, "max_rank": 50, "label": "Chart rank"},
     "chart_new":     {"max_rank": 100, "label": "Newly on chart"},
