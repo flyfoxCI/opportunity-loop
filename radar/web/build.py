@@ -81,10 +81,23 @@ def fdate(d: str) -> str:
 
 # ---------------------------------------------------------------- components
 
+NAV_ICON = {
+    "today": '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+    "db": '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+    "plays": '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+    "dirs": '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+    "charts": '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    "record": '<path d="M20 6 9 17l-5-5"/>',
+}
+
+
 def page(title: str, body: str, *, base: str = "", active: str = "", desc: str = "", day: str = "") -> str:
     nav = [("index.html", "Today", "today"), ("db/index.html", "Product DB", "db"), ("plays/index.html", "Playbooks", "plays"),
            ("d/index.html", "Directions", "dirs"), ("charts.html", "Charts", "charts"), ("record.html", "Track record", "record")]
-    links = "".join(f'<a href="{base}{h}" class="{"on" if k == active else ""}">{t}</a>' for h, t, k in nav)
+    links = "".join(f'<a href="{base}{h}" class="{"on" if k == active else ""}"><svg width="16" height="16" viewBox="0 0 24 24" '
+                    f'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '
+                    f'aria-hidden="true">{NAV_ICON[k]}</svg>{t}</a>' for h, t, k in nav)
+    stamp = datetime.strptime(day, "%Y-%m-%d").strftime("data %b %-d, %Y") if day else "daily breakouts"
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -93,24 +106,29 @@ def page(title: str, body: str, *, base: str = "", active: str = "", desc: str =
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc or 'Which small products took off yesterday, why, and how a solo builder could follow.')}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Newsreader:opsz,wght@6..72,600;6..72,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{base}assets/site.css">
 <link rel="alternate" type="application/rss+xml" title="{SITE}" href="{base}feed.xml">
 <script>try{{var t=localStorage.getItem('ol-theme');if(t)document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 </head>
 <body>
-<header class="top"><div class="wrap top-in">
-  <a class="brand" href="{base}index.html"><span class="mark">◎</span> {SITE}<span class="ver">v3</span></a>
-  <nav class="nav">{links}</nav>
-  <button class="theme" type="button" aria-label="Toggle dark mode" onclick="olTheme()">◐</button>
-</div></header>
+<div class="shell">
+<aside class="rail">
+  <a class="brand" href="{base}index.html"><span class="logo">O</span><span><b>{SITE}</b><i>{e(stamp)}</i></span></a>
+  <nav class="nav" aria-label="Sections">{links}</nav>
+  <div class="railfoot"><span>Updated daily · 06:30 UTC</span>
+    <a href="{base}feed.xml">RSS feed</a><a href="{base}llms.txt">llms.txt</a><a href="{base}api/today.json">Today as JSON</a>
+    <button class="theme" type="button" aria-label="Toggle dark mode" onclick="olTheme()">◐ Theme</button></div>
+</aside>
+<div class="main">
 <main class="wrap">{body}</main>
 <footer class="foot wrap">
-  <div>{SITE} · daily breakout intelligence · data {e(day)} ·
-  <a href="{base}llms.txt">llms.txt</a> · <a href="{base}api/today.json">JSON</a> · <a href="{base}feed.xml">RSS</a></div>
-  <div class="muted">Every number links to its source and carries a label: verified, estimated, inferred or not found.
+  <div>{SITE} · daily breakout intelligence for solo builders · data {e(day)}</div>
+  <div>Every number links to its source and carries a label: verified, estimated, inferred or not found.
   Charts are never padded. Not investment advice.</div>
 </footer>
+</div>
+</div>
 <script src="{base}assets/site.js"></script>
 </body>
 </html>"""
@@ -193,17 +211,23 @@ def card(rep: dict, base: str) -> str:
     echo = rep["demand_echo"]
     rank = b.get("rule") in synth.RANK_RULES
     take = rep.get("takeaway") or rep.get("follow", {}).get("wedge") or ""
+    name = p.get("name") or ""
+    title = (e(rep["lesson_title"]) if name[:12].lower() in rep["lesson_title"].lower()
+             else f'<b>{e(short(name, 40))}</b>: {e(rep["lesson_title"])}')
+    meta = [SOURCE_TEXT.get(rep["source"], rep["source"])]
+    if p.get("developer"):
+        meta.append(e(short(p["developer"], 30)))
+    if p.get("age_days") is not None:
+        meta.append(f"{p['age_days']} days old")
     return f"""<article class="card" data-surface="{e(rep['surface'])}" data-text="{e((p.get('name') or '') + ' ' + rep['direction_name'] + ' ' + rep['lesson_title']).lower()}">
-  <div class="card-l">{grade_badge(rep['grade'])}</div>
+  <div class="card-l">{icon(p, 48)}</div>
   <div class="card-m">
-    <a class="ttl" href="{href}">{e(rep['lesson_title'])}</a>
-    <div class="who">{icon(p, 28)}<span><b>{e(short(p.get('name')))}</b> <span class="muted">· {item_meta(rep)}</span></span></div>
+    <a class="ttl" href="{href}">{title}</a>
     {f'<p class="why">{chip(why["label"])} {e(why["text"])}</p>' if why else (f'<p class="why muted">{e(what)}</p>' if what else '')}
     {f'<p class="take"><span class="k">Take</span> {e(take)}</p>' if take else ''}
-    <div class="tags"><a class="tag" href="{base}d/{e(rep['direction'])}.html">{e(rep['direction_name'])}</a>
-      <span class="tag ghost">{e(RULE_TEXT.get(b.get('rule'), b.get('rule')))}</span>
-      <span class="echo" title="Buyer-intent Reddit threads in this direction, last 14 days">demand {echo_dots(echo['threads_14d'])} {echo['threads_14d']} threads</span>
-      {'<span class="tag agent">agent-checked</span>' if rep['mode'] == 'agent' else ''}</div>
+    <div class="tags">{grade_badge(rep['grade'])}<span>{' · '.join(meta)}</span>
+      <a class="tag" href="{base}d/{e(rep['direction'])}.html">{e(rep['direction_name'])}</a>
+      <span class="echo" title="Buyer-intent Reddit threads in this direction, last 14 days">demand {echo_dots(echo['threads_14d'])} {echo['threads_14d']}</span></div>
   </div>
   <div class="card-r">{metric_badge(b)}<div class="sp {'rank' if rank else ''}">{spark(rep.get('curve') or [], rank=rank)}</div></div>
 </article>"""
@@ -257,6 +281,11 @@ def today_page(day: str, reps: list, cands: list, all_days: list) -> str:
     mode_note = ("" if agent_n else '<div class="note">These briefs are <b>data-only</b>: every number is measured, '
                  'the trigger says "not checked" until the agent investigation (LLM + TinyFish) runs in CI.</div>')
     prev = [d for d in all_days if d < day][:6]
+    lanes = sorted(((n, d) for d, n in top_dir.items() if d not in ("other",)), reverse=True)[:10]
+    dirbox = ("" if not lanes else '<section class="dirbox" aria-label="Directions"><div class="dirhead"><span><b>By direction</b>'
+              'where the moves cluster today</span><a href="d/index.html">All directions →</a></div><div class="dirgrid">'
+              + "".join(f'<a class="dirt dt{i % 6}" href="d/{e(d)}.html"><b>{e((BY_SLUG.get(d) or {}).get("name", d))}</b>'
+                        f'<span>{n:,} crossed a line</span></a>' for i, (n, d) in enumerate(lanes)) + "</div></section>")
     return f"""
 <section class="hero">
   <div class="date">{datetime.strptime(day, '%Y-%m-%d').strftime('%A, %B %-d, %Y')}</div>
@@ -266,6 +295,7 @@ def today_page(day: str, reps: list, cands: list, all_days: list) -> str:
   Every move is measured against the product's own recent baseline or the source's own change figure.</p>
   <div class="tiles">{tiles}</div>
 </section>
+{dirbox}
 {mode_note}
 <div class="bar"><div class="tabs" role="tablist">{tabs}</div>
 <input class="search" type="search" placeholder="Filter by name or direction" aria-label="Filter"></div>
@@ -611,14 +641,16 @@ def db_item(row: dict, base: str) -> str:
     text = " ".join([p.get("name") or "", rep["direction_name"], verdict, follow, p.get("developer") or "",
                      " ".join(CAUSES.get(c, c) for c in rep.get("causes") or [])]).lower()
     return f"""<li data-p="{' '.join(plats)}" data-v="{e(rep.get('visibility') or 'x')}" data-g="{g['grade']}" data-text="{e(text)}">
-  <span class="lg">{icon(p, 48)}</span>
+  <span class="lg">{icon(p, 52)}</span>
   <div class="bd">
-    <div class="hd">{grade_badge(g)}<a class="nm" href="{base}db/p/{slug(row['entity'])}.html">{e(short(p.get('name'), 60))}</a>{''.join(f'<i class="st">{PLATFORM.get(x, x)}</i>' for x in plats)}</div>
+    <div class="hd"><a class="nm" href="{base}db/p/{slug(row['entity'])}.html">{e(short(p.get('name'), 60))}</a>{''.join(f'<i class="st">{PLATFORM.get(x, x)}</i>' for x in plats)}</div>
     {f'<div class="vd">{e(verdict)}</div>' if verdict else ''}
     {f'<div class="how"><b>How to follow</b> {e(follow)}</div>' if follow else ''}
     <div class="mt">{vis_pill(rep.get('visibility'))}{cause_tags(rep)}<a class="tg ghost" href="{base}d/{e(rep['direction'])}.html">{e(rep['direction_name'])}</a>
       <span class="muted">{e(p.get('developer') or '')}{' · ' if p.get('developer') else ''}{len(row['breakouts'])} breakout{'s' if len(row['breakouts']) > 1 else ''} · last {fdate(rep['day'])}</span></div>
   </div>
+  <div class="rc"><span class="grade g-{g['grade']}" title="{e(g['text'])}">{g['grade']} · {g['score']}</span>
+    <span class="mv">{move_text(rep['badge'])}</span><small>{e(rep['badge'].get('metric') or '')}</small></div>
 </li>"""
 
 
@@ -710,8 +742,10 @@ def product_page(row: dict, charts: list, in_plays: dict | None = None) -> str:
     chart_html = "".join(linechart(c) for c in charts)
     body = f"""<a class="back" href="{base}db/{dict(DB_TABS).get(rep['surface'], 'index.html')}">← Product DB · {e(SURFACE_NAME.get(rep['surface'], ''))}</a>
 <div class="crumb">{e(SURFACE_NAME.get(rep['surface'], ''))} · {' + '.join(PLATFORM.get(x, x) for x in plats)} · written {fdate(rep['day'])}</div>
-<div class="who big">{icon(p, 44)}<span><b>{e(p.get('name'))}</b>{(' · ' + e(p['developer'])) if p.get('developer') else ''}</span></div>
-<h1 class="ph1">{e(rep['lesson_title'])}</h1>
+<header class="phead"><div>
+<div class="who big">{icon(p, 52)}<span><b>{e(p.get('name'))}</b>{(' · ' + e(p['developer'])) if p.get('developer') else ''}</span></div>
+<h1 class="ph1">{e(rep['lesson_title'])}</h1></div>
+<div class="gbox">{grade_badge(g, True)}<b>{g['score']} / 100</b><span>{e(g['text'])}</span></div></header>
 <section class="kvs">{summ_html}</section>
 <section class="blk"><h2>Data <span class="muted">updated daily</span></h2>
   <p class="facts">{' · '.join(facts) or '<span class="muted">No store measurements for this surface.</span>'}</p>
