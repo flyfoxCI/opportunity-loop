@@ -1,13 +1,12 @@
-# Turn one long-video workflow into short-form distribution
+# Repurpose long videos into shorts to capture creator demand
 
 > Scalereach.ai · TrustMRR · https://trustmrr.com/startup/scalereach
-> MRR: 2.4K → 6.2K (8 days, own-baseline)
+> MRR: 2.4K → 6.3K (8 days, own-baseline)
 > Grade A (67/100, Worth following) · direction: AI video & UGC ads · mode: agent
 
 ## Why it moved
-- [fact] Verified MRR increased from $2,359.26 to $6,176.52 over an eight-day window. (https://trustmrr.com/startup/scalereach)
-- [inferred] The evidence links to Tinyfish CLI documentation, but does not explain a specific growth mechanism. (https://docs.tinyfish.ai/cli)
-- [not_found] No direct customer-acquisition or product-change evidence is provided. (https://trustmrr.com/startup/scalereach)
+- [fact] MRR increased from $2,359.26 to $6,337.97 over an eight-day window, a 2.69x increase. (https://trustmrr.com/startup/scalereach)
+- [not_found] The evidence does not identify which specific action caused the revenue increase. (https://trustmrr.com/startup/scalereach)
 
 ## Discount the numbers
 
@@ -19,21 +18,21 @@
 - Genuine advise need to build a channel (https://www.reddit.com/r/NewTubers/comments/1xzlm7e/)
 
 ## How to follow
-- play: Validate a link-to-clips workflow before adding broader publishing integrations.
-- wedge: Start with one long-video source and one short-form destination.
-- avoid: Do not assume the MRR lift proves scalable distribution; the acquisition trigger is not found.
+- play: Build around an existing long-video asset and automate short-form clipping.
+- wedge: Start with creators whose audience and content live on different platforms.
+- avoid: Do not claim virality, workflow advantages, or a specific acquisition channel without evidence.
 
 ### Validate in 72 hours
-1. Interview five creators who already repurpose long videos.
-1. Manually turn one creator's video into three platform-ready clips.
-1. Test whether faster, better clips increase willingness to pay.
+1. Interview five active YouTube or Twitch creators about their current clipping process.
+1. Run three manual clipping tests using creators' real long videos.
+1. Measure time saved and whether participants publish the generated clips.
 
 ### 14-day MVP
-1. Build a narrow link-to-clip workflow for one source and one destination.
-1. Add a review-and-edit step for selected moments.
-1. Offer a paid plan after users approve generated clips.
+1. Support YouTube links and vertical TikTok, Reels, and Shorts exports.
+1. Add a review screen for selecting and adjusting selected moments.
+1. Instrument uploads, exports, published clips, and paid conversions.
 
 ### First 30 users
-1. Recruit 10 creators from one community for concierge clip generation.
-1. Ask another 10 creators to compare the output with their manual workflow.
-1. Track time saved, clip approval rate, weekly usage, and paid conversion.
+1. Recruit ten creators from NewTubers and ten video creators through direct outreach.
+1. Offer a guided import of one long video per creator.
+1. Interview each user after their first export and track activation and repeat use.

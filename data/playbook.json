@@ -1,4 +1,260 @@
 {
  "updated": "2026-11-20",
- "plays": []
+ "plays": [
+  {
+   "id": "p01",
+   "category": "direction",
+   "recipe": "Survey one underserved audience, identify the same recurring decision or workaround in at least five recent responses, then ship one focused workflow for that exact task and measure its adoption for 14 days.",
+   "why": "Repeated audience-specific pain can narrow product scope, but the evidence shows only that focused workflow updates coincided with rank gains, not that surveying caused growth.",
+   "steps": [
+    {
+     "do": "Select one audience with a recurring problem, collect at least five recent complaints or interviews, and choose the task mentioned most often; do not treat broad category interest as validation.",
+     "evidence": "ThriftLens was described for resale candidates, with camera scans producing “brand recognition, resale value, and profit potential”; its Indonesia chart moved from #104 to #4, but no survey was found. ProPi System Analyzer was explicitly designed for “sound engineers, technicians, and live sound professionals” and reached #4 in Indonesia’s paid Utilities chart from #131, but the survey was not shown.",
+     "inferred": true
+    },
+    {
+     "do": "Shape the first screen around one named decision: whether an item is worth buying, whether a sound system needs alignment, or when a storage bucket will reach its included-price threshold.",
+     "evidence": "HeC v3.0, released 2026-11-16, visualizes bucket and Storage Box growth and projects when they reach the “1 TB included-price threshold.” ThriftLens says a camera scan “instantly analyzes the image” and returns a report on resale value and profit potential. ProPi lists real-time measurement and system-alignment tools for sound professionals.",
+     "inferred": false
+    },
+    {
+     "do": "Prepare to catch the traffic by choosing one country and language evidenced by a demand signal, then localize the selected task before adding broader features.",
+     "evidence": "ThriftLens was tracked in Indonesia and described resale scanning; ProPi reached #4 in Indonesia’s paid Utilities chart. HeC was available in German and English and reached Germany Developer Tools grossing rank #6 from #103. No case directly documents this localization step.",
+     "inferred": true
+    },
+    {
+     "do": "Release one focused update within seven days, limited to the selected workflow, and record the date and the exact pre-update failure removed.",
+     "evidence": "HeC shipped v3.0 on 2026-11-16 with storage-growth projections and alerts for unexpected behavior, then its Germany Developer Tools grossing rank rose from #103 to #6. mystc SA shipped v5.0.19 on 2026-11-18 with a new Home, Line Hub, refreshed Store, loyalty programs, saved locations, themes, and smoother actions, then moved from #88 to #7 on SA Top Free. These are rankings, not downloads, and neither source excludes rival explanations.",
+     "inferred": false
+    },
+    {
+     "do": "Measure the selected country-category rank and the task’s repeat use for 14 days; change the workflow only if the signal persists beyond the first observation.",
+     "evidence": "HeC reached grossing rank #6 but fell from #108 to #76 in the free chart, so the lanes diverged. mystc SA rose 81 places in one day, but only three days of its history were tracked. Content Manager shipped v3.12.1 on 2026-11-19 and later rose 39 places in Brazil, but no usage data or causal attribution was supplied.",
+     "inferred": true
+    }
+   ],
+   "cases": [
+    {
+     "rid": "2026-11-20-app-189085078519225132979984249315312126155",
+     "did": "On 2026-11-20, ThriftLens was first seen at #104 before the tracked source recorded #4 on Indonesia’s Top Grossing · Shopping chart; its listing already positioned camera scans around “brand recognition, resale value, and profit potential.”",
+     "result": "The chart recorded a 100-place gain since yesterday. This is a rank change, not a new-install count, and only one day of the product’s history was tracked.",
+     "causality": "weak"
+    },
+    {
+     "rid": "2026-11-20-app-37680272124765837094752244450277813628",
+     "did": "On 2026-11-16, HeC shipped v3.0; its release notes say it shows how buckets and Storage Boxes grow, projects when they reach the “1 TB included-price threshold,” and alerts users to unexpected behavior.",
+     "result": "By 2026-11-19, HeC was first seen on the tracked chart; its Germany Developer Tools grossing rank later rose 97 places from #103 to #6. The rank is not an install count, and the free-chart rank fell from #108 to #76.",
+     "causality": "medium"
+    },
+    {
+     "rid": "2026-11-19-app-2002610190005379",
+     "did": "On 2026-10-19, the developer released ProPi System Analyzer for “sound engineers, technicians, and live sound professionals”; its listing describes real-time measurement and system-alignment tools.",
+     "result": "By 2026-11-18, it had reached #4 in Indonesia’s paid Utilities chart from #131, a 127-place improvement. The ranking does not show how many users or sales resulted, and the evidence does not show when within the window the gain occurred.",
+     "causality": "weak"
+    },
+    {
+     "rid": "2026-11-20-app-2002607290000509",
+     "did": "On 2026-11-18, STC shipped mystc SA version 5.0.19 with a new Home, dedicated Line Hub, refreshed Store, loyalty programs, saved locations, themes, and smoother actions; its notes began, “Welcome to the all-new mystc app, reimagined to introduce a new era for mystc with a fully redesigned experience.”",
+     "result": "By the next daily observation, the app was rank 7 on SA Top Free versus rank 88 before the update, an 81-place increase; this was a rank change, not a download count or cumulative-growth total.",
+     "causality": "medium"
+    },
+    {
+     "rid": "2026-11-20-app-87050734275331259542588657015784760558",
+     "did": "On 2026-11-19, Content Manager shipped version 3.12.1 after more than two years on the App Store; the available notes did not disclose a particular new feature or explicit demand-led change.",
+     "result": "By the measured crossing, it had risen from #41 to #2 in Brazil and also moved 84 places to #6 in Japan, 182 to #15 in the US, 167 to #15 in Germany, and 149 to #29 in Indonesia. These were grossing-rank changes, not new-user counts, and the update was not proven to have caused them.",
+     "causality": "weak"
+    }
+   ],
+   "counter": [
+    {
+     "rid": "2026-11-20-app-87050734275331259542588657015784760558",
+     "name": "",
+     "what": "Content Manager shipped version 3.12.1 on 2026-11-19, but the available notes disclosed no particular feature or demand-led change; its later Brazil grossing rise therefore cannot be assigned to a validated workflow."
+    },
+    {
+     "rid": "2026-11-20-app-189085078519225132979984249315312126155",
+     "name": "",
+     "what": "ThriftLens used a resale-decision workflow and moved 100 chart places in one day, but no survey, launch post, advertisement, platform feature, pricing change, or other distribution event was found to connect its workflow to the lift."
+    }
+   ],
+   "suits": "Suits solo builders with access to a concentrated user community, customer interviews, app-store reviews, forums, or issue trackers, and the ability to ship a narrow update quickly. It is strongest for recurring utilities where one decision can be completed in a single screen or report.",
+   "prerequisites": "Requires a reachable audience for at least five recent complaints, a measurable repeated task, one country or language to test, and the ability to instrument task completion and repeat use independently of app-store rank.",
+   "risks": [
+    "Survey demand may not convert into usage",
+    "Localizing too many features can dilute the wedge",
+    "Platform review or release timing can distort rank data",
+    "A chart spike can reflect seasonality, paid acquisition, or another release"
+   ],
+   "notes": [
+    "The recurring pattern is a narrow user task plus a visible workflow, but only HeC’s release notes directly identify the task and connect it to a dated update. ProPi was built for a clearly named professional audience, while ThriftLens offers a concrete resale-decision report; neither documents the proposed survey.\n\nThe most actionable sequence is validation, one focused task, one release, and a 14-day read. The evidence does not prove that surveying drove growth; its defensible value is reducing the risk of building the wrong feature. All results are short-window chart positions rather than installs, revenue, or retention, so causality is weak or medium at best."
+   ],
+   "changed": "Checking confirmed the draft’s weak-causality framing but required adding Content Manager as a fifth case because it took the same focused-release direction. It also tightened the causality assessment, separated HeC’s diverging free and grossing charts, and marked the survey, localization, and 14-day measurement steps as inferred because no case directly documented them."
+  },
+  {
+   "id": "p02",
+   "category": "growth",
+   "recipe": "Publish one before-and-after demo in the audience's exact community, show the completed result rather than a feature list, and attach a unique source link before publishing.",
+   "why": "A visible transformation lowers interpretation cost and creates a traceable path from attention to activation, but the supplied cases do not establish that any demo or channel caused their measured revenue changes.",
+   "steps": [
+    {
+     "do": "Select a community where the same job is requested repeatedly, choose one high-friction action, and confirm that the community permits a concrete demo; do not infer a channel from revenue or discussion growth alone.",
+     "evidence": "Superjoin's proposed channel was its own community, but the investigation found no Superjoin post, reply, video, advertisement, store feature, roundup, or platform launch. Its 73 demand-echo threads covered broad productivity and Notion topics, so Superjoin's involvement was not established.",
+     "inferred": true
+    },
+    {
+     "do": "Shape the demo around one complete before-and-after result, showing the exact input and finished output instead of a general feature explanation.",
+     "evidence": "TrendStory says users can create “viral videos in just a few clicks for TikTok, Instagram, and YouTube Shorts,” while Superjoin connects live HubSpot, Salesforce, and 30+ integrations to Google Sheets and Excel with scheduled refreshes and two-way HubSpot sync. Neither investigation documented an actual demonstration or acquisition post.",
+     "inferred": false
+    },
+    {
+     "do": "Prepare one destination page and one unique source or referral link for the specific post, reply, video, or landing page being tested.",
+     "evidence": "Superjoin's demand-echo count increased from 5 to 73 across two 14-day periods, but no identified Superjoin post or source linked those threads to the product. TrendStory's acquisition source likewise was not established.",
+     "inferred": true
+    },
+    {
+     "do": "Publish one demo in the selected community with the channel, hook, and cadence specified, then test a second format only after seven days of source-level data.",
+     "evidence": "TrendStory's stated output spans TikTok, Instagram, and YouTube Shorts, but no acquisition campaign or documented publishing cadence was found. Superjoin's investigation likewise found no documented distribution event.",
+     "inferred": true
+    },
+    {
+     "do": "Measure source clicks, signups, completed core actions, and paid conversions for seven days; keep rank or revenue secondary and change the hook only after source attribution is complete.",
+     "evidence": "Superjoin's verified MRR rose from $10,458 to $96,757 over one day, a 9.25x increase, but the evidence does not identify which launch, promotion, pricing change, or distribution event caused it. TrendStory's source-reported MRR rose from $38,149.23 to $67,035.28 over 30 days, a 1.76x increase, while acquisition channels, conversion rates, and campaign counts were not established.",
+     "inferred": true
+    }
+   ],
+   "cases": [
+    {
+     "rid": "2026-11-20-trustmrr-superjoin",
+     "did": "Superjoin offers live data from HubSpot, Salesforce, and 30+ integrations into Google Sheets and Excel, with scheduled refreshes and two-way HubSpot sync; no Superjoin post, reply, video, advertisement, store feature, roundup, or platform launch was found.",
+     "result": "Verified MRR increased from $10,458 to $96,757 over one day, a 9.25x rise. Demand-echo threads increased from 5 to 73 across two 14-day periods, but they concern broad productivity and Notion topics; neither figure establishes that a demo caused growth.",
+     "causality": "weak"
+    },
+    {
+     "rid": "2026-11-19-trustmrr-trendstory",
+     "did": "TrendStory says users can create “viral videos in just a few clicks for TikTok, Instagram, and YouTube Shorts”; no acquisition campaign or documented demo was found.",
+     "result": "Source-reported MRR increased from $38,149.23 to $67,035.28 over 30 days, a 1.76x rise. The evidence provides no customer counts, acquisition channels, conversion rates, or attributable campaigns, so the increase cannot be credited to a demo.",
+     "causality": "weak"
+    }
+   ],
+   "counter": [
+    {
+     "rid": "2026-11-20-trustmrr-superjoin",
+     "name": "Superjoin",
+     "what": "MRR increased from $10,458 to $96,757 over one day, but no Superjoin acquisition post or distribution event was found; the rise cannot validate a community demo."
+    },
+    {
+     "rid": "2026-11-19-trustmrr-trendstory",
+     "name": "TrendStory",
+     "what": "MRR increased by $28,886.05 over 30 days while no acquisition campaign, channel attribution, or documented demo was recorded."
+    }
+   ],
+   "suits": "Suits solo builders with a repeatable core action that can be demonstrated quickly, access to a concentrated community, and the ability to add source links and basic product analytics. It is especially useful when prospects understand the problem but need a concrete example of the completed outcome.",
+   "prerequisites": "Requires one working demo, a destination page, unique source links, and separate tracking for source visits, signups, activation, and payment. The community must be selected from direct audience evidence rather than inferred from revenue, rankings, or broad discussion growth.",
+   "risks": [
+    "Community rules may prohibit promotion",
+    "Broad demos can attract curiosity without qualified users",
+    "Attribution links can be stripped or ignored",
+    "A completed result can expose implementation or quality weaknesses"
+   ],
+   "notes": [
+    "The cases support two typologies: a data workflow with a tangible before-and-after state and a short-form creation workflow whose output can appear across three platforms. Both make the result easier to understand, but neither investigation documents a demo, channel, cadence, or attributable acquisition source.\n\nTreat this play as an attribution discipline as much as a content tactic. The revenue increases and discussion counts are measured outcomes, not proof that community demos caused them; source-level records are required before repeating or scaling the tactic."
+   ],
+   "changed": "Checking removed the unsupported attribution to demos and campaigns: neither case documents a published before-and-after demo or an attributable channel. It also corrected the figures to Superjoin's one-day 9.25x MRR rise and TrendStory's source-reported 30-day 1.76x rise, while retaining both only as weak cases."
+  },
+  {
+   "id": "p03",
+   "category": "monetization",
+   "recipe": "Give users one complete useful result free, then offer one paid plan at the repeat action; disclose price, renewal cadence, usage limits, and the exact unlocked capability before checkout.",
+   "why": "A free completed result can demonstrate value before asking for payment, but the available cases do not establish that this lock point caused revenue growth.",
+   "steps": [
+    {
+     "do": "Select a repeatable task where users can complete one useful result free, then require payment for the next use; do not start with a signup-time or launch-time paywall.",
+     "evidence": "Organize fotos: FocusClean states, “Organize até 100 fotos gratuitamente por mês,” and lists in-app purchases, but no price, locked feature, trial, or upgrade moment was found. mise was listed as “Gratis” with in-app purchases and generated personalized meal plans, but its paid capability and purchase moment were also absent; no case directly demonstrates the proposed selection rule.",
+     "inferred": true
+    },
+    {
+     "do": "Shape the free path around one complete result, then place the paid offer at the repeated action and state exactly what the payment unlocks.",
+     "evidence": "Content Manager: AI Сleaner is free with in-app purchases and says, “UM ANO GRÁTIS PARA ESTUDANTES,” while its core flow reviews and deletes unwanted content. However, no evidence identifies the paid capability or proves that the offer appears after a completed cleanup, so this step is inferred.",
+     "inferred": true
+    },
+    {
+     "do": "Prepare a checkout screen showing one price, renewal cadence, included usage, and a direct comparison between the free allowance and paid limit.",
+     "evidence": "Organize fotos: FocusClean documents a free allowance of “até 100 fotos … por mês” and has in-app purchases, but supplies no paid price or renewal terms. Content Manager offers “UM ANO GRÁTIS PARA ESTUDANTES,” but the evidence does not provide the plan price, renewal cadence, or exact lock point.",
+     "inferred": true
+    },
+    {
+     "do": "Run one test with one price and one post-result trigger, keep the free allowance visible, and record the copy and checkout path used.",
+     "evidence": "The dated app evidence shows free-with-in-app-purchase models: mise was captured on 2026-11-19 as “Gratis”; Content Manager shipped v3.12.1 on 2026-11-19 and remained free with in-app purchases; and Organize fotos: FocusClean was captured on 2026-11-20 with 100 free photo cleanups per month. None supplies a completed-result trigger or a documented price, so the test parameters are not directly evidenced.",
+     "inferred": true
+    },
+    {
+     "do": "Measure completed free results, paywall views, purchases, refunds, and seven-day repeat use for 30 days; change one price or limit only after the first cohort is readable.",
+     "evidence": "SmartlyCV's verified MRR increased from $61.70 to $450.44 over the source's 30-day window, a 7.3× rise, but its plan, price, trial, subscriber count, and checkout moment were not provided. TrendStory's verified MRR increased from $38,149.23 to $67,035.28 over 30 days, a 1.76× rise, but its pricing and payment moment were also unknown; neither supports the proposed measurement design causally.",
+     "inferred": true
+    }
+   ],
+   "cases": [
+    {
+     "rid": "2026-11-19-trustmrr-smartlycv",
+     "did": "SmartlyCV packages ATS-tailored resumes, cover letters, interview practice, and application management in one workspace; as captured on 2026-11-19, it had verified MRR, but the evidence provides no plan, price, trial, free allowance, or exact checkout moment.",
+     "result": "Its verified MRR rose from $61.70 to $450.44 over the source's 30-day window, a 7.3× increase. This does not reveal subscriber count, price, retention, or whether the proposed post-result offer caused the increase.",
+     "causality": "weak"
+    },
+    {
+     "rid": "2026-11-19-trustmrr-trendstory",
+     "did": "TrendStory is categorized as SaaS and creates short-form videos for TikTok, Instagram, and YouTube Shorts; as captured on 2026-11-19, it had verified revenue, but no evidence shows a free result, locked capability, price, trial, or export-time payment prompt.",
+     "result": "Its verified MRR rose from $38,149.23 to $67,035.28 over the source's 30-day window, a 1.76× increase. The evidence does not establish monetization at export or any causal contribution from the proposed offer.",
+     "causality": "weak"
+    },
+    {
+     "rid": "2026-11-20-app-174064538116109081983483105406681882060",
+     "did": "Organize fotos: FocusClean states, “Organize até 100 fotos gratuitamente por mês,” and lists in-app purchases; as captured on 2026-11-20, no price, locked feature, trial, or upgrade timing was found.",
+     "result": "The app rose from #100 to #15 on Brazil's Top Grossing Utilities chart since yesterday, an 85-place gain. The rank is not revenue, downloads, or purchases, and the evidence does not connect the free allowance to conversion.",
+     "causality": "weak"
+    },
+    {
+     "rid": "2026-11-20-app-87050734275331259542588657015784760558",
+     "did": "Content Manager: AI Сleaner is free with in-app purchases and states “UM ANO GRÁTIS PARA ESTUDANTES”; version 3.12.1 shipped on 2026-11-19, but no paid-plan price, trial length, exact lock point, or post-result payment prompt was found.",
+     "result": "After the update, it rose from #41 to #2 in Brazil's Top Grossing Utilities chart and also reached #6 in Japan, #15 in the US, #15 in Germany, and #29 in Indonesia. These are chart ranks, not installs or revenue, and the update or monetization cannot be isolated as the cause.",
+     "causality": "weak"
+    },
+    {
+     "rid": "2026-11-19-app-2002606120001703",
+     "did": "mise was captured on 2026-11-19 as “Gratis” with in-app purchases and creates personalized meal plans from dietary preferences, calorie goals, preferred supermarkets, budget, and available ingredients; no paid plan, price, trial, locked feature, or purchase moment was found.",
+     "result": "It ranked #3 in DE Top Grossing · Food & Drink, #6 in Indonesia, and #7 in the US. The chart positions do not disclose revenue, subscribers, conversion rate, or purchases, and the evidence does not attribute the movement to monetization.",
+     "causality": "weak"
+    }
+   ],
+   "counter": [
+    {
+     "rid": "2026-11-19-trustmrr-smartlycv",
+     "name": "SmartlyCV",
+     "what": "MRR rose 7.3× from $61.70 to $450.44 over 30 days, but the plan, price, checkout moment, subscriber count, and retention were missing, so the revenue lift cannot be assigned to a post-result offer."
+    },
+    {
+     "rid": "2026-11-19-trustmrr-trendstory",
+     "name": "TrendStory",
+     "what": "MRR rose 1.76× from $38,149.23 to $67,035.28 over 30 days, but the evidence does not show a free result, export-time offer, price, or customer count; monetization at export was not established."
+    },
+    {
+     "rid": "2026-11-20-app-87050734275331259542588657015784760558",
+     "name": "Content Manager: AI Сleaner",
+     "what": "It rose 39 places to #2 in Brazil after v3.12.1, but the evidence does not identify the paid feature, price, checkout trigger, or whether the student-free-year offer affected the result."
+    }
+   ],
+   "suits": "Suits products with an immediately understandable action such as organizing photos, creating a meal plan, tailoring an application, or producing a short video. It also suits utilities where a visible free allowance can reveal repeat intent without requiring a subscription decision at signup; it is unsuitable for products that cannot deliver a complete useful result before payment.",
+   "prerequisites": "Requires a free path that completes one useful result, one clearly defined repeat action, an exact paid capability, one price and renewal policy, and cohort tracking for completed free results, paywall views, purchases, refunds, and seven-day repeat use. The proposed payment trigger must be tested rather than presented as an evidence-backed rule.",
+   "risks": [
+    "A free allowance may cannibalize paid demand",
+    "An aggressive lock point may suppress activation",
+    "Unclear renewal terms may increase refunds",
+    "Store and payment rules vary by market",
+    "Chart rank can conceal weak or short-lived monetization"
+   ],
+   "notes": [
+    "Across the cases, the recurring model is a free core utility with in-app purchases. The most specific free allowance is Organize fotos: FocusClean's “até 100 fotos gratuitamente por mês,” while Content Manager is the only case with a stated subscription period, “UM ANO GRÁTIS PARA ESTUDANTES.” No case verifies a post-result lock point, so that timing remains a hypothesis.\n\nSmartlyCV and TrendStory both show substantial source-reported 30-day MRR increases, while three apps reached grossing-chart positions. These numbers are not proof of the proposed offer: the SaaS cases lack prices and checkout moments, and the app cases lack revenue, conversion, and retention data."
+   ],
+   "changed": "Checking removed unsupported claims that a post-result paywall was directly observed and narrowed the play to a testable hypothesis. It retained five documented free-with-in-app-purchase or revenue cases, corrected their outcome descriptions, and marked the lock-point, checkout, and measurement steps as inferred because the evidence never verifies them."
+  }
+ ]
 }
