@@ -3,7 +3,7 @@
 > Daily breakout intelligence for solo builders: which small products (apps, SaaS, open source, mini-games, short drama)
 > crossed a measurable line today, why, whether buyers are asking for it, and how one or two people could follow.
 
-Every page has a Markdown twin. Data date: 2026-11-19.
+Every page has a Markdown twin. Data date: 2026-11-20.
 
 ## Pages
 - [Today](index.md): today's briefs, ranked by grade
